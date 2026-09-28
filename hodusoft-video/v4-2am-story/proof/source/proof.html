@@ -1,0 +1,207 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;src:url(../v2/fonts/inter700.woff2) format('woff2');font-weight:100 900}
+@font-face{font-family:Mono;src:url(../v2/fonts/mono.woff2) format('woff2')}
+@font-face{font-family:Anton;src:url(../v2/fonts/anton400.woff2) format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000;overflow:hidden}
+body{font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#fff}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000}
+.world{position:absolute;inset:0;overflow:hidden}
+.cam{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 960px}
+.a{position:absolute}
+.bok{position:absolute;border-radius:50%}
+/* phone */
+.phone{position:absolute;left:190px;top:250px;width:700px;height:1440px;border-radius:110px;background:#111;padding:22px;box-shadow:0 60px 120px rgba(0,0,0,.7),inset 0 0 0 3px #2a2a2e,inset 0 0 0 8px #0b0b0c}
+.screen{position:relative;width:100%;height:100%;border-radius:90px;overflow:hidden;background:#000}
+.sb{position:absolute;left:0;right:0;top:0;height:110px;display:flex;align-items:center;justify-content:space-between;padding:26px 64px 0;font-weight:650;font-size:34px;z-index:20}
+.island{position:absolute;left:50%;top:26px;width:210px;height:62px;border-radius:40px;background:#000;transform:translateX(-50%);z-index:21}
+.batt{display:flex;align-items:center;gap:10px;font-size:28px}
+.bat{position:relative;width:56px;height:28px;border:3px solid rgba(255,255,255,.55);border-radius:9px;padding:2px}
+.bat i{display:block;height:100%;border-radius:4px;background:#fff}
+.bat:after{content:'';position:absolute;right:-8px;top:8px;width:4px;height:9px;border-radius:0 3px 3px 0;background:rgba(255,255,255,.55)}
+.st{position:absolute;inset:0}
+.notif{position:absolute;left:28px;right:28px;border-radius:44px;background:rgba(60,60,66,.72);backdrop-filter:blur(30px);padding:28px 32px;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.notif .hd{display:flex;align-items:center;gap:16px;font-size:26px;color:rgba(255,255,255,.7);font-weight:600}
+.appic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:26px}
+.notif .tt{font-size:31px;font-weight:700;margin-top:14px}
+.notif .bd{font-size:30px;line-height:1.3;color:rgba(255,255,255,.92);margin-top:6px;font-weight:500}
+.bub{position:absolute;max-width:470px;padding:22px 28px;border-radius:40px;font-size:31px;line-height:1.32;font-weight:500}
+/* desktop */
+.mon{position:absolute;left:40px;top:560px;width:1000px;height:660px;border-radius:26px;background:#0c0d10;padding:16px;box-shadow:0 50px 100px rgba(0,0,0,.6),inset 0 0 0 3px #22242a}
+.ui{position:relative;width:100%;height:100%;border-radius:14px;overflow:hidden;background:#f5f6f8;color:#111827}
+.card{position:absolute;background:#fff;border-radius:18px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 8px 24px rgba(17,24,39,.08)}
+.chipx{display:inline-flex;align-items:center;gap:8px;font-size:17px;font-weight:650;border-radius:999px;padding:7px 14px;margin:0 8px 8px 0}
+.lbl{font-size:14px;font-weight:700;letter-spacing:.08em;color:#6b7280}
+.act{position:absolute;left:20px;right:20px;height:74px;border-radius:14px;background:#f3f4f6;display:flex;align-items:center;gap:16px;padding:0 18px;font-size:20px;font-weight:650}
+.tick{width:38px;height:38px;border-radius:50%;border:3px solid #d1d5db;display:grid;place-items:center;flex:none}
+.cur{position:absolute;z-index:50}
+#grain{position:absolute;inset:-60px;opacity:.09;mix-blend-mode:overlay;pointer-events:none;z-index:90}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.6));pointer-events:none;z-index:91}
+#black{position:absolute;inset:0;background:#000;z-index:95}
+.sup{position:absolute;left:0;right:0;text-align:center;z-index:96}
+</style></head>
+<body><div id="stage"></div>
+<script>
+const T={pa:1.0,notif:2.4,shotB:5.0,type2:5.7,send:6.05,sys:6.45,shotC:7.2,card:7.35,click:8.8,split:9.15,accept:9.8,luis:10.2,luisD:9.12,seats:14.3,wheel:17.1,bp:18.7,emma:19.6,bpNotif:20.3,die:22.3,sup:23.2,logo:24.7,end:27.0};
+const stage=document.getElementById('stage');
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),mix=(a,b,k)=>a+(b-a)*k;
+const E={out3:x=>1-Math.pow(1-x,3),outExpo:x=>x>=1?1:1-Math.pow(2,-10*x),inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,outBack:x=>{const c1=1.5,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)},in3:x=>x*x*x,lin:x=>x};
+const P=(t,a,d,e='out3')=>E[e](cl((t-a)/d));
+const hash=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+function el(tag,cls,html,parent,css){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;if(css)e.style.cssText=css;(parent||stage).appendChild(e);return e}
+const nz=(t,s)=>Math.sin(t*1.3+s)*.6+Math.sin(t*2.7+s*2)*.3+Math.sin(t*5.1+s*3)*.1; // handheld
+
+// ================= EMMA'S WORLD: airport at night =================
+const W1=el('div','world');W1.style.background='#0b0706';
+const C1=el('div','cam',null,W1);
+// background layer (blurred): departures board + bokeh
+const bg1=el('div','a',null,C1,'left:-200px;top:-200px;width:1480px;height:2320px;filter:blur(11px)');
+el('div','a',null,bg1,'inset:0;background:radial-gradient(ellipse at 50% 20%,#3a2210 0%,#140b07 55%,#070403 100%)');
+const board=el('div','a',null,bg1,'left:40px;top:280px;width:1400px;height:560px;background:#0a0a0a;border-radius:10px;padding:26px;box-shadow:0 0 80px rgba(255,160,60,.25)');
+const FL=[['DALLAS','SL 108','ON TIME','#FFB547'],['DENVER','SL 214','CANCELLED','#FF3B30'],['SEATTLE','SL 330','DELAYED','#FFB547'],['BOSTON','SL 412','CANCELLED','#FF3B30'],['MIAMI','SL 505','ON TIME','#FFB547'],['DENVER','SL 218','06:10','#FFB547']];
+board.innerHTML='<div style="font-family:Mono;font-size:44px;color:#FFB547;margin-bottom:18px">DEPARTURES</div>'+FL.map(f=>`<div style="display:flex;justify-content:space-between;font-family:Mono;font-size:44px;color:#FFB547;padding:8px 0"><span style="width:330px">${f[0]}</span><span>${f[1]}</span><span style="width:330px;text-align:right;color:${f[3]};${f[3]=='#FF3B30'?'text-shadow:0 0 30px #FF3B30':''}">${f[2]}</span></div>`).join('');
+for(let i=0;i<34;i++){const r=40+hash(i)*150;el('div','bok',null,bg1,`left:${hash(i+9)*1480}px;top:${900+hash(i+21)*1400}px;width:${r}px;height:${r}px;background:radial-gradient(circle,rgba(255,${150+hash(i+3)*70|0},${60+hash(i+4)*50|0},${.25+hash(i+5)*.35}) 0%,rgba(255,150,60,0) 70%)`)}
+for(let i=0;i<14;i++){const r=20+hash(i+60)*60;el('div','bok',null,bg1,`left:${hash(i+70)*1480}px;top:${hash(i+80)*800}px;width:${r}px;height:${r}px;background:rgba(255,200,140,.18)`)}
+// phone
+const phone=el('div','phone',null,C1);const scr=el('div','screen',null,phone);
+el('div','island',null,scr);
+const sb=el('div','sb',`<span class="clk">2:07</span><span class="batt"><span class="pct">9%</span><span class="bat"><i></i></span></span>`,scr);
+// state: lock screen
+const lock=el('div','st',null,scr,'background:radial-gradient(ellipse at 30% 20%,#3b2a4a,#140f1c 60%,#07060a)');
+el('div','a','Tuesday, November 18',lock,'left:0;right:0;top:190px;text-align:center;font-size:36px;font-weight:600;color:rgba(255,255,255,.85)');
+el('div','a','2:07',lock,'left:0;right:0;top:230px;text-align:center;font-size:210px;font-weight:300;letter-spacing:-.02em;color:rgba(255,255,255,.95)');
+const n1=el('div','notif',`<div class="hd"><div class="appic" style="background:#34C759;color:#fff">✉</div>MESSAGES<span style="margin-left:auto">now</span></div><div class="tt">SkyLine Air</div><div class="bd">Flight SL214 to Denver is cancelled. We've rebooked you on SL218, 6:10 AM. Reply 1 to confirm, 2 to talk to us.</div>`,lock,'top:610px');
+// state: messages
+const msg=el('div','st',null,scr,'background:#000');
+el('div','a',`<div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#F26422,#ff9a5c);display:grid;place-items:center;font-weight:800;font-size:40px;margin:0 auto">S</div><div style="text-align:center;font-size:26px;margin-top:10px;font-weight:600">SkyLine Air</div>`,msg,'left:0;right:0;top:120px');
+el('div','a','Today 2:07 AM',msg,'left:0;right:0;top:320px;text-align:center;font-size:24px;color:#8e8e93;font-weight:600');
+el('div','bub','Flight SL214 to Denver is cancelled. We\'ve rebooked you on SL218, 6:10 AM. Reply 1 to confirm, 2 to talk to us.',msg,'left:30px;top:370px;background:#262629');
+const b2=el('div','bub','2',msg,'right:30px;top:640px;background:#0A84FF;padding:22px 34px');
+const sys=el('div','bub','Thanks, Emma. Luis from SkyLine is calling you now.',msg,'left:30px;top:760px;background:#262629');
+const kb=el('div','a',null,msg,'left:0;right:0;bottom:0;height:520px;background:#1c1c1e');
+kb.innerHTML=[['1','2','3'],['4','5','6'],['7','8','9']].map((r,ri)=>r.map((k,ci)=>`<div class="key k${k}" style="position:absolute;left:${24+ci*212}px;top:${40+ri*118}px;width:200px;height:104px;border-radius:14px;background:#3a3a3c;display:grid;place-items:center;font-size:48px;font-weight:500">${k}</div>`).join('')).join('');
+const input=el('div','a','',msg,'left:30px;right:30px;bottom:540px;height:80px;border-radius:40px;border:2px solid #3a3a3c;padding:0 30px;display:flex;align-items:center;font-size:32px;color:#fff');
+// state: incoming / in call
+const call=el('div','st',null,scr,'background:linear-gradient(180deg,#2b2d33,#0e0f12)');
+el('div','a',`<div style="width:170px;height:170px;border-radius:50%;background:linear-gradient(135deg,#F26422,#ff9a5c);display:grid;place-items:center;font-weight:800;font-size:76px;margin:0 auto">S</div><div style="text-align:center;font-size:52px;font-weight:600;margin-top:26px">SkyLine Air</div><div class="csub" style="text-align:center;font-size:32px;color:rgba(255,255,255,.65);margin-top:10px">incoming call…</div>`,call,'left:0;right:0;top:230px');
+const accBtns=el('div','a',`<div style="position:absolute;left:90px;width:150px;height:150px;border-radius:50%;background:#FF3B30"></div><div class="acc" style="position:absolute;right:90px;width:150px;height:150px;border-radius:50%;background:#34C759;display:grid;place-items:center;font-size:64px">✆</div>`,call,'left:0;right:0;bottom:250px;height:150px');
+const inBtns=el('div','a',[0,1,2,3,4,5].map(i=>`<div style="position:absolute;left:${80+(i%3)*190}px;top:${Math.floor(i/3)*200}px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.14)"></div>`).join('')+'<div style="position:absolute;left:250px;top:470px;width:150px;height:150px;border-radius:50%;background:#FF3B30"></div>',call,'left:0;right:0;top:700px;height:700px');
+const wave=el('div','a','<svg width="600" height="120"><path fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".75"/></svg>',call,'left:28px;top:560px');const wpath=wave.querySelector('path');
+// boarding-pass banner
+const n2=el('div','notif',`<div class="hd"><div class="appic" style="background:#F26422;color:#fff">S</div>SKYLINE AIR<span style="margin-left:auto">now</span></div><div class="tt">Boarding passes ready ✓</div><div class="bd">SL218 · 6:10 AM · Seats 2A, 2B · Gate B7<br>Wheelchair assist confirmed</div>`,scr,'top:40px;z-index:30');
+const lowb=el('div','a',`<div style="font-size:30px;font-weight:700">Low Battery</div><div style="font-size:26px;color:rgba(255,255,255,.7);margin-top:6px">1% of battery remaining</div>`,scr,'left:90px;right:90px;top:620px;height:180px;border-radius:40px;background:rgba(60,60,66,.8);backdrop-filter:blur(20px);text-align:center;padding-top:44px;z-index:31');
+const dead=el('div','st',null,scr,'background:#000;z-index:40');
+// foreground: out-of-focus shoulder/rail
+const fg1=el('div','a',null,C1,'left:-120px;top:1500px;width:520px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(40,24,14,.95),rgba(20,12,8,0) 70%);filter:blur(30px)');
+
+// ================= LUIS'S WORLD: kitchen at night =================
+const W2=el('div','world');W2.style.background='#05080f';
+const C2=el('div','cam',null,W2);
+const bg2=el('div','a',null,C2,'left:-200px;top:-200px;width:1480px;height:2320px;filter:blur(20px)');
+el('div','a',null,bg2,'inset:0;background:radial-gradient(ellipse at 60% 30%,#12243f 0%,#070d18 55%,#030509 100%)');
+for(let i=0;i<22;i++){const r=50+hash(i+200)*160;el('div','bok',null,bg2,`left:${hash(i+210)*1480}px;top:${hash(i+220)*1100}px;width:${r}px;height:${r}px;background:radial-gradient(circle,rgba(${90+hash(i)*60|0},${150+hash(i+1)*60|0},255,${.18+hash(i+2)*.25}) 0%,rgba(80,140,255,0) 70%)`)}
+el('div','a',null,bg2,'left:900px;top:220px;width:260px;height:420px;border-radius:20px;background:rgba(255,190,120,.10)'); // warm window / range hood light
+const mon=el('div','mon',null,C2);const ui=el('div','ui',null,mon);
+ui.innerHTML=`<div style="height:62px;background:#111827;color:#fff;display:flex;align-items:center;gap:14px;padding:0 22px;font-size:19px;font-weight:700">
+ <div style="width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#F26422,#ff9a5c);display:grid;place-items:center;font-size:16px">S</div>SkyLine Care Desk
+ <span style="margin-left:auto;font-weight:600;color:#9ca3af;font-size:16px">Luis M. · Remote · <span style="color:#34d399">● Available</span></span>
+ <span style="font-family:Mono;font-size:12px;color:#6b7280;border:1px solid #374151;border-radius:6px;padding:3px 7px;margin-left:10px">HoduCC</span></div>`;
+const idle=el('div','a',`<div class="lbl">QUEUE</div><div style="font-size:26px;font-weight:700;margin-top:6px;color:#9ca3af">Waiting for next customer…</div>`,ui,'left:26px;top:90px');
+const card=el('div','card',`<div style="display:flex;align-items:center;gap:12px"><span class="chipx" style="background:#FFF1E8;color:#C2410C;margin:0">● PRIORITY CALLBACK</span><span style="font-size:15px;color:#6b7280;font-weight:600">replied "2" by SMS · 2:07 AM</span></div>
+ <div style="font-size:34px;font-weight:800;margin-top:14px">Emma Carter</div>
+ <div class="ctx" style="margin-top:14px"></div>`,ui,'left:22px;top:84px;width:560px;height:520px;padding:24px');
+const CTX=[['✈ SL214 ORD → DEN','#FEE2E2','#B91C1C','CANCELLED'],['👤 2 travelers','#EEF2FF','#3730A3',''],['♿ Dad · wheelchair assist','#ECFDF5','#047857',''],['💬 SMS thread attached','#F3F4F6','#374151',''],['★ Gold member · 6 yrs','#FEF9C3','#854D0E',''],['↻ Suggested: SL218 · 6:10 AM','#FFF1E8','#C2410C','']];
+const ctx=card.querySelector('.ctx');const chips=CTX.map(c=>el('span','chipx',c[0]+(c[3]?` <b style="font-size:14px;letter-spacing:.06em">${c[3]}</b>`:''),ctx,`background:${c[1]};color:${c[2]}`));
+const callBtn=el('div','a','📞 Call Emma',card,'left:24px;right:24px;bottom:24px;height:70px;border-radius:14px;background:#F26422;color:#fff;display:grid;place-items:center;font-size:24px;font-weight:800');
+const wait=el('div','a','',card,'left:24px;bottom:108px;font-family:Mono;font-size:16px;color:#6b7280');
+const acts=el('div','card',`<div class="lbl" style="margin:20px">ACTIONS</div>`,ui,'left:600px;top:84px;width:354px;height:520px');
+const ACT=[['Hold seats 2A · 2B','SL218 · 6:10 AM'],['Wheelchair assist','Gate B7 · 5:30 AM'],['Send boarding passes','SMS + WhatsApp']];
+const actEls=ACT.map((a,i)=>el('div','act',`<div class="tick"></div><div><div>${a[0]}</div><div style="font-size:15px;color:#6b7280;font-weight:600;margin-top:2px">${a[1]}</div></div>`,acts,`top:${70+i*92}px`));
+const live=el('div','a',`<div class="lbl">ON CALL</div><div class="tm" style="font-family:Mono;font-size:30px;font-weight:700;margin-top:6px">00:00</div><svg width="300" height="60" style="margin-top:6px"><path fill="none" stroke="#F26422" stroke-width="4" stroke-linecap="round"/></svg>`,acts,'left:24px;bottom:22px');
+const cursor=el('div','cur','<svg width="40" height="40" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#111" stroke="#fff" stroke-width="1.4"/></svg>',ui,'left:0;top:0');
+// mug in foreground (out of focus)
+const mug=el('div','a',`<div style="position:absolute;left:0;top:60px;width:230px;height:250px;border-radius:0 0 50px 50px;background:linear-gradient(90deg,#d9d4cc,#f4efe7 45%,#bdb6ab)"></div><div style="position:absolute;left:205px;top:110px;width:90px;height:120px;border-radius:50%;border:22px solid #d8d2c9"></div><div style="position:absolute;left:0;top:44px;width:230px;height:40px;border-radius:50%;background:#3b2518"></div><svg class="steam" width="230" height="300" style="position:absolute;left:0;top:-250px"><path fill="none" stroke="rgba(255,255,255,.35)" stroke-width="10" stroke-linecap="round"/><path fill="none" stroke="rgba(255,255,255,.25)" stroke-width="8" stroke-linecap="round"/></svg>`,C2,'left:40px;top:1360px;width:300px;height:330px;filter:blur(6px)');
+const steam=[...mug.querySelectorAll('path')];
+
+// seam between the two worlds in split screen
+const seam=el('div','a',null,stage,'left:0;right:0;height:4px;background:#F26422;box-shadow:0 0 30px #F26422;z-index:60;transform-origin:50% 50%');
+const lab1=el('div','a','<span style="opacity:.6">TERMINAL B · CHICAGO</span>',stage,'left:40px;font-family:Mono;font-size:24px;letter-spacing:.14em;z-index:61');
+const lab2=el('div','a','<span style="opacity:.6">LUIS · HOME OFFICE · DENVER</span>',stage,'left:40px;font-family:Mono;font-size:24px;letter-spacing:.14em;z-index:61');
+
+// grain / vignette / black / supers
+const g=el('canvas',null,null,stage);g.id='grain';g.width=300;g.height=300;{const c=g.getContext('2d'),im=c.createImageData(300,300);for(let i=0;i<im.data.length;i+=4){const v=Math.random()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}c.putImageData(im,0,0)}g.style.width='1200px';g.style.height='2040px';
+el('div',null,null,stage).id='vig';
+const black=el('div',null,null,stage);black.id='black';
+const sup1=el('div','sup','Nobody remembers a good call.',stage,'top:820px;font-family:Anton;font-size:78px;text-transform:uppercase;letter-spacing:.01em');
+const sup2=el('div','sup','They remember the one<br>that <span style="color:#F26422">saved their night.</span>',stage,'top:920px;font-family:Anton;font-size:78px;text-transform:uppercase;line-height:1.05');
+const logo=el('div','sup','Hodu<span style="color:#F26422">Soft</span><div style="font-family:Mono;font-size:22px;letter-spacing:.12em;color:#9ca3af;margin-top:14px">CONTACT CENTER · IP PBX · VOICE &amp; SMS BROADCASTING</div>',stage,'top:1560px;font-family:Anton;font-size:84px');
+
+function showState(n){[lock,msg,call].forEach(s=>s.style.display='none');n.style.display='block'}
+function battery(t){const pts=[[0,9],[9,7],[15,4],[19,2],[20.8,1]];let v=9;for(let i=1;i<pts.length;i++){if(t<pts[i][0]){const a=pts[i-1],b=pts[i];v=Math.ceil(mix(a[1],b[1],(t-a[0])/(b[0]-a[0])));break}v=pts[i][1]}return v}
+
+function render(t){
+ g.style.transform=`translate(${-Math.floor(hash(Math.floor(t*24))*60)}px,${-Math.floor(hash(Math.floor(t*24)+7)*60)}px)`;
+ // ---------- phone state machine ----------
+ const bv=battery(t);sb.querySelector('.pct').textContent=bv+'%';const bi=sb.querySelector('.bat i');bi.style.width=Math.max(6,bv*1.2*4)+'%';bi.style.background=bv<=5?'#FF3B30':'#fff';
+ sb.querySelector('.pct').style.color=bv<=5?'#FF3B30':'#fff';sb.style.opacity=t>T.die?0:1;
+ if(t<T.shotB){showState(lock);const a=P(t,T.notif,.5,'outExpo');n1.style.transform=`translateY(${(1-a)*-180}px) scale(${.92+.08*a})`;n1.style.opacity=a;}
+ else if(t<T.split+.2){showState(msg);
+  b2.style.opacity=t>T.send?1:0;b2.style.transform=`scale(${P(t,T.send,.25,'outBack')})`;b2.style.transformOrigin='100% 100%';
+  sys.style.opacity=P(t,T.sys,.3);sys.style.transform=`translateY(${(1-P(t,T.sys,.3))*20}px)`;
+  input.textContent=(t>T.type2&&t<T.send)?'2':'';input.style.opacity=t>T.send?0:1;
+  kb.querySelector('.k2').style.background=(t>T.type2-.05&&t<T.type2+.12)?'#6b6b70':'#3a3a3c';}
+ else {showState(call);const acc=t>T.accept;
+  call.querySelector('.csub').textContent=acc?'00:'+String(Math.floor(t-T.accept)).padStart(2,'0'):'incoming call…';
+  accBtns.style.display=acc?'none':'block';inBtns.style.display=acc?'block':'none';
+  accBtns.querySelector('.acc').style.transform=`scale(${1+.08*Math.sin(t*14)})`;
+  let d='';const talk=(t>T.luis&&t<T.luis+T.luisD)||(t>T.emma&&t<T.emma+2.07);
+  for(let x=0;x<=600;x+=6){const y=60+(acc?Math.sin(x*.05+t*12)*Math.sin(x*.013+t*3)*(talk?40:4):0);d+=(x?'L':'M')+x+' '+y.toFixed(1)}wpath.setAttribute('d',d);wave.style.opacity=acc?1:0;}
+ const bpa=P(t,T.bpNotif,.5,'outExpo')*(1-P(t,T.die-.4,.3));n2.style.transform=`translateY(${(1-bpa)*-260}px)`;n2.style.opacity=bpa;
+ const lb=t>T.die-1.2&&t<T.die;lowb.style.opacity=lb?1:0;lowb.style.transform=`scale(${.9+.1*P(t,T.die-1.2,.25,'outBack')})`;
+ dead.style.opacity=t>T.die?1:0;
+ // ---------- desktop state ----------
+ const cardIn=P(t,T.card,.5,'outExpo');card.style.opacity=cardIn;card.style.transform=`translateY(${(1-cardIn)*40}px)`;idle.style.opacity=1-cardIn;
+ chips.forEach((c,i)=>{const a=P(t,T.card+.2+i*.12,.35,'outBack');c.style.opacity=a;c.style.transform=`scale(${a})`});
+ wait.textContent='customer wait '+(t<T.accept?'0:0'+Math.min(4,Math.max(0,Math.floor((t-T.send)*1.1)))+'':'0:04');
+ const clicked=t>T.click;callBtn.style.background=t>T.accept?'#10B981':clicked?'#C2410C':'#F26422';callBtn.textContent=t>T.accept?'● Connected':clicked?'Calling Emma…':'📞 Call Emma';
+ callBtn.style.transform=`scale(${1-.05*P(t,T.click,.06)*(1-P(t,T.click+.06,.2))})`;
+ const AT=[T.seats,T.wheel,T.bp];
+ actEls.forEach((a,i)=>{const on=t>AT[i];const k=P(t,AT[i],.3,'outBack');const tk=a.querySelector('.tick');tk.style.background=on?'#10B981':'transparent';tk.style.borderColor=on?'#10B981':'#d1d5db';tk.innerHTML=on?`<span style="color:#fff;font-size:22px;transform:scale(${k});display:inline-block">✓</span>`:'';
+  a.style.background=on?'#ECFDF5':'#f3f4f6';a.style.opacity=t>T.accept?1:.45});
+ live.style.opacity=t>T.accept?1:0;live.querySelector('.tm').textContent='00:'+String(Math.max(0,Math.floor(t-T.accept))).padStart(2,'0');
+ {let d='';const talk=(t>T.luis&&t<T.luis+T.luisD)||(t>T.emma&&t<T.emma+2.07);for(let x=0;x<=300;x+=5){const y=30+Math.sin(x*.07+t*11)*Math.sin(x*.02+t*2)*(talk?22:2);d+=(x?'L':'M')+x+' '+y.toFixed(1)}live.querySelector('path').setAttribute('d',d)}
+ // cursor path: to Call button, then to each action as it completes
+ const CP=[[T.card+.6,[420,300]],[T.click,[280,560]],[T.seats-.25,[720,190]],[T.wheel-.25,[720,282]],[T.bp-.25,[720,374]]];
+ let cx=420,cy=300;for(let i=1;i<CP.length;i++){const a=P(t,CP[i][0]-.45,.45,'inOut');if(t>=CP[i][0]-.45){cx=mix(CP[i-1][1][0],CP[i][1][0],a);cy=mix(CP[i-1][1][1],CP[i][1][1],a)}}
+ cursor.style.transform=`translate(${cx}px,${cy}px)`;
+ steam.forEach((p,i)=>{let d='';for(let y=300;y>=0;y-=10){const x=100+i*40+Math.sin(y*.03+t*(1.5+i*.4)+i)*25*(1-y/300+.3);d+=(y==300?'M':'L')+x.toFixed(1)+' '+y}p.setAttribute('d',d)});
+ // ---------- shots / cameras ----------
+ const hh1=[nz(t,1)*6,nz(t,2)*6,nz(t,3)*.3];const hh2=[nz(t,4)*4,nz(t,5)*4,nz(t,6)*.2];
+ let w1={on:1,clip:[0,0,0,0]},w2={on:0,clip:[0,0,0,0]};
+ if(t<T.shotB){ // A: slow push-in on phone over the board
+  const k=P(t,0,T.shotB,'lin');C1.style.transform=`translate(${hh1[0]}px,${hh1[1]+mix(80,20,k)}px) scale(${mix(.92,1.05,k)}) rotate(${hh1[2]}deg)`;
+ }else if(t<T.shotC){ // B: tight on keyboard/thread
+  const k=P(t,T.shotB,T.shotC-T.shotB,'lin');C1.style.transform=`translate(${hh1[0]}px,${hh1[1]-mix(120,220,k)}px) scale(${mix(1.3,1.36,k)}) rotate(${hh1[2]}deg)`;
+ }else if(t<T.split){ // C: Luis's desk
+  w1.on=0;w2.on=1;const k=P(t,T.shotC,T.split-T.shotC,'lin');C2.style.transform=`translate(${hh2[0]+mix(150,120,k)}px,${hh2[1]+60}px) scale(${mix(1.24,1.32,k)})`;
+ }else{ // D: split screen, both worlds
+  w1.on=1;w2.on=1;const k=P(t,T.split,.7,'inOut');const mid=960;
+  w1.clip=[0,0,1920-mix(1920,mid,k),0];w2.clip=[mix(1920,mid,k),0,0,0];
+  C1.style.transform=`translate(${hh1[0]}px,${-336+hh1[1]}px) scale(.78) rotate(${hh1[2]}deg)`; // phone into top half
+  C2.style.transform=`translate(${hh2[0]}px,${540+hh2[1]}px) scale(1.02)`;
+ }
+ W1.style.display=w1.on?'block':'none';W2.style.display=w2.on?'block':'none';
+ W1.style.clipPath=`inset(${w1.clip.map(v=>v+'px').join(' ')})`;W2.style.clipPath=`inset(${w2.clip.map(v=>v+'px').join(' ')})`;
+ const inSplit=t>=T.split;seam.style.display=inSplit?'block':'none';
+ if(inSplit){const k=P(t,T.split,.7,'inOut');const y=mix(1920,960,k);seam.style.top=(y-2)+'px';seam.style.transform=`scaleX(${P(t,T.accept,.5,'outExpo')*1+.02})`;seam.style.opacity=t>T.die?1-P(t,T.die,.4):1;
+  lab1.style.top='40px';lab2.style.top=(y+24)+'px';lab1.style.opacity=lab2.style.opacity=P(t,T.split+.5,.5)*(1-P(t,T.die,.3));}
+ else{lab1.style.opacity=lab2.style.opacity=0}
+ // blacks & supers
+ let bo=1-P(t,0,.8);if(t>T.die+.5)bo=P(t,T.die+.5,.5);black.style.opacity=bo;
+ const s1=P(t,T.sup,.6,'outExpo'),s2=P(t,T.sup+1.0,.6,'outExpo');sup1.style.opacity=s1;sup1.style.transform=`translateY(${(1-s1)*20}px)`;sup2.style.opacity=s2;sup2.style.transform=`translateY(${(1-s2)*20}px)`;
+ const lg=P(t,T.logo,.6,'outExpo');logo.style.opacity=lg;
+}
+window.render=render;window.ready=document.fonts.ready.then(()=>{render(0);return true});
+</script></body></html>
