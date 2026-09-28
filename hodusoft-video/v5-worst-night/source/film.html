@@ -1,0 +1,351 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;src:url(../v2/fonts/inter700.woff2) format('woff2');font-weight:100 900}
+@font-face{font-family:Mono;src:url(../v2/fonts/mono.woff2) format('woff2')}
+@font-face{font-family:Anton;src:url(../v2/fonts/anton400.woff2) format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000;overflow:hidden}
+body{font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;color:#fff}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#000}
+.scene{position:absolute;inset:0;overflow:hidden;display:none}
+.cam{position:absolute;inset:0;transform-origin:960px 540px}
+.a{position:absolute}
+.bok{position:absolute;border-radius:50%}
+/* phone */
+.ph{position:absolute;width:400px;height:820px;border-radius:64px;background:#0d0d0f;padding:14px;box-shadow:inset 0 0 0 3px #26262a,inset 0 0 0 7px #09090a}
+.ph .scr{position:relative;width:100%;height:100%;border-radius:52px;overflow:hidden;background:#000}
+.isl{position:absolute;left:50%;top:16px;width:120px;height:36px;border-radius:20px;background:#000;transform:translateX(-50%);z-index:5}
+.nt{position:absolute;left:14px;right:14px;border-radius:26px;background:rgba(58,58,64,.78);padding:16px 18px;backdrop-filter:blur(16px)}
+.nt .h{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:rgba(255,255,255,.62);letter-spacing:.02em}
+.nt .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:15px;color:#fff}
+.nt .t{font-size:18px;font-weight:700;margin-top:8px}
+.nt .b{font-size:17px;line-height:1.3;color:rgba(255,255,255,.9);margin-top:3px;font-weight:500}
+/* laptop */
+.lap{position:absolute;left:260px;top:120px;width:1400px;height:900px}
+.lid{position:absolute;left:0;top:0;width:1400px;height:880px;border-radius:30px 30px 8px 8px;background:#101114;padding:26px 26px 40px;box-shadow:inset 0 0 0 2px #26282e;transform-origin:50% 100%}
+.disp{position:relative;width:100%;height:100%;border-radius:8px;overflow:hidden;background:#1b1d22}
+.win{position:absolute;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06);background:#f3f4f6;color:#111827}
+.win .tb{height:34px;background:#e5e7eb;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;font-weight:600;color:#4b5563}
+.win .tb i{width:11px;height:11px;border-radius:50%;display:block}
+.cur{position:absolute;z-index:80;pointer-events:none}
+.k{font-size:13px;font-weight:700;letter-spacing:.08em;color:#6b7280}
+/* call app */
+.tile{position:absolute;border-radius:14px;overflow:hidden;background:#1f2228}
+.tile .nm{position:absolute;left:12px;bottom:10px;font-size:15px;font-weight:600;background:rgba(0,0,0,.45);padding:4px 10px;border-radius:8px}
+.tile .av{position:absolute;left:50%;top:44%;width:96px;height:96px;border-radius:50%;transform:translate(-50%,-50%);display:grid;place-items:center;font-size:36px;font-weight:700}
+.metric{position:absolute;border-radius:16px;padding:22px 24px}
+.metric .l{font-size:16px;font-weight:700;letter-spacing:.08em;opacity:.7}
+.metric .v{font-size:64px;font-weight:800;letter-spacing:-.02em;margin-top:6px}
+/* film layer */
+.bar{position:absolute;left:0;right:0;height:64px;background:#000;z-index:200}
+#grain{position:absolute;inset:-80px;opacity:.10;mix-blend-mode:overlay;pointer-events:none;z-index:150}
+#vig{position:absolute;inset:0;pointer-events:none;z-index:151;background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(0,0,0,.65))}
+#grade{position:absolute;inset:0;pointer-events:none;z-index:149;mix-blend-mode:soft-light}
+#flash{position:absolute;inset:0;pointer-events:none;z-index:148;background:#cfe0ff;mix-blend-mode:screen}
+#black{position:absolute;inset:0;background:#000;z-index:180}
+.sup{position:absolute;left:0;right:0;text-align:center;z-index:190;font-weight:300;letter-spacing:.02em}
+#vhs{position:absolute;inset:0;z-index:170;pointer-events:none;display:none}
+</style></head>
+<body><div id="stage"></div>
+<script>
+const D=__DURS__;
+const T={
+ n1:[1.2,2.0,2.7,3.4,4.4], lower:4.9, s2:6.6, sh2b:9.4, click1:10.0, modal:10.35, sh2c:11.8, ivr:12.0, sh2d:14.8, sh2e:16.8,
+ s3:18.8, ceo1:20.2, sup1:23.4, s4:26.0, sup2:27.75, s5:28.8, nb1:29.6, nb2:31.3, s6:33.2, sh6b:36.8, addClick:37.2, prov:37.5,
+ sh6c:40.4, whClick:41.0, wh:41.3, fix:43.0, emma:43.6, sh6d:44.6, close:45.8, s7:47.2, ceo2:48.4, dana:51.1, react:52.9, s8:53.8, narr:54.3, logo:56.8, cta:57.4, end:60.0};
+const stage=document.getElementById('stage');
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),mix=(a,b,k)=>a+(b-a)*k;
+const E={out3:x=>1-Math.pow(1-x,3),outExpo:x=>x>=1?1:1-Math.pow(2,-10*x),inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,sine:x=>-(Math.cos(Math.PI*x)-1)/2,outBack:x=>{const c1=1.4,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)},in3:x=>x*x*x,lin:x=>x};
+const P=(t,a,d,e='out3')=>E[e](cl((t-a)/d));
+const hash=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+const nz=(t,s)=>Math.sin(t*.9+s)*.6+Math.sin(t*2.1+s*2)*.3+Math.sin(t*4.3+s*3)*.1;
+function el(tag,cls,html,parent,css){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;if(css)e.style.cssText=css;(parent||stage).appendChild(e);return e}
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const CURSOR='<svg width="30" height="30" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#111" stroke="#fff" stroke-width="1.5"/></svg>';
+
+// ======================= RAIN WINDOW (shared canvas helper) =======================
+function rainCanvas(parent,css,w,h,tint){const c=el('canvas','a',null,parent,css);c.width=w;c.height=h;c._x=c.getContext('2d');c._tint=tint;
+ c._drops=Array.from({length:70},(_,i)=>({x:hash(i+1)*w,y0:hash(i+2)*h,r:2+hash(i+3)*5,v:30+hash(i+4)*120}));return c}
+function drawRain(c,t,bright){const g=c._x,w=c.width,h=c.height;g.clearRect(0,0,w,h);
+ const [r,gg,b]=c._tint;const grd=g.createLinearGradient(0,0,0,h);grd.addColorStop(0,`rgba(${r},${gg},${b},${.55+bright*.45})`);grd.addColorStop(1,`rgba(${r*.4|0},${gg*.4|0},${b*.5|0},${.35+bright*.4})`);g.fillStyle=grd;g.fillRect(0,0,w,h);
+ for(let i=0;i<9;i++){const x=hash(i+50)*w,y=hash(i+60)*h*.7,rr=20+hash(i+70)*60;const rg=g.createRadialGradient(x,y,0,x,y,rr);rg.addColorStop(0,`rgba(255,${200+hash(i)*40|0},150,${.25+bright*.5})`);rg.addColorStop(1,'rgba(255,200,150,0)');g.fillStyle=rg;g.fillRect(x-rr,y-rr,rr*2,rr*2)}
+ c._drops.forEach((d,i)=>{const y=(d.y0+t*d.v)%(h+40)-20;g.fillStyle=`rgba(220,235,255,${.25+bright*.4})`;g.beginPath();g.ellipse(d.x+Math.sin(t+i)*2,y,d.r*.7,d.r,0,0,6.283);g.fill();g.fillStyle=`rgba(200,220,255,.10)`;g.fillRect(d.x-1,y-d.r*6,2,d.r*6)})}
+
+// ======================= SCENE: NIGHTSTAND =======================
+function nightstand(warm){
+ const s=el('div','scene');s.style.background='#04060a';const cam=el('div','cam',null,s);
+ const back=el('div','a',null,cam,'left:-200px;top:-150px;width:2320px;height:1380px;filter:blur(14px)');
+ el('div','a',null,back,`inset:0;background:radial-gradient(ellipse at 70% 30%,${warm?'#2a1a0c':'#0e1a2c'} 0%,#05070b 60%)`);
+ const rw=rainCanvas(back,'left:1300px;top:120px;width:640px;height:520px;border-radius:6px',320,260,warm?[80,60,45]:[40,70,120]);
+ el('div','a',null,back,'left:1290px;top:110px;width:660px;height:540px;border:14px solid #0a0c10;border-radius:8px');
+ if(warm)el('div','bok',null,back,'left:220px;top:180px;width:520px;height:520px;background:radial-gradient(circle,rgba(255,170,90,.45),rgba(255,140,60,0) 65%)');
+ // surface
+ const surf=el('div','a',null,cam,`left:-300px;top:560px;width:2520px;height:900px;background:
+  repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 3px,transparent 3px 21px),linear-gradient(180deg,${warm?'#2b1d14':'#161311'},${warm?'#140d09':'#0a0808'})`);
+ const spill=el('div','a',null,cam,'left:460px;top:520px;width:1000px;height:520px;border-radius:50%;background:radial-gradient(ellipse,rgba(170,200,255,.55),rgba(120,160,255,0) 65%);mix-blend-mode:screen');
+ // glass (foreground, blurred)
+ el('div','a','<div style="position:absolute;inset:0;border-radius:18px 18px 30px 30px;background:linear-gradient(90deg,rgba(255,255,255,.08),rgba(255,255,255,.22) 30%,rgba(255,255,255,.05) 60%,rgba(255,255,255,.18));border:2px solid rgba(255,255,255,.18)"></div><div style="position:absolute;left:6px;right:6px;bottom:6px;height:55%;border-radius:0 0 26px 26px;background:rgba(160,190,230,.12)"></div>',cam,'left:1480px;top:330px;width:180px;height:330px;filter:blur(7px)');
+ // phone (3D)
+ const wrap=el('div','a',null,cam,'left:760px;top:170px;width:400px;height:820px;transform-style:preserve-3d');
+ const ph=el('div','ph',null,wrap,'left:0;top:0');const scr=el('div','scr',null,ph);el('div','isl',null,scr);
+ const lock=el('div','a',null,scr,'inset:0;background:radial-gradient(ellipse at 30% 15%,#243553,#0b1220 55%,#04060b)');
+ el('div','a','Wednesday, December 17',lock,'left:0;right:0;top:92px;text-align:center;font-size:19px;font-weight:600;color:rgba(255,255,255,.8)');
+ el('div','a','2:07',lock,'left:0;right:0;top:112px;text-align:center;font-size:118px;font-weight:300;color:rgba(255,255,255,.95);letter-spacing:-.01em');
+ const flare=el('div','a',null,cam,'left:0;right:0;top:560px;height:6px;background:linear-gradient(90deg,transparent,rgba(160,200,255,.9),transparent);filter:blur(3px);mix-blend-mode:screen');
+ return {s,cam,back,rw,surf,spill,wrap,scr,lock,flare,notifs:[]};
+}
+function notif(ns,ic,icbg,app,title,body){const n=el('div','nt',`<div class="h"><div class="ic" style="background:${icbg}">${ic}</div>${app}<span style="margin-left:auto">now</span></div><div class="t">${title}</div><div class="b">${body}</div>`,ns.lock);ns.notifs.push(n);return n}
+const NS1=nightstand(false);
+notif(NS1,'!','#FF3B30','OPS ALERTS','Queue: 412 waiting','Longest wait 47:12 · SLA breached');
+notif(NS1,'!','#FF3B30','OPS ALERTS','Abandon rate 38% ↑','+29 pts in the last hour');
+notif(NS1,'✈','#3B82F6','IROPS','Storm: 60 flights cancelled','ORD, DEN, MSP · rebooking backlog');
+notif(NS1,'#','#6B7280','MENTIONS','@SkyLineAir trending','2.1K posts · "3 hours on hold…"');
+notif(NS1,'M','#111827','MESSAGES','Mark Ellison (CEO)','What\'s going on? Board call at 9.');
+const lower=el('div','a',`<div style="font-size:20px;letter-spacing:.35em;color:rgba(255,255,255,.6);font-weight:600">DANA REYES</div><div style="font-size:34px;font-weight:300;letter-spacing:.04em;margin-top:10px">Director, Customer Operations · SkyLine Air</div><div style="width:60px;height:2px;background:#F26422;margin-top:14px"></div>`,NS1.s,'left:140px;top:790px;z-index:10;text-shadow:0 2px 20px #000');
+const NS2=nightstand(true);
+notif(NS2,'H','#F26422','HODUCC · OPS','Surge detected: 60 flights cancelled','Rebooking SMS sent to 8,400 passengers.');
+notif(NS2,'H','#F26422','HODUCC · OPS','5,900 rebooked by text','Queue 143 · all SLAs green · no action needed');
+
+// ======================= SCENE: KITCHEN LAPTOP =======================
+function kitchen(warm){
+ const s=el('div','scene');s.style.background='#030509';const cam=el('div','cam',null,s);
+ const back=el('div','a',null,cam,'left:-200px;top:-150px;width:2320px;height:1380px;filter:blur(18px)');
+ el('div','a',null,back,`inset:0;background:radial-gradient(ellipse at 20% 30%,${warm?'#2b1a0e':'#0b1628'} 0%,#040609 60%)`);
+ const rw=rainCanvas(back,'left:120px;top:140px;width:560px;height:620px',280,310,warm?[90,65,45]:[35,60,110]);
+ for(let i=0;i<7;i++){const r=60+hash(i+300)*140;el('div','bok',null,back,`left:${1500+hash(i+301)*700}px;top:${120+hash(i+302)*500}px;width:${r}px;height:${r}px;background:radial-gradient(circle,rgba(${warm?'255,170,90':'110,160,255'},${.18+hash(i+303)*.2}),rgba(0,0,0,0) 70%)`)}
+ if(warm)el('div','bok',null,back,'left:1500px;top:-100px;width:700px;height:700px;background:radial-gradient(circle,rgba(255,170,90,.45),rgba(0,0,0,0) 65%)');
+ el('div','a',null,cam,`left:-300px;top:900px;width:2520px;height:400px;background:linear-gradient(180deg,${warm?'#1d140e':'#0d0f13'},#050506)`);
+ const glow=el('div','a',null,cam,'left:160px;top:640px;width:1600px;height:520px;border-radius:50%;background:radial-gradient(ellipse,rgba(190,210,255,.28),rgba(0,0,0,0) 65%);mix-blend-mode:screen');
+ const lap=el('div','lap',null,cam);
+ el('div','a',null,lap,'left:-60px;top:872px;width:1520px;height:40px;border-radius:0 0 28px 28px;background:linear-gradient(180deg,#2a2c31,#141518)');
+ const lid=el('div','lid',null,lap);const disp=el('div','disp',null,lid);
+ const mug=el('div','a',`<div style="position:absolute;left:0;top:40px;width:150px;height:170px;border-radius:0 0 36px 36px;background:linear-gradient(90deg,#3a3d44,#6a6e77 45%,#2a2c31)"></div><div style="position:absolute;left:136px;top:78px;width:64px;height:86px;border-radius:50%;border:16px solid #4a4d55"></div><div style="position:absolute;left:0;top:28px;width:150px;height:28px;border-radius:50%;background:#1a120c"></div><svg class="stm" width="150" height="220" style="position:absolute;left:0;top:-190px"><path fill="none" stroke="rgba(255,255,255,.28)" stroke-width="7" stroke-linecap="round"/><path fill="none" stroke="rgba(255,255,255,.2)" stroke-width="6" stroke-linecap="round"/></svg>`,cam,'left:1690px;top:760px;width:210px;height:220px;filter:blur(3px)');
+ return {s,cam,back,rw,glow,lap,lid,disp,mug,steam:[...mug.querySelectorAll('.stm path')]};
+}
+function win(parent,title,x,y,w,h,tbc){const d=el('div','win',`<div class="tb" style="${tbc||''}"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span style="margin-left:8px">${title}</span></div><div class="bd" style="position:absolute;left:0;right:0;top:34px;bottom:0"></div>`,parent,`left:${x}px;top:${y}px;width:${w}px;height:${h}px`);return d}
+// ---- Act 1 laptop: the old stack
+const K1=kitchen(false);
+el('div','a',null,K1.disp,'inset:0;background:linear-gradient(135deg,#1c2433,#0e131c)');
+const wb=win(K1.disp,'Wallboard (legacy) — refresh: manual',40,40,700,470,'background:#d1d5db');
+wb.querySelector('.bd').innerHTML=`<div style="padding:26px;background:#e5e7eb;height:100%"><div class="k">CALLS IN QUEUE</div><div class="q1" style="font-size:150px;font-weight:800;color:#6b7280;line-height:1;margin-top:10px">412</div>
+ <div class="k" style="margin-top:22px">LONGEST WAIT</div><div class="lw" style="font-size:56px;font-weight:800;color:#6b7280">47:12</div>
+ <div style="position:absolute;left:26px;bottom:20px;font-size:16px;font-weight:700;color:#b91c1c">⚠ Last updated 47 min ago</div></div>`;
+const pbx=win(K1.disp,'PBX Admin Console v4.2',520,150,760,520,'background:#c7d2fe');
+pbx.querySelector('.bd').innerHTML=`<div style="padding:22px;font-size:17px;background:#eef2ff;height:100%"><div style="font-weight:800;font-size:22px">Extensions › Add seats</div>
+ <div style="margin-top:18px;display:grid;grid-template-columns:200px 1fr;gap:12px;align-items:center"><span>Seats to add</span><div style="border:1px solid #9ca3af;background:#fff;padding:8px 12px;border-radius:6px">30</div><span>Location</span><div style="border:1px solid #9ca3af;background:#fff;padding:8px 12px;border-radius:6px">Remote / Home</div></div>
+ <div class="sub" style="margin-top:22px;display:inline-block;background:#4f46e5;color:#fff;padding:10px 22px;border-radius:6px;font-weight:700">Submit request</div></div>`;
+const modal=el('div','a',`<div style="font-weight:800;font-size:22px;color:#b91c1c">Request submitted</div><div style="margin-top:12px;font-size:18px;line-height:1.5;color:#111827">Hardware provisioning: <b>3–5 business days</b>.<br>Remote login: <b>not supported</b> on on-prem PBX.<br>Ticket #IT-20931 assigned to Infrastructure.</div><div style="margin-top:18px;text-align:right"><span style="background:#e5e7eb;padding:8px 18px;border-radius:6px;font-weight:700">OK</span></div>`,pbx,'left:120px;top:150px;width:520px;padding:26px;background:#fff;border-radius:12px;box-shadow:0 30px 60px rgba(0,0,0,.35);border:1px solid #fecaca');
+const dial=win(K1.disp,'Softphone — test call',860,40,440,420,'background:#d1fae5');
+dial.querySelector('.bd').innerHTML=`<div style="padding:22px;background:#f0fdf4;height:100%;text-align:center"><div class="k">CALLING</div><div style="font-size:26px;font-weight:800;margin-top:6px">SkyLine Support · 1-800</div><div class="dt" style="font-family:Mono;font-size:22px;margin-top:6px;color:#374151">00:00</div>
+ <svg width="380" height="120" style="margin-top:14px"><path class="dw" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round"/></svg><div class="cap" style="font-size:19px;font-weight:600;line-height:1.35;color:#111827;margin-top:8px;min-height:80px"></div></div>`;
+const soc=win(K1.disp,'Mentions — @SkyLineAir',120,90,620,640,'background:#e5e7eb');
+const POSTS=[['@jess_travels','3 hours on hold with @SkyLineAir. They hung up on me. Twice.','2m'],['@mike.d','Stuck at ORD with two kids and nobody answers the phone. @SkyLineAir','3m'],['@corporate_kate','Missed my board meeting. 58 minutes on hold and counting.','4m'],['@dfw_dan','@SkyLineAir your hold music is now my personality','6m'],['@annaliese','Does anyone at @SkyLineAir work at night??','7m'],['@tbrooks','Called 11 times. Voicemail full.','9m']];
+soc.querySelector('.bd').innerHTML=`<div class="feed" style="position:absolute;left:0;right:0;top:0;background:#fff">${POSTS.map(p=>`<div style="padding:18px 22px;border-bottom:1px solid #e5e7eb;display:flex;gap:14px"><div style="width:44px;height:44px;border-radius:50%;background:#d1d5db;flex:none"></div><div><div style="font-weight:800;font-size:16px">${p[0]} <span style="color:#9ca3af;font-weight:600">· ${p[2]}</span></div><div style="font-size:18px;margin-top:4px;line-height:1.35">${p[1]}</div></div></div>`).join('')}</div>`;
+const clk=el('div','a',`<div style="font-size:15px;letter-spacing:.3em;color:rgba(255,255,255,.5)">KITCHEN · 4:52 AM</div>`,K1.s,'left:140px;top:110px;z-index:10');
+const cur1=el('div','cur',CURSOR,K1.disp,'left:0;top:0');
+// ---- Act 2 laptop: one HoduCC ops view
+const K2=kitchen(true);
+el('div','a',null,K2.disp,'inset:0;background:#0f1115');
+const ops=el('div','a',null,K2.disp,'inset:0;color:#111827;background:#f5f6f8');
+ops.innerHTML=`<div style="height:54px;background:#111827;color:#fff;display:flex;align-items:center;gap:12px;padding:0 20px;font-weight:700;font-size:17px">
+ <div style="width:28px;height:28px;border-radius:7px;background:#F26422;display:grid;place-items:center;font-size:15px">H</div>HoduCC · Operations <span style="color:#9ca3af;font-weight:600">· SkyLine Air</span>
+ <span style="margin-left:auto;font-size:14px;color:#34d399">● LIVE</span></div>`;
+const kp=[['CALLS IN QUEUE','q2','143'],['AVG WAIT','aw','0:18'],['CALLS AVOIDED (SMS)','ca','0'],['AGENTS ONLINE','ao','46']];
+const kpis=kp.map((k,i)=>el('div','metric',`<div class="l">${k[0]}</div><div class="v ${k[1]}">${k[2]}</div>`,ops,`left:${20+i*334}px;top:74px;width:318px;height:150px;background:#fff;color:#111827;box-shadow:0 6px 18px rgba(17,24,39,.06)`));
+const chart=el('div','a',`<div class="k" style="padding:18px 22px">INBOUND VOLUME · LAST 2 HOURS</div><svg width="780" height="300" style="position:absolute;left:10px;top:50px"><path class="ar" fill="rgba(242,100,34,.14)"/><path class="ln" fill="none" stroke="#F26422" stroke-width="4" stroke-linecap="round"/><line class="mk" x1="0" x2="0" y1="10" y2="290" stroke="#111827" stroke-dasharray="5 6" stroke-width="2"/><text class="mt" font-size="15" font-weight="700" fill="#111827">SMS broadcast</text></svg>`,ops,'left:20px;top:244px;width:810px;height:370px;background:#fff;border-radius:16px');
+const side=el('div','a',null,ops,'left:850px;top:244px;width:478px;height:370px;background:#fff;border-radius:16px;overflow:hidden');
+// side panel states: (a) broadcast summary, (b) add agents + map, (c) live quality
+const sideA=el('div','a',`<div class="k" style="padding:18px 22px">AUTOMATED OUTREACH</div><div style="padding:0 22px;font-size:18px;line-height:1.6">
+ <div>📨 Rebooking SMS sent <b style="float:right">8,400</b></div><div>✅ Rebooked by text <b class="rb" style="float:right">0</b></div><div>☎ Callback requested <b style="float:right">612</b></div></div>
+ <div class="addb" style="position:absolute;left:22px;right:22px;bottom:22px;height:62px;border-radius:12px;background:#F26422;color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px">+ Add 30 remote agents</div>`,side,'inset:0');
+const sideB=el('div','a',`<div class="k" style="padding:18px 22px">PROVISIONING REMOTE AGENTS</div><svg width="478" height="230" style="position:absolute;left:0;top:50px"><path d="M40 70 C90 30 180 20 250 35 C320 25 400 40 440 80 C455 120 430 170 380 190 C320 205 260 200 200 205 C140 210 80 190 50 150 C30 120 30 95 40 70Z" fill="#eef0f3" stroke="#d1d5db" stroke-width="2"/><g class="dots"></g></svg>
+ <div class="pv" style="position:absolute;left:22px;right:22px;bottom:70px;font-size:18px;font-weight:700"></div><div style="position:absolute;left:22px;right:22px;bottom:40px;height:12px;border-radius:6px;background:#eef0f3"><div class="pb" style="height:100%;width:0;border-radius:6px;background:#10b981"></div></div>`,side,'inset:0');
+const dotsG=sideB.querySelector('.dots');const HOMES=Array.from({length:30},(_,i)=>[70+hash(i+500)*350,55+hash(i+520)*135]);
+HOMES.forEach(h=>{const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',h[0]);c.setAttribute('cy',h[1]);c.setAttribute('r',6);c.setAttribute('fill','#10b981');dotsG.appendChild(c)});
+const sideC=el('div','a',`<div class="k" style="padding:18px 22px">LIVE QUALITY · AI SCORED</div>
+ <div class="jt" style="margin:0 22px;border-radius:14px;padding:16px;border:2px solid #f59e0b;background:#fffbeb"><div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:800;font-size:19px">Jordan K. · week 1</div><div class="who" style="font-size:15px;color:#6b7280;margin-top:2px">with Emma Carter · wheelchair assist</div></div><div class="sc" style="font-size:46px;font-weight:800;color:#d97706">61</div></div>
+ <div class="st" style="margin-top:8px;font-size:15px;font-weight:700;color:#b45309">Sentiment dropping · long silence</div></div>
+ <div style="display:flex;gap:10px;margin:14px 22px"><div class="bL" style="flex:1;height:52px;border-radius:10px;border:2px solid #d1d5db;display:grid;place-items:center;font-weight:800;font-size:16px">Listen</div><div class="bW" style="flex:1;height:52px;border-radius:10px;border:2px solid #F26422;color:#F26422;display:grid;place-items:center;font-weight:800;font-size:16px">Whisper</div><div style="flex:1;height:52px;border-radius:10px;border:2px solid #d1d5db;display:grid;place-items:center;font-weight:800;font-size:16px">Barge</div></div>
+ <div class="wm" style="margin:0 22px;font-size:16px;color:#374151;font-style:italic"></div>`,side,'inset:0');
+const agents=el('div','a','',ops,'left:20px;top:634px;width:1308px;height:150px;background:#fff;border-radius:16px;overflow:hidden');
+agents.innerHTML='<div class="k" style="padding:16px 22px">AGENTS</div><div class="ag" style="position:absolute;left:22px;right:22px;top:52px;display:flex;flex-wrap:wrap;gap:8px"></div>';
+const agWrap=agents.querySelector('.ag');const agDots=Array.from({length:76},(_,i)=>el('div',null,'',agWrap,`width:22px;height:22px;border-radius:6px;background:${i<46?'#10b981':'#e5e7eb'}`));
+const cur2=el('div','cur',CURSOR,K2.disp,'left:0;top:0');
+const clk2=el('div','a',`<div class="ct" style="font-size:15px;letter-spacing:.3em;color:rgba(255,255,255,.55)">KITCHEN · 2:12 AM</div>`,K2.s,'left:140px;top:110px;z-index:10');
+
+// ======================= SCENE: BOARD CALL =======================
+function board(good){
+ const s=el('div','scene');s.style.background='#0b0c0f';const cam=el('div','cam',null,s);
+ const app=el('div','a',null,cam,'left:60px;top:84px;width:1800px;height:912px;border-radius:18px;background:#15171c;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)');
+ el('div','a',`<span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;margin-right:10px"></span>SkyLine Air · Board — Overnight Operations Review <span style="color:#6b7280;margin-left:14px">9:00 AM</span>`,app,'left:24px;top:18px;font-size:18px;font-weight:600;color:#d1d5db');
+ const share=el('div','a',null,app,`left:24px;top:62px;width:1270px;height:760px;border-radius:14px;background:${good?'#ffffff':'#ffffff'};color:#111827;overflow:hidden`);
+ share.innerHTML=`<div style="padding:34px 40px 0"><div style="font-size:15px;font-weight:700;letter-spacing:.12em;color:#6b7280">SHARED BY DANA REYES</div><div style="font-size:44px;font-weight:800;margin-top:6px">Overnight report · Winter storm</div></div>`;
+ const M=good?[['ABANDON RATE','4%','#059669','#ecfdf5'],['AVG WAIT','0:18','#059669','#ecfdf5'],['CSAT','4.6','#059669','#ecfdf5'],['CALLS AVOIDED','5,900','#c2410c','#fff1e8']]
+            :[['ABANDON RATE','44%','#dc2626','#fef2f2'],['AVG WAIT','38:12','#dc2626','#fef2f2'],['CSAT','2.1','#dc2626','#fef2f2'],['COMPLAINTS','+640%','#dc2626','#fef2f2']];
+ const mets=M.map((m,i)=>el('div','metric',`<div class="l" style="color:${m[2]}">${m[0]}</div><div class="v" style="color:${m[2]}">${m[1]}</div>`,share,`left:${40+(i%2)*600}px;top:${170+Math.floor(i/2)*230}px;width:570px;height:200px;background:${m[3]}`));
+ el('div','a',good?'Illustrative data · fictional company':'Illustrative data · fictional company',share,'right:30px;bottom:18px;font-size:13px;color:#9ca3af');
+ const P5=[['Mark Ellison','CEO','ME','#7c3aed'],['Priya Shah','CFO','PS','#0891b2'],['Tom Brooks','COO','TB','#16a34a'],['Lena Ortiz','VP Marketing','LO','#db2777'],['Dana Reyes','You','DR','#F26422']];
+ const tiles=P5.map((p,i)=>{const tl=el('div','tile',`<div class="av" style="background:${p[3]}">${p[2]}</div><div class="nm">${p[0]} <span style="opacity:.6">· ${p[1]}</span></div><div class="ring" style="position:absolute;inset:0;border-radius:14px;border:4px solid #22c55e;opacity:0"></div>`,app,`left:1314px;top:${62+i*152}px;width:462px;height:140px`);return tl});
+ el('div','a',[0,1,2,3].map(i=>`<span style="display:inline-block;width:56px;height:56px;border-radius:50%;background:${i==3?'#dc2626':'#2a2d34'};margin:0 8px"></span>`).join(''),app,'left:0;right:0;bottom:16px;text-align:center');
+ const reacts=el('div','a',null,app,'left:1314px;top:0;width:462px;height:900px;pointer-events:none');
+ return {s,cam,app,share,mets,tiles,reacts};
+}
+const B1=board(false),B2=board(true);
+const R=['👏','😂','🙌','👏','😂'];const reactEls=R.map((r,i)=>el('div','a',r,B2.reacts,`font-size:54px;left:${40+hash(i+900)*360}px;top:760px;opacity:0`));
+
+// ======================= FILM LAYERS =======================
+const grade=el('div',null,null,stage);grade.id='grade';
+const flash=el('div',null,null,stage);flash.id='flash';
+const g=el('canvas',null,null,stage);g.id='grain';g.width=320;g.height=320;{const c=g.getContext('2d'),im=c.createImageData(320,320);for(let i=0;i<im.data.length;i+=4){const v=Math.random()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}c.putImageData(im,0,0)}g.style.width='2080px';g.style.height='1240px';
+el('div',null,null,stage).id='vig';
+const vhs=el('canvas',null,null,stage);vhs.id='vhs';vhs.width=480;vhs.height=270;vhs.style.width='1920px';vhs.style.height='1080px';const vx=vhs.getContext('2d');
+const black=el('div',null,null,stage);black.id='black';
+const sup1=el('div','sup','Every ops leader has lived this night.',stage,'top:500px;font-size:54px');
+const sup2=el('div','sup','Same storm. <span style="color:#F26422;font-weight:500">Different stack.</span>',stage,'top:500px;font-size:62px');
+const endL=el('div','sup','Built for the nights nobody plans for.',stage,'top:330px;font-size:58px');
+const logo=el('div','sup','Hodu<span style="color:#F26422">Soft</span>',stage,'top:450px;font-family:Anton;font-size:150px;font-weight:400;letter-spacing:.005em');
+const prod=el('div','sup','CONTACT CENTER · IP PBX · VOICE & SMS BROADCASTING',stage,'top:640px;font-family:Mono;font-size:24px;letter-spacing:.18em;color:#9ca3af;font-weight:400');
+const cta=el('div','sup',`<span style="display:inline-block;border:2px solid #F26422;border-radius:999px;padding:16px 34px;font-size:26px;font-weight:600;letter-spacing:.02em">See how it handles your worst night &nbsp;→&nbsp; <b style="color:#F26422">Book a demo · hodusoft.com</b></span>`,stage,'top:720px');
+el('div','bar',null,stage,'top:0');el('div','bar',null,stage,'bottom:0');
+
+// ======================= DRAW =======================
+const SCENES=[NS1.s,K1.s,B1.s,NS2.s,K2.s,B2.s];
+function only(s){SCENES.forEach(x=>x.style.display=x===s?'block':'none')}
+function lightning(t,times){let f=0;times.forEach(a=>{const d=t-a;if(d>=0&&d<.5)f=Math.max(f,(d<.06?1:d<.12?.3:d<.2?.8:0)*Math.exp(-d*4))});return f}
+function drawNight(ns,t,lt,dur,calm){
+ only(ns.s);const k=P(lt,0,dur,'sine');
+ ns.cam.style.transform=`translate(${nz(t,1)*4}px,${nz(t,2)*3+mix(0,calm?120:150,k)}px) scale(${mix(calm?1.05:.95,calm?1.45:1.55,k)})`;
+ ns.wrap.style.transform=`perspective(1600px) rotateX(${mix(calm?38:52,calm?22:20,k)}deg) rotateZ(${mix(-10,-4,k)}deg) translateY(${mix(40,-10,k)}px)`;
+ const lf=lightning(t,calm?[]:[0.55,5.4]);drawRain(ns.rw,t,lf);
+ const N=ns.notifs;const times=calm?[T.nb1,T.nb2]:T.n1;let wake=0;
+ N.forEach((n,i)=>{const a=P(t,times[i],.45,'outExpo');const nIn=t>=times[i];
+  // newest on top: each card pushes previous down
+  const later=times.filter((x,j)=>j>i&&t>=x).length;const y=300+later*(calm?150:118)*1;
+  n.style.top=y+'px';n.style.opacity=nIn?a:0;n.style.transform=`translateY(${(1-a)*-50}px) scale(${.94+.06*a})`;if(nIn)wake=1});
+ const sp=wake?(.6+.4*Math.max(0,...times.map(x=>t>=x?Math.exp(-(t-x)*3):0))):.0;
+ ns.lock.style.opacity=wake?1:.0;ns.spill.style.opacity=sp*.9;ns.flare.style.opacity=wake?(.25+.5*Math.max(0,...times.map(x=>t>=x?Math.exp(-(t-x)*5):0))):0;
+ flash.style.opacity=lf*.5;
+}
+function lidClose(K,t){const c=P(t,T.close,.6,'inOut');K.lid.style.transform=`perspective(2000px) rotateX(${c*88}deg)`;K.glow.style.opacity=1-c;K.disp.style.filter=`brightness(${1-c*.8})`}
+function drawK1(t){only(K1.s);drawRain(K1.rw,t,lightning(t,[13.2]));flash.style.opacity=lightning(t,[13.2])*.35;
+ K1.lid.style.transform='none';K1.mug.querySelector('.stm').style.opacity=0;
+ // window stacking / visibility per shot
+ let shot=t<T.sh2b?'a':t<T.sh2c?'b':t<T.sh2d?'c':t<T.sh2e?'d':'e';
+ const q=Math.round(mix(412,588,P(t,T.s2,12,'lin')));wb.querySelector('.q1').textContent=q;
+ wb.style.zIndex=shot=='e'||shot=='a'?5:1;pbx.style.zIndex=shot=='b'?6:2;dial.style.zIndex=shot=='c'?7:3;soc.style.zIndex=shot=='d'?8:1;
+ soc.style.display=shot=='d'?'block':'none';pbx.style.display=(shot=='a'||shot=='b')?'block':'none';dial.style.display=(shot=='c'||shot=='d'||shot=='e')?'block':'none';
+ const mo=P(t,T.modal,.35,'outBack');modal.style.opacity=t>T.modal?1:0;modal.style.transform=`scale(${.9+.1*mo})`;
+ pbx.querySelector('.sub').style.background=(t>T.click1&&t<T.click1+.12)?'#312e81':'#4f46e5';
+ // dialer
+ const dt=Math.max(0,t-T.ivr);dial.querySelector('.dt').textContent='00:'+String(Math.floor(dt)).padStart(2,'0');
+ const talk=t>T.ivr+.2&&t<T.ivr+D.ivr;let d='';for(let x=0;x<=380;x+=5){const y=60+(talk?Math.sin(x*.07+t*12)*Math.sin(x*.02+t*3)*34:0);d+=(x?'L':'M')+x+' '+y.toFixed(1)}dial.querySelector('.dw').setAttribute('d',d);
+ const IW='All of our agents are currently assisting other customers. Your estimated wait time is… forty-seven minutes.'.split(' ');const nw=Math.floor(cl((t-T.ivr)/(D.ivr*.95))*IW.length);dial.querySelector('.cap').textContent=IW.slice(0,nw).join(' ');
+ soc.querySelector('.feed').style.transform=`translateY(${-Math.max(0,t-T.sh2d)*70}px)`;
+ clk.style.opacity=shot=='e'?P(t,T.sh2e,.4):0;
+ // cursor
+ const CP=[[T.s2,[300,300]],[T.click1-.05,[610,370]],[T.sh2c-.1,[1080,400]],[T.sh2d+.3,[430,420]],[T.sh2e,[360,200]]];let cx=300,cy=300;
+ for(let i=1;i<CP.length;i++){const a=P(t,CP[i][0]-.5,.5,'inOut');if(t>=CP[i][0]-.5){cx=mix(CP[i-1][1][0],CP[i][1][0],a);cy=mix(CP[i-1][1][1],CP[i][1][1],a)}}
+ cur1.style.transform=`translate(${cx}px,${cy}px)`;
+ // cameras
+ const hh=[nz(t,7)*5,nz(t,8)*4];let cam;
+ if(shot=='a'){const k=P(t,T.s2,T.sh2b-T.s2,'sine');cam=`translate(${hh[0]}px,${hh[1]}px) scale(${mix(.96,1.04,k)})`}
+ else if(shot=='b'){const k=P(t,T.sh2b,2.4,'sine');const s_=mix(1.55,1.75,k);cam=`translate(${hh[0]-(1186-960)*s_}px,${hh[1]-(536-540)*s_}px) scale(${s_})`}
+ else if(shot=='c'){const k=P(t,T.sh2c,3,'sine');const s_=mix(1.7,1.9,k);cam=`translate(${hh[0]-(1366-960)*s_}px,${hh[1]-(420-540)*s_}px) scale(${s_})`}
+ else if(shot=='d'){const k=P(t,T.sh2d,2,'sine');const s_=mix(1.5,1.62,k);cam=`translate(${hh[0]-(716-960)*s_}px,${hh[1]-(556-540)*s_}px) scale(${s_})`}
+ else {const k=P(t,T.sh2e,2,'sine');cam=`translate(${hh[0]+mix(0,120,k)}px,${hh[1]+mix(0,60,k)}px) scale(${mix(1.0,1.15,k)})`}
+ K1.cam.style.transform=cam;
+}
+function drawK2(t){only(K2.s);drawRain(K2.rw,t,0);flash.style.opacity=0;
+ let shot=t<T.sh6b?'a':t<T.sh6c?'b':t<T.sh6d?'c':'d';
+ const q=Math.round(t<T.s6?143:mix(143,12,P(t,T.s6+.4,9,'out3')));kpis[0].querySelector('.v').textContent=q;
+ kpis[2].querySelector('.v').textContent=fmt(mix(0,5900,P(t,T.s6+.2,3.2,'out3')));kpis[2].querySelector('.v').style.color='#c2410c';
+ const ag=46+Math.round(30*P(t,T.prov,2.0,'lin'));kpis[3].querySelector('.v').textContent=ag;agDots.forEach((d,i)=>d.style.background=i<ag?'#10b981':'#e5e7eb');
+ sideA.querySelector('.rb').textContent=fmt(mix(0,5900,P(t,T.s6+.2,3.2,'out3')));
+ // chart: volume spikes then falls after broadcast marker
+ let dA='',dL='';const pts=[];for(let i=0;i<=60;i++){const x=i*13;let v=40+i*3.2;if(i>30)v=136*Math.exp(-(i-30)/9)+22;v+=Math.sin(i*1.7)*4;const reveal=cl((t-T.s6)/1.2);if(i/60>reveal*1.0+.05)break;pts.push([x,290-v*1.9])}
+ pts.forEach((p,i)=>{dL+=(i?'L':'M')+p[0]+' '+p[1].toFixed(1)});if(pts.length){dA=dL+`L${pts[pts.length-1][0]} 290 L0 290Z`}
+ chart.querySelector('.ln').setAttribute('d',dL);chart.querySelector('.ar').setAttribute('d',dA);const mx=30*13;const mk=chart.querySelector('.mk');mk.setAttribute('x1',mx);mk.setAttribute('x2',mx);chart.querySelector('.mt').setAttribute('x',mx+8);chart.querySelector('.mt').setAttribute('y',30);
+ sideA.style.display=shot=='a'?'block':'none';sideB.style.display=shot=='b'?'block':'none';sideC.style.display=(shot=='c'||shot=='d')?'block':'none';
+ sideA.querySelector('.addb').style.background=(t>T.addClick&&t<T.addClick+.15)?'#c2410c':'#F26422';
+ // provisioning
+ const pk=P(t,T.prov,2.0,'lin');const n=Math.round(30*pk);[...dotsG.children].forEach((c,i)=>{const on=i<n;c.setAttribute('r',on?6+3*Math.exp(-(t-T.prov-i*2/30)*6):0)});
+ sideB.querySelector('.pv').textContent=n<30?`Provisioning extensions… ${n}/30`:'30/30 agents online · 1m 32s';sideB.querySelector('.pb').style.width=(pk*100)+'%';
+ // quality
+ const fixed=t>T.fix;const sc=Math.round(fixed?mix(61,92,P(t,T.fix,.6)):61);const jt=sideC.querySelector('.jt');
+ sideC.querySelector('.sc').textContent=sc;sideC.querySelector('.sc').style.color=fixed?'#059669':'#d97706';jt.style.borderColor=fixed?'#10b981':'#f59e0b';jt.style.background=fixed?'#ecfdf5':'#fffbeb';
+ const st=sideC.querySelector('.st');st.textContent=t>T.emma?'✓ Resolved · rebooked 6:10 AM · lounge access':fixed?'Sentiment recovering':'Sentiment dropping · long silence';st.style.color=fixed?'#047857':'#b45309';
+ sideC.querySelector('.bW').style.background=t>T.whClick?'#F26422':'transparent';sideC.querySelector('.bW').style.color=t>T.whClick?'#fff':'#F26422';
+ const WM='“Offer her lounge access.”';sideC.querySelector('.wm').textContent=t>T.wh?'Whisper to Jordan: '+WM.slice(0,Math.floor(cl((t-T.wh)/D.whisper)*WM.length)):'';
+ clk2.querySelector('.ct').textContent=shot=='d'?'KITCHEN · 2:31 AM':'KITCHEN · 2:12 AM';clk2.style.opacity=(shot=='a'&&t<T.s6+2.5)||shot=='d'?1:0;
+ // cursor
+ const CP=[[T.s6,[700,420]],[T.addClick-.05,[1080,560]],[T.whClick-.05,[1030,470]],[T.sh6d,[900,300]]];let cx=700,cy=420;
+ for(let i=1;i<CP.length;i++){const a=P(t,CP[i][0]-.5,.5,'inOut');if(t>=CP[i][0]-.5){cx=mix(CP[i-1][1][0],CP[i][1][0],a);cy=mix(CP[i-1][1][1],CP[i][1][1],a)}}
+ cur2.style.transform=`translate(${cx}px,${cy}px)`;
+ // steam alive in act 2
+ K2.steam.forEach((p,i)=>{let d='';for(let y=220;y>=0;y-=10){const x=55+i*30+Math.sin(y*.035+t*(1.4+i*.5)+i)*18*(1-y/220+.3);d+=(y==220?'M':'L')+x.toFixed(1)+' '+y}p.setAttribute('d',d)});
+ lidClose(K2,t);
+ const hh=[nz(t,9)*4,nz(t,10)*3];let cam;
+ if(shot=='a'){const k=P(t,T.s6,T.sh6b-T.s6,'sine');cam=`translate(${hh[0]}px,${hh[1]}px) scale(${mix(1.0,1.1,k)})`}
+ else if(shot=='b'){const k=P(t,T.sh6b,3.6,'sine');cam=`translate(${hh[0]-430}px,${hh[1]+60}px) scale(${mix(1.6,1.72,k)})`}
+ else if(shot=='c'){const k=P(t,T.sh6c,4.2,'sine');cam=`translate(${hh[0]-430}px,${hh[1]+40}px) scale(${mix(1.7,1.85,k)})`}
+ else {const k=P(t,T.sh6d,2.6,'sine');cam=`translate(${hh[0]}px,${hh[1]+mix(0,-40,k)}px) scale(${mix(1.05,.92,k)})`}
+ K2.cam.style.transform=cam;
+}
+function drawBoard(B,t,s0,good){only(B.s);flash.style.opacity=0;const lt=t-s0;
+ const join=P(lt,0,.6,'outExpo');B.app.style.opacity=join;
+ B.mets.forEach((m,i)=>{const a=P(lt,.4+i*.12,.5,'outExpo');m.style.opacity=a;m.style.transform=`translateY(${(1-a)*20}px)`});
+ const speakers=good?[[T.ceo2,D.ceo2,0],[T.dana,D.dana,4]]:[[T.ceo1,D.ceo1,0]];
+ B.tiles.forEach((tl,i)=>{let on=0;speakers.forEach(([a,d,idx])=>{if(idx===i&&t>a&&t<a+d+.2)on=1});tl.querySelector('.ring').style.opacity=on});
+ let cam;const hh=[nz(t,11)*3,nz(t,12)*3];
+ if(!good){ // slow creep into the red numbers, then Dana's tile in the silence
+  if(t<T.ceo1+D.ceo1){const k=P(t,s0,T.ceo1+D.ceo1-s0,'sine');cam=`translate(${hh[0]+mix(0,120,k)}px,${hh[1]+mix(0,30,k)}px) scale(${mix(1.0,1.12,k)})`}
+  else{const k=P(t,T.ceo1+D.ceo1,3.2,'sine');cam=`translate(${hh[0]+mix(120,-900,k)}px,${hh[1]+mix(30,-620,k)}px) scale(${mix(1.12,2.1,k)})`}
+ }else{
+  if(t<T.dana){const k=P(t,s0,T.dana-s0,'sine');cam=`translate(${hh[0]+mix(0,100,k)}px,${hh[1]}px) scale(${mix(1.0,1.08,k)})`}
+  else{const k=P(t,T.dana,1.4,'sine');cam=`translate(${hh[0]+mix(100,-700,k)}px,${hh[1]+mix(0,-560,k)}px) scale(${mix(1.08,1.8,k)})`}
+  reactEls.forEach((r,i)=>{const a=cl((t-T.react-i*.15)/1.6);r.style.opacity=a>0&&a<1?Math.sin(a*Math.PI):0;r.style.transform=`translateY(${-a*520}px) scale(${.8+.4*a})`});
+ }
+ B.cam.style.transform=cam;
+}
+function drawAt(t){
+ if(t<T.s2)drawNight(NS1,t,t,T.s2,false);
+ else if(t<T.s3)drawK1(t);
+ else if(t<T.s4)drawBoard(B1,t,T.s3,false);
+ else if(t<T.s5){drawNight(NS2,t,0,1,true)}
+ else if(t<T.s6)drawNight(NS2,t,t-T.s5,T.s6-T.s5,true);
+ else if(t<T.s7)drawK2(t);
+ else drawBoard(B2,t,T.s7,true);
+}
+function drawVHS(t,amt){vhs.style.display=amt>0?'block':'none';if(!amt)return;vx.clearRect(0,0,480,270);
+ for(let i=0;i<40;i++){const y=(hash(i+Math.floor(t*30))*270)|0;vx.fillStyle=`rgba(255,255,255,${.05+hash(i*3+Math.floor(t*30))*.15*amt})`;vx.fillRect(0,y,480,1+hash(i)*2)}
+ const by=(t*400)%270;vx.fillStyle=`rgba(255,255,255,${.15*amt})`;vx.fillRect(0,by,480,14)}
+function render(t){
+ g.style.transform=`translate(${-Math.floor(hash(Math.floor(t*24))*80)}px,${-Math.floor(hash(Math.floor(t*24)+5)*80)}px)`;
+ let st=t;let rew=0;
+ if(t>=T.s4&&t<T.s5){ // rewind montage: race backwards through the night
+  const lt=t-T.s4;const k=cl(lt/1.5);st=T.s4-.01-Math.pow(k,1.4)*(T.s4-1.2);rew=1-P(lt,1.5,.3);
+  if(k>=1){st=1.2}
+  stage.querySelectorAll('.cam').forEach(c=>{c.style.filter=`saturate(.4) contrast(1.25) blur(${k<1?1:0}px)`});
+ }else stage.querySelectorAll('.cam').forEach(c=>{c.style.filter='none'});
+ if(t>=T.s8){only(null);}else drawAt(st);
+ if(rew){[...SCENES].forEach(s=>{if(s.style.display==='block')s.style.transform=`skewX(${(hash(Math.floor(t*30))-.5)*6*rew}deg) translateX(${(hash(Math.floor(t*30)+1)-.5)*30*rew}px)`})}else SCENES.forEach(s=>s.style.transform='none');
+ drawVHS(t,rew);
+ // grade by act
+ const act1=t<T.s4,act2=t>=T.s5&&t<T.s7;
+ grade.style.background=t>=T.s3&&t<T.s4||t>=T.s7?'rgba(255,240,220,.08)':act2?'rgba(255,150,70,.30)':'rgba(40,110,190,.40)';
+ // blacks & supers
+ let bo=1-P(t,0,.9);
+ if(t>T.sup1-.6&&t<T.s4)bo=Math.max(bo,P(t,T.sup1-.6,.8)*.82);
+ if(t>=T.s4+1.45&&t<T.s5+.5)bo=Math.max(bo,t<T.s5?P(t,T.s4+1.45,.25):1-P(t,T.s5,.5));
+ if(t>=T.s8-.35)bo=Math.max(bo,P(t,T.s8-.35,.35));
+ black.style.opacity=bo;
+ const s1=P(t,T.sup1,.8)*(1-P(t,T.s4-.3,.3));sup1.style.opacity=s1;sup1.style.letterSpacing=(.02+.03*P(t,T.sup1,3,'lin'))+'em';
+ const s2=P(t,T.sup2,.5)*(1-P(t,T.s5-.05,.3));sup2.style.opacity=s2;
+ const e1=P(t,T.narr-.1,.9);endL.style.opacity=e1;endL.style.transform=`translateY(${(1-e1)*16}px)`;
+ const lg=P(t,T.logo,.8,'outExpo');logo.style.opacity=lg;logo.style.transform=`scale(${1.06-.06*lg})`;
+ prod.style.opacity=P(t,T.logo+.4,.6);cta.style.opacity=P(t,T.cta,.7);cta.style.transform=`translateY(${(1-P(t,T.cta,.7))*14}px)`;
+ lower.style.opacity=P(t,T.lower,.6)*(1-P(t,T.s2-.4,.3));
+}
+window.render=render;window.ready=document.fonts.ready.then(()=>{render(0);return true});
+</script></body></html>
