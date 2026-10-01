@@ -1,11 +1,11 @@
 import numpy as np, soundfile as sf, json
 from scipy.signal import butter, sosfilt, resample_poly, fftconvolve
-SR = 44100; DUR = 36.5; N = int(SR * DUR)
+SR = 44100; DUR = 37.75; N = int(SR * DUR)
 rng = np.random.default_rng(21)
 DU = json.load(open('durs.json'))
-T = dict(hold=.6, s2=4.3, menu=4.35, s3=8.35, x1=8.55, x2=9.45, x3=10.35, s4=11.55, rep=11.65, sam1=13.25, rep2=14.35, sam2=14.5,
-         s5=16.1, snap=16.2, land=17.05, narr=17.6, s6=19.7, rail=20.3, meet=20.6, s7=21.7, pick=22.0, fly=22.4, arrive=23.7,
-         maya=23.9, res=26.5, s7b=27.3, s8=29.6, e1=29.8, e2=31.2, logo=32.6, cta=33.4)
+T = dict(hold=0.6, s2=4.3, menu=4.35, s3=9.6, x1=9.8, x2=10.7, x3=11.6, s4=12.8, rep=12.9, sam1=14.5, rep2=15.6, sam2=15.75,
+         s5=17.35, snap=17.45, land=18.3, narr=18.85, s6=20.95, rail=21.55, meet=21.85, s7=22.95, pick=23.25, fly=23.65, arrive=24.95,
+         maya=25.15, res=27.75, s7b=28.55, s8=30.85, e1=31.05, e2=32.45, logo=33.85, cta=34.65, p1=4.45, p2=5.65, p3=6.9, jump=8.25, lv2=8.9)
 t = np.arange(N) / SR
 z = lambda: np.zeros(N)
 tt = lambda d: np.arange(int(d * SR)) / SR
@@ -62,11 +62,12 @@ add(fx, phone(load('vo/hold.wav', .6)), T['hold'])
 add(fx, sparkle(.6, .05), 3.0)                                  # cobweb sparkle
 add(fx, sweep(500, 260, .5, .08), 1.95)                          # yawn
 # IVR maze
-add(fx, phone(load('vo/menu.wav', .6)), T['menu'])
-for lv in range(4):
-    s0 = T['s2'] + [0, 1.05, 2.1, 3.15][lv]
-    for i in range(3): add(fx, pop(500 + i * 120, .12), s0 + i * .05)
-    add(fx, boing(260, .4, .2), s0 + .35); add(fx, whoosh(.35, .2, 400, 6000), s0 + .7)
+for f, k in (('m1', 'p1'), ('m2', 'p2'), ('m3', 'p3')): add(fx, phone(load(f'vo/{f}.wav', .6)), T[k])
+for i in range(3): add(fx, pop(500 + i * 120, .12), T['s2'] + i * .06)
+for i, k in enumerate(('p1', 'p2', 'p3')): add(fx, ping(79 + i * 4, .1, .6), T[k])          # each door lights
+add(fx, boing(260, .4, .2), T['jump']); add(fx, whoosh(.35, .2, 400, 6000), T['jump'] + .35)
+for i in range(3): add(fx, pop(500 + i * 120, .12), T['lv2'] + i * .06)
+add(fx, sweep(420, 300, .5, .06), T['lv2'] + .3)                                              # little sigh
 # transfer ping-pong
 for i, tl in enumerate([T['x1'] - .25, T['x2'] - .25, T['x3'] - .25, T['x3'] + .8]):
     add(fx, boing(300 + i * 40, .35, .18), tl); add(fx, ping(84 + i * 2, .14), tl + .42)
@@ -102,7 +103,7 @@ add(vo, load('vo/narr.wav', .78), T['narr']); add(vo, load('vo/maya.wav', .72), 
 add(vo, load('vo/e1.wav', .78), T['e1']); add(vo, load('vo/e2.wav', .78), T['e2']); add(vo, load('vo/cta.wav', .78), T['cta'])
 dialog = fx * 0  # character lines are already in fx; build a ducking key from all speech
 spk = z()
-for f, t0, g in [('hold', T['hold'], .6), ('menu', T['menu'], .6), ('xfer1', T['x1'], .55), ('xfer2', T['x2'], .55), ('xfer3', T['x3'], .55), ('repeat', T['rep'], .55),
+for f, t0, g in [('hold', T['hold'], .6), ('m1', T['p1'], .6), ('m2', T['p2'], .6), ('m3', T['p3'], .6), ('xfer1', T['x1'], .55), ('xfer2', T['x2'], .55), ('xfer3', T['x3'], .55), ('repeat', T['rep'], .55),
                  ('sam1', T['sam1'], .55), ('sam2', T['sam2'], .62)]: add(spk, load(f'vo/{f}.wav', g), t0)
 spk += vo
 # ---------------- MUSIC ----------------

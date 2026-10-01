@@ -23,7 +23,7 @@ body{font-family:J,sans-serif;color:var(--navy);-webkit-font-smoothing:antialias
 <body><div id="stage"></div>
 <script>
 const DU=__DURS__;
-const T={hold:.6,s2:4.3,menu:4.35,s3:8.35,x1:8.55,x2:9.45,x3:10.35,s4:11.55,rep:11.65,sam1:13.25,rep2:14.35,sam2:14.5,s5:16.1,snap:16.2,land:17.05,narr:17.6,s6:19.7,rail:20.3,meet:20.6,s7:21.7,pick:22.0,fly:22.4,arrive:23.7,maya:23.9,res:26.5,s7b:27.3,s8:29.6,e1:29.8,e2:31.2,logo:32.6,cta:33.4,end:36.5};
+const T={hold:0.6,s2:4.3,menu:4.35,s3:9.6,x1:9.8,x2:10.7,x3:11.6,s4:12.8,rep:12.9,sam1:14.5,rep2:15.6,sam2:15.75,s5:17.35,snap:17.45,land:18.3,narr:18.85,s6:20.95,rail:21.55,meet:21.85,s7:22.95,pick:23.25,fly:23.65,arrive:24.95,maya:25.15,res:27.75,s7b:28.55,s8:30.85,e1:31.05,e2:32.45,logo:33.85,cta:34.65,end:37.75,p1:4.45,p2:5.65,p3:6.9,jump:8.25,lv2:8.9};
 const stage=document.getElementById('stage');
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),mix=(a,b,k)=>a+(b-a)*k;
 const E={out3:x=>1-Math.pow(1-x,3),outExpo:x=>x>=1?1:1-Math.pow(2,-10*x),inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,in3:x=>x*x*x,lin:x=>x,
@@ -172,15 +172,27 @@ function render(t){
   face(sam1,{blink:t>2.4?(t>3.2?.45:blinkAt(t,[1.5])):blinkAt(t,[1.5]),px:t<1.8?8:Math.sin(t*2)*4,py:t>3.2?6:0,mouth:t>1.9&&t<2.5?'o':t>3.2?'flat':'frown',sweat:P(t,2.6,.3),web:P(t,3.0,.5)});
   S(callerChip,sx,560,P(t,.9,.4,'outBack'));
  }
- // ---------- S2 IVR maze ----------
- else if(t<T.s3){only(s2);const lt=t-T.s2;capIn(cap2,t,T.s2+.1,T.s3-.2);
-  const LVt=[0,1.05,2.1,3.15];let lv=0;LVt.forEach((a,i)=>{if(lt>=a)lv=i});const lk=lt-LVt[lv];
-  const enterDoor=lk>.62; const zk=P(lk,.72,.3,'in3');
-  c2.style.transform=`translate(${-(1220-960)*zk*1.4}px,${-(535-540)*zk*1.4}px) scale(${1+zk*1.4}) `;c2.style.opacity=1-zk*.6;
-  doors.forEach((d,i)=>{d.querySelector('.n').textContent=LV[lv][i][0];d.querySelector('.l').textContent=LV[lv][i][1];const a=P(lk,.0+i*.05,.3,'outBack');d.style.transform=`scale(${a})`;d.style.background=(i==2&&lk>.4)?'#FFF1E8':'#fff';d.style.color=i==2&&lk>.4?'var(--or)':'var(--navy)'});
-  const jk=P(lk,.35,.4,'inOut');const sx=mix(960,1220,jk),sy=860+hop(jk,160)-jk*180;S(sam2,sx,sy,1-jk*.35,jk*20);
-  face(sam2,{blink:blinkAt(t,[4.6]),px:6,mouth:lv>1?'frown':'flat',sweat:lv>1?1:0,brow:lv>2?1:0});
-  lvChip.textContent=`Menu level ${lv+1}`;lvChip.style.opacity=lt>.3?1:0;
+ // ---------- S2 IVR maze (synced to "press 1 / press 2 / press 3") ----------
+ else if(t<T.s3){only(s2);
+  const lv=t<T.lv2?0:1;const lit=lv?-1:(t>=T.p3?2:t>=T.p2?1:t>=T.p1?0:-1);
+  const CAP=['Press 1 for… <em>sales.</em>','Press 2 for… <em>support.</em>','Press 3 for… <em>more options.</em>'];
+  const capT=lv?T.lv2+.05:[T.p1,T.p2,T.p3][Math.max(0,lit)];
+  cap2.innerHTML=lv?'…and <em>more options.</em>':CAP[Math.max(0,lit)];capIn(cap2,t,lit<0&&!lv?99:capT,T.s3-.2);
+  const zk=lv?0:P(t,T.jump+.35,.3,'in3');
+  c2.style.transform=`translate(${-(1370-960)*zk*1.4}px,${-(535-540)*zk*1.4}px) scale(${1+zk*1.4})`;c2.style.opacity=1-zk*.6;
+  const t0=lv?T.lv2:T.s2;
+  doors.forEach((d,i)=>{d.querySelector('.n').textContent=LV[lv][i][0];d.querySelector('.l').textContent=LV[lv][i][1];
+   const a=P(t,t0+i*.06,.35,'outBack');const on=(i===lit);const pulse=on?1+.05*P(t,[T.p1,T.p2,T.p3][i],.12)*(1-P(t,[T.p1,T.p2,T.p3][i]+.12,.25)):1;
+   d.style.transform=`scale(${a*pulse})`;d.style.background=on?'#FFF1E8':'#fff';d.style.color=on?'var(--or)':'var(--navy)';
+   d.style.boxShadow=on?'0 0 0 6px rgba(242,100,34,.35),0 30px 60px -28px rgba(11,27,63,.35)':'';});
+  // Sam watches each door light up, then dives into "more options"
+  const DX=[570,970,1370];let sx=970,sy=860,sc=1,rot=0;
+  if(!lv){if(lit>=0){const hk=P(t,[T.p1,T.p2,T.p3][lit],.3);sy=860+hop(hk,40)}
+   const jk=P(t,T.jump,.4,'inOut');sx=mix(970,1370,jk);sy=sy+hop(jk,160)-jk*240;sc=1-jk*.35;rot=jk*20}
+  else{const a=P(t,T.lv2+.1,.35,'outBack');sc=a;sy=860}
+  S(sam2,sx,sy,sc,rot);
+  face(sam2,{blink:blinkAt(t,[4.9,6.3]),px:lv?0:(lit<0?0:(DX[lit]-970)/40),py:lv?2:-2,mouth:lv?'flat':(lit==2?'o':'smile'),sweat:lv?1:0,brow:lv?.6:0});
+  lvChip.textContent=`Menu level ${lv+1}`;lvChip.style.opacity=t>T.s2+.3?1:0;
  }
  // ---------- S3 ping-pong ----------
  else if(t<T.s4){only(s3);enter(s3,t,T.s3);capIn(cap3,t,T.s3+.1,T.s4-.2);
@@ -192,7 +204,7 @@ function render(t){
   const TIMES=[T.x1,T.x2,T.x3];const WHO=[0,2,1];
   agSb.forEach((b,i)=>{const j=WHO.indexOf(i);const t0=TIMES[j];b.style.left=(AG[i][3]-60)+'px';b.style.top=(AG[i][4]-320)+'px';b.textContent=['Let me transfer you.','Let me transfer you!','Transferring you now.'][j];sbIn(b,t,t0,t0+1.0)});
   agents.forEach((a,i)=>{const k=P(t,T.s3+i*.08,.4,'outBack');a.style.transform=`scale(${k})`});
-  xChip.textContent=`Transferred ×${Math.max(0,hi-1)+ (hi>=4?0:0)}`;xChip.style.opacity=hi>=1?1:0;
+  const xc=[T.x1,T.x2,T.x3,T.x3+1.2].filter(x=>t>x).length;xChip.textContent=`Transferred ×${xc}`;xChip.style.opacity=xc?1:0;
  }
  // ---------- S4 repeat ----------
  else if(t<T.s5){only(s4);enter(s4,t,T.s4);capIn(cap4,t,T.s4+.1,T.s5-.15);
