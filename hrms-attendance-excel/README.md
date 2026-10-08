@@ -1,7 +1,7 @@
 # HRMS – Attendance Timeline Excel (select employees + upload)
 
-**Download:** choose From/To dates, then either **All employees** or **Select employees**. The picker has
-search, a **Select all** checkbox and a checkbox per employee. You get one `.xlsx` with an **Instructions**
+**Download:** choose From/To dates and pick employees from the **Employees dropdown**. It starts on
+**All employees**; open it to untick that and tick specific employees, with search. You get one `.xlsx` with an **Instructions**
 sheet plus **one sheet per employee**, one row per day.
 
 **Upload:** an admin edits that same file and uploads it back. Attendance rows are created or updated.
@@ -25,6 +25,7 @@ npm install exceljs multer dayjs
 | `server/controllers/attendanceExcelController.js` | `controllers/` |
 | `server/routes/attendanceExcelRoutes.js` | `routes/` |
 | `client/components/AttendanceExcelPanel.jsx` | `src/components/` |
+| `client/components/EmployeeDropdown.jsx` | `src/components/` (same folder as the panel) |
 
 It also uses `middleware/requireAdmin.js` and `src/api.js` from the `hrms-holiday-removal` folder.
 `api.js` was updated to also export `API_BASE` and `authHeaders`, so copy it again.
@@ -57,15 +58,19 @@ import AttendanceExcelPanel from '../components/AttendanceExcelPanel';
 ```
 It can replace your current "Download Excel" button. `onUploaded` is optional; use it to refresh the timeline after an upload.
 
-### 4. Styles (optional)
+### 4. Styles (needed for the dropdown to look like a dropdown)
 ```css
 .attendance-excel-panel { display: flex; flex-direction: column; gap: 10px; max-width: 640px; }
+.attendance-excel-panel > .btn { align-self: flex-start; }
 .aep-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.aep-picker { border: 1px solid #ddd; border-radius: 6px; padding: 8px; }
-.aep-picker input[type=search] { width: 100%; margin-bottom: 6px; }
-.aep-select-all { display: flex; gap: 6px; font-weight: 600; border-bottom: 1px solid #eee; padding-bottom: 6px; }
-.aep-count { margin-left: auto; font-weight: 400; color: #666; }
-.aep-list { max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-top: 6px; }
+.emp-dd { position: relative; width: 340px; max-width: 100%; }
+.emp-dd-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #bbb; border-radius: 6px; background: #fff; cursor: pointer; font: inherit; }
+.emp-dd-menu { position: absolute; z-index: 50; top: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,.12); padding: 8px; }
+.emp-dd-menu input[type=search] { width: 100%; box-sizing: border-box; padding: 6px 8px; margin-bottom: 6px; }
+.emp-dd-item { display: flex; gap: 8px; align-items: center; padding: 4px 2px; cursor: pointer; }
+.emp-dd-strong { font-weight: 600; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+.emp-dd-list { max-height: 240px; overflow-y: auto; }
+.emp-dd-item small, .emp-dd-empty { color: #777; }
 ```
 
 ## The Excel sheet

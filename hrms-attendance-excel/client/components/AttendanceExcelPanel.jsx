@@ -1,22 +1,21 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { API_BASE, apiFetch, authHeaders } from '../api'; // same api.js as the holiday-removal feature
+import EmployeeDropdown from './EmployeeDropdown';
 
 const pad = (n) => String(n).padStart(2, '0');
 const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
 /**
  * Admin panel for "Attendance Timeline Excel":
- *  - Download: date range + All employees OR pick specific employees (one sheet per employee)
+ *  - Download: date range + employee dropdown (All employees or specific ones; one sheet per employee)
  *  - Upload: send the edited file back to create / update attendance
  */
 export default function AttendanceExcelPanel({ onUploaded }) {
   const now = new Date();
   const [from, setFrom] = useState(ymd(new Date(now.getFullYear(), now.getMonth(), 1)));
   const [to, setTo] = useState(ymd(now));
-  const [mode, setMode] = useState('all'); // 'all' | 'select'
   const [employees, setEmployees] = useState([]);
   const [selected, setSelected] = useState(new Set());
-  const [search, setSearch] = useState('');
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState('');
 
@@ -26,42 +25,26 @@ export default function AttendanceExcelPanel({ onUploaded }) {
   const [uploadErrors, setUploadErrors] = useState([]);
 
   useEffect(() => {
-    apiFetch('/attendance/timeline/employees').then(setEmployees).catch((e) => setError(e.message));
+    apiFetch('/attendance/timeline/employees')
+      .then((list) => {
+        setEmployees(list);
+        setSelected(new Set(list.map((e) => e._id))); // default: all employees
+      })
+      .catch((e) => setError(e.message));
   }, []);
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return q
-      ? employees.filter((e) => `${e.name || ''} ${e.email || ''}`.toLowerCase().includes(q))
-      : employees;
-  }, [employees, search]);
-
-  const allFilteredSelected = filtered.length > 0 && filtered.every((e) => selected.has(e._id));
-
-  const toggle = (id) =>
-    setSelected((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-
-  const toggleAllFiltered = () =>
-    setSelected((prev) => {
-      const next = new Set(prev);
-      filtered.forEach((e) => (allFilteredSelected ? next.delete(e._id) : next.add(e._id)));
-      return next;
-    });
+  const allSelected = employees.length > 0 && selected.size === employees.length;
 
   const download = async () => {
     setError('');
-    if (mode === 'select' && selected.size === 0) return setError('Select at least one employee');
+    if (selected.size === 0) return setError('Select at least one employee');
     setDownloading(true);
     try {
       const res = await fetch(`${API_BASE}/attendance/timeline/export`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
         credentials: 'include',
-        body: JSON.stringify({ from, to, employeeIds: mode === 'all' ? 'all' : [...selected] }),
+        body: JSON.stringify({ from, to, employeeIds: allSelected ? 'all' : [...selected] }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -129,52 +112,13 @@ export default function AttendanceExcelPanel({ onUploaded }) {
       </div>
 
       <div className="aep-row">
-        <label>
-          <input type="radio" name="aep-mode" checked={mode === 'all'} onChange={() => setMode('all')} /> All employees
-          ({employees.length})
-        </label>
-        <label>
-          <input type="radio" name="aep-mode" checked={mode === 'select'} onChange={() => setMode('select')} /> Select
-          employees
-        </label>
+        <label>Employees</label>
+        <EmployeeDropdown employees={employees} selected={selected} onChange={setSelected} />
       </div>
-
-      {mode === 'select' && (
-        <div className="aep-picker">
-          <input
-            type="search"
-            placeholder="Search employee by name or email"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <label className="aep-select-all">
-            <input type="checkbox" checked={allFilteredSelected} onChange={toggleAllFiltered} />
-            Select all{search ? ' (matching search)' : ''}
-            <span className="aep-count">{selected.size} selected</span>
-          </label>
-          <div className="aep-list">
-            {filtered.map((e) => (
-              <label key={e._id}>
-                <input type="checkbox" checked={selected.has(e._id)} onChange={() => toggle(e._id)} />
-                {e.name || e.email}
-                {e.name && e.email ? <small> — {e.email}</small> : null}
-              </label>
-            ))}
-            {filtered.length === 0 && <small>No employees match.</small>}
-          </div>
-          {selected.size > 0 && (
-            <button type="button" className="btn btn-link btn-sm" onClick={() => setSelected(new Set())}>
-              Clear selection
-            </button>
-          )}
-        </div>
-      )}
 
       {error && <p className="text-danger">{error}</p>}
       <button type="button" className="btn btn-primary" onClick={download} disabled={downloading}>
-        {downloading
-          ? 'Preparing…'
-          : `Download Excel${mode === 'select' && selected.size ? ` (${selected.size})` : mode === 'all' ? ' (all)' : ''}`}
+        {downloading ? 'Preparing…' : `Download Excel${allSelected ? ' (all)' : selected.size ? ` (${selected.size})` : ''}`}
       </button>
 
       <hr />
