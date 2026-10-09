@@ -39,3 +39,13 @@ Local reference render: `../locked-post/locked-celebrating-the-visionary.png` (f
 ## Typography update
 
 Canva's editing tools can't set a font family, so the headline (Anton) and the name block (Inter + Google Sans) are placed as transparent graphics rendered from `typo.html`: `headline.png` and `name-block.png`. The photo, logo and colour shapes are still separate Canva elements. To edit the words, change `typo.html`, re-render, and replace the two images in Canva.
+
+## Page 2: editable-text version
+
+Page 2 of the same design has every word as editable Canva text, in fonts close to the original:
+
+- "VISIONARY": Canva's Anton-style heavy condensed font.
+- "CELEBRATING THE": a narrower condensed display font. Canva's tools here can only reuse fonts already placed in a design, so only one Anton text box was available.
+- Name, "HAPPY BIRTHDAY" and the title: a Poppins-style geometric sans.
+
+It was built in a helper design, "Helper: editable page 2 source (safe to delete)" (`DAHXgDxJ_9A`), and copied in. A worker restart also left a blank page 3 and a partial copy of page 1 as page 4. The user chose to keep them, and they can be deleted in Canva.
