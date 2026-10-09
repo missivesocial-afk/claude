@@ -1,0 +1,306 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>1FCode Birthday Post Concepts</title>
+<style>
+/* ---------- FONTS (offline via npm @fontsource) ---------- */
+@font-face{font-family:"Google Sans";font-weight:400;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-400-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:500;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-500-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:600;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-600-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:700;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2)}
+
+/* ---------- 1FC BRAND (from 1FC Logo & Colors guide) ---------- */
+:root{
+  --green:#043335;   /* Legacy Green */
+  --lime:#EAE26A;    /* Light Lime */
+  --white:#F4F4ED;   /* Bond White */
+  --display:"Google Sans",Inter,sans-serif;
+  --text:Inter,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#6b6b6b;display:flex;flex-direction:column;gap:40px;padding:40px;font-family:var(--text)}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden}
+.slide > *{position:absolute}
+.g{background:var(--green);color:var(--white)}
+.w{background:var(--white);color:var(--green)}
+.l{background:var(--lime);color:var(--green)}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.c{left:0;right:0;text-align:center}
+
+/* paper speckle, as on the brand guide's Bond White pages */
+.paper::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .25  0 0 0 0 .26  0 0 0 0 .22  0 0 0 9 -6.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* shared footer: byline (face + name) left, logo right */
+.foot{left:80px;right:80px;bottom:62px;display:flex;align-items:center;justify-content:space-between}
+.foot .logo{height:40px;display:block}
+.byline{display:flex;align-items:center;gap:20px}
+.byline img{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:50% 18%;border:4px solid var(--lime)}
+.byline b{display:block;font:600 30px/1.1 var(--display);letter-spacing:-.01em}
+.byline span{display:block;font:500 22px/1.3 var(--text);opacity:.75;margin-top:4px}
+.w .byline img,.l .byline img{border-color:var(--green)}
+
+/* ===== 01 THE FRAME ===== */
+.v1 .glow{inset:0;background:radial-gradient(620px 560px at 50% 64%, rgba(234,226,106,.30), rgba(234,226,106,.08) 55%, transparent 75%)}
+.v1 .kicker{top:92px;font:500 30px/1 var(--text);letter-spacing:.22em;text-transform:uppercase;color:var(--lime)}
+.v1 h1{top:146px;line-height:.86}
+.v1 h1 .serif{display:block;font-size:200px;color:var(--lime)}
+.v1 h1 .sans{display:block;font:600 186px/.95 var(--display);letter-spacing:-.045em}
+.v1 .photo{width:880px;left:104px;top:520px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 66%,transparent 84%);mask-image:linear-gradient(to bottom,#000 0,#000 66%,transparent 84%)}
+.v1 .fade{left:0;right:0;bottom:0;height:380px;background:linear-gradient(to bottom,rgba(4,51,53,0),rgba(4,51,53,.85) 40%,var(--green) 62%)}
+.brk{position:absolute;width:118px;border:36px solid var(--lime)}
+.brk.left{border-right:0}.brk.right{border-left:0}
+.v1 .name{top:1104px;font:600 76px/1 var(--display);letter-spacing:-.025em}
+.v1 .role{top:1196px;font:500 32px/1 var(--text);letter-spacing:.04em;color:var(--lime)}
+.v1 .logo{left:0;right:0;margin:auto;bottom:60px;height:38px}
+
+/* ===== 02 THE KEY ===== */
+.v2 .top{top:104px;font:600 112px/1 var(--display);letter-spacing:-.04em}
+.v2 svg{left:52px;top:244px;width:977px;height:782px}
+.v2 .tag{top:1052px;font:500 62px/1.1 var(--display);letter-spacing:-.02em}
+.v2 .tag .serif{font-size:74px}
+.v2 .who{top:1148px;font:500 28px/1.3 var(--text);letter-spacing:.03em;opacity:.8}
+.v2 .logo{left:0;right:0;margin:auto;bottom:62px;height:38px}
+
+/* ===== 03 MAKE A WISH ===== */
+.v3 h1{top:78px;line-height:.9}
+.v3 h1 .serif{display:block;font-size:168px;color:var(--lime)}
+.v3 h1 .sans{display:block;font:600 140px/1 var(--display);letter-spacing:-.04em}
+.v3 svg{left:186px;top:392px;width:708px;height:567px}
+.v3 .msg{top:996px;left:100px;right:100px;font:400 38px/1.4 var(--text);opacity:.85;text-wrap:balance}
+.v3 .foot{border-top:2px solid rgba(244,244,237,.14);padding-top:26px;bottom:52px}
+
+/* ===== 04 BULLISH ===== */
+.v4 .tick{left:80px;top:96px;font:700 32px/1 var(--mono);letter-spacing:.04em;background:var(--green);color:var(--lime);padding:16px 24px;border-radius:12px}
+.v4 h1{left:80px;top:178px;font:600 118px/.98 var(--display);letter-spacing:-.045em}
+.v4 .sub{left:82px;top:438px;font-size:84px;line-height:1}
+.v4 .chart{left:0;top:470px;width:1080px;height:720px}
+.v4 .foot{border-top:3px solid rgba(4,51,53,.14);padding-top:26px;bottom:52px}
+
+/* ===== 05 THE BIRTHDAY ISSUE ===== */
+.v5{--mag:linear-gradient(180deg,var(--white) 0%,var(--white) 20%,var(--lime) 50%,#7f8a4a 68%,var(--green) 84%)}
+.v5{background:var(--mag);color:var(--green)}
+.v5 .strap{left:60px;right:60px;top:70px;display:flex;justify-content:space-between;font:600 24px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;border-bottom:3px solid var(--green);padding-bottom:16px}
+.v5 .mast{left:0;right:0;top:104px;text-align:center;font:700 262px/1 var(--display);letter-spacing:-.06em;color:var(--green)}
+.v5 .pwrap{inset:0;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 30px,#000 210px,#000 calc(100% - 210px),transparent calc(100% - 30px));mask-image:linear-gradient(to right,transparent 30px,#000 210px,#000 calc(100% - 210px),transparent calc(100% - 30px))}
+.v5 .photo{position:absolute;width:1153px;left:19px;top:222px}
+.v5 .sideL,.v5 .sideR{top:0;bottom:0;width:240px;background:var(--mag)}
+.v5 .sideL{left:0;-webkit-mask-image:linear-gradient(to right,#000 30%,transparent);mask-image:linear-gradient(to right,#000 30%,transparent)}
+.v5 .sideR{right:0;-webkit-mask-image:linear-gradient(to left,#000 30%,transparent);mask-image:linear-gradient(to left,#000 30%,transparent)}
+.v5 .fade{left:0;right:0;bottom:0;height:470px;background:linear-gradient(to bottom,rgba(4,51,53,0),rgba(4,51,53,.88) 42%,var(--green) 70%)}
+.v5 .line{width:250px;font:500 26px/1.3 var(--text)}
+.v5 .line b{display:block;font:700 46px/1 var(--display);letter-spacing:-.02em;margin-bottom:10px}
+.v5 .line.r{text-align:right}
+.v5 .bottom{left:64px;right:64px;bottom:150px;color:var(--white)}
+.v5 .bottom .serif{display:block;font-size:150px;line-height:.9;color:var(--lime)}
+.v5 .bottom .sans{display:block;font:600 92px/1 var(--display);letter-spacing:-.035em;margin-top:8px}
+.v5 .foot{color:var(--white);left:64px;right:64px;bottom:58px}
+.v5 .foot span{font:500 26px/1.2 var(--text);letter-spacing:.03em;color:var(--lime)}
+
+/* ===== 06 COMPILED ===== */
+.v6 h1{left:80px;right:80px;top:92px;font:600 124px/.98 var(--display);letter-spacing:-.045em}
+.v6 .editor{left:80px;right:80px;top:390px;background:var(--green);color:var(--white);border-radius:30px;box-shadow:0 30px 60px rgba(4,51,53,.35);overflow:hidden}
+.v6 .bar{display:flex;align-items:center;gap:14px;padding:26px 34px;background:rgba(0,0,0,.18);font:400 26px/1 var(--mono);color:rgba(244,244,237,.6)}
+.v6 .bar i{width:20px;height:20px;border-radius:50%;background:var(--lime)}
+.v6 .bar i:nth-child(2){background:rgba(244,244,237,.55)}.v6 .bar i:nth-child(3){background:rgba(244,244,237,.25)}
+.v6 .bar span{margin-left:18px}
+.v6 .code{padding:36px 40px 40px 0;font:400 39px/1.66 var(--mono);counter-reset:ln}
+.v6 .code div{white-space:pre;counter-increment:ln}
+.v6 .code div::before{content:counter(ln);display:inline-block;width:92px;text-align:right;padding-right:34px;color:rgba(244,244,237,.28)}
+.v6 .k{color:var(--lime)}.v6 .s{color:var(--white)}.v6 .p{color:rgba(244,244,237,.62)}.v6 .f{color:var(--lime);font-weight:700}
+.v6 .cm{color:var(--lime);font-weight:700}
+.v6 .cm::after{content:"";display:inline-block;width:20px;height:40px;margin-left:8px;vertical-align:-6px;background:var(--lime)}
+.v6 .status{display:flex;justify-content:space-between;padding:24px 40px;background:rgba(0,0,0,.2);color:var(--lime);font:700 28px/1 var(--mono);letter-spacing:.02em}
+.v6 .face{right:56px;top:300px;z-index:2;width:200px;height:200px;border-radius:50%;object-fit:cover;object-position:50% 16%;border:10px solid var(--lime);box-shadow:0 18px 40px rgba(4,51,53,.35)}
+
+/* ===== 07 STATEMENT ===== */
+.v7 h1{left:90px;right:90px;top:92px;font:500 70px/1.05 var(--display);letter-spacing:-.03em;text-align:center}
+.v7 h1 .serif{color:var(--lime);font-size:84px}
+.v7 .rwrap{left:150px;width:780px;top:316px;transform:rotate(-2deg);filter:drop-shadow(0 30px 40px rgba(0,0,0,.4))}
+.v7 .receipt{background:var(--white);color:var(--green);padding:44px 50px 52px;font:400 30px/1.5 var(--mono);
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/36px 100%;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/36px 100%}
+.v7 .rhead{text-align:center}
+.v7 .rhead img{height:40px;display:block;margin:0 auto 18px}
+.v7 .rhead b{display:block;font:700 30px/1.2 var(--mono);letter-spacing:.22em}
+.v7 .rhead span{display:block;font-size:22px;opacity:.6;letter-spacing:.08em;margin-top:4px}
+.v7 hr{border:0;border-top:3px dashed rgba(4,51,53,.35);margin:20px 0}
+.v7 .row{display:flex;justify-content:space-between;gap:20px}
+.v7 .row span:last-child{font-weight:700;text-align:right}
+.v7 .total{text-align:center;margin-top:6px}
+.v7 .total span{display:block;font-size:22px;letter-spacing:.2em;opacity:.65}
+.v7 .total b{display:inline-block;font:600 64px/1.1 var(--display);letter-spacing:-.03em;background:var(--lime);padding:6px 20px;margin-top:10px}
+.v7 .barcode{height:70px;margin:24px auto 10px;width:460px;background:repeating-linear-gradient(90deg,var(--green) 0 4px,transparent 4px 7px,var(--green) 7px 9px,transparent 9px 15px,var(--green) 15px 21px,transparent 21px 24px)}
+.v7 .thanks{text-align:center;font-size:20px;letter-spacing:.16em;opacity:.7}
+.v7 .sign{left:0;right:0;bottom:64px;text-align:center;font:600 28px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+</style></head>
+
+<body>
+
+<!-- 01 THE FRAME: founder inside the logo's brackets, where the keyhole sits -->
+<section class="slide g v1" data-name="01-the-frame">
+  <div class="glow"></div>
+  <div class="kicker c">[ Birthday Edition ]</div>
+  <h1 class="c"><span class="serif">Happy</span><span class="sans">Birthday</span></h1>
+  <img class="photo bleed" src="assets/rishabh-cutout-hd.png" alt="">
+  <div class="fade"></div>
+  <div class="brk left" style="left:184px;top:596px;height:500px"></div>
+  <div class="brk right" style="right:184px;top:596px;height:500px"></div>
+  <div class="name c">Rishabh M Shah</div>
+  <div class="role c">Founder &amp; CEO, 1FC Group of Companies</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<!-- 02 THE KEY: the logo icon, with Rishabh as the keyhole -->
+<section class="slide l v2" data-name="02-the-key">
+  <div class="top c">Happy Birthday,</div>
+  <svg viewBox="602 478 154 124" aria-hidden="true">
+    <defs>
+      <clipPath id="kh"><path d="M 660.3125 584.5 L 671.761719 531.601562 L 671.074219 531.289062 C 664.398438 528.253906 660.085938 521.5625 660.085938 514.238281 C 660.085938 503.921875 668.488281 495.515625 678.816406 495.5 C 689.160156 495.5 697.566406 503.90625 697.566406 514.238281 C 697.566406 521.574219 693.25 528.265625 686.566406 531.289062 L 685.875 531.601562 L 697.339844 584.5 Z"/></clipPath>
+      <radialGradient id="khglow" cx="678.8" cy="512" r="40" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#EAE26A" stop-opacity=".45"/><stop offset="1" stop-color="#EAE26A" stop-opacity="0"/></radialGradient>
+    </defs>
+    <path fill="#043335" d="M 603.65625 600.113281 L 603.65625 479.886719 L 634.078125 479.886719 L 634.078125 493.625 L 618.117188 493.625 L 618.117188 586.375 L 634.078125 586.375 L 634.078125 600.113281 Z"/>
+    <path fill="#043335" d="M 723.578125 600.113281 L 723.578125 586.375 L 739.535156 586.375 L 739.535156 493.625 L 723.578125 493.625 L 723.578125 479.886719 L 753.996094 479.886719 L 753.996094 600.113281 Z"/>
+    <g clip-path="url(#kh)">
+      <rect x="650" y="490" width="60" height="100" fill="#043335"/>
+      <rect x="650" y="490" width="60" height="100" fill="url(#khglow)"/>
+      <image href="assets/rishabh-cutout-hd.png" x="632.3" y="494.9" width="102.95" height="102.95"/>
+    </g>
+  </svg>
+  <div class="tag c">to the one who <span class="serif">holds the key.</span></div>
+  <div class="who c">Rishabh M Shah · Founder &amp; CEO, 1FC Group of Companies</div>
+  <img class="logo" src="assets/logo-on-light.svg" alt="1FCode">
+</section>
+
+<!-- 03 MAKE A WISH: the keyhole becomes a birthday candle -->
+<section class="slide g v3" data-name="03-make-a-wish">
+  <h1 class="c"><span class="serif">Make a wish,</span><span class="sans">Rishabh.</span></h1>
+  <svg viewBox="602 478 154 124" aria-hidden="true">
+    <defs>
+      <pattern id="stripes" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)">
+        <rect width="8" height="8" fill="#F4F4ED"/><rect width="3.4" height="8" fill="#EAE26A"/>
+      </pattern>
+      <radialGradient id="flameglow" cx="678.8" cy="510" r="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#EAE26A" stop-opacity=".55"/><stop offset=".45" stop-color="#EAE26A" stop-opacity=".14"/><stop offset="1" stop-color="#EAE26A" stop-opacity="0"/></radialGradient>
+    </defs>
+    <circle cx="678.8" cy="510" r="44" fill="url(#flameglow)"/>
+    <path fill="#EAE26A" d="M 603.65625 600.113281 L 603.65625 479.886719 L 634.078125 479.886719 L 634.078125 493.625 L 618.117188 493.625 L 618.117188 586.375 L 634.078125 586.375 L 634.078125 600.113281 Z"/>
+    <path fill="#EAE26A" d="M 723.578125 600.113281 L 723.578125 586.375 L 739.535156 586.375 L 739.535156 493.625 L 723.578125 493.625 L 723.578125 479.886719 L 753.996094 479.886719 L 753.996094 600.113281 Z"/>
+    <line x1="678.8" y1="531.6" x2="678.8" y2="522" stroke="#F4F4ED" stroke-opacity=".7" stroke-width="1.4" stroke-linecap="round"/>
+    <path fill="url(#stripes)" d="M 660.3125 584.5 L 671.761719 531.601562 L 685.875 531.601562 L 697.339844 584.5 Z"/>
+    <path fill="#EAE26A" d="M 678.8 488 C 682.6 496.5 688.4 502 688.4 512.6 A 9.6 9.6 0 0 1 669.2 512.6 C 669.2 502 675 496.5 678.8 488 Z"/>
+    <path fill="#F4F4ED" d="M 678.8 500.5 C 680.9 505.4 684.1 508.2 684.1 514 A 5.3 5.3 0 0 1 673.5 514 C 673.5 508.2 676.7 505.4 678.8 500.5 Z"/>
+  </svg>
+  <div class="msg c">Happy birthday to our Founder &amp; CEO. Here’s to another year of building legacies.</div>
+  <div class="foot">
+    <div class="byline"><img src="assets/rishabh-portrait-hd.jpg" alt=""><div><b>Rishabh M Shah</b><span>Founder &amp; CEO, 1FC Group of Companies</span></div></div>
+    <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+  </div>
+</section>
+
+<!-- 04 BULLISH: a candlestick chart whose last candle is a birthday candle -->
+<section class="slide w paper v4" data-name="04-bullish">
+  <div class="tick">RMS&nbsp;&nbsp;▲ +1 YR</div>
+  <h1>Bullish on<br>another year.</h1>
+  <div class="sub serif">Happy Birthday, Rishabh.</div>
+  <svg class="chart bleed" viewBox="0 0 1080 720" aria-hidden="true"></svg>
+  <div class="foot">
+    <div class="byline"><img src="assets/rishabh-portrait-hd.jpg" alt=""><div><b>Rishabh M Shah</b><span>Founder &amp; CEO, 1FC Group of Companies</span></div></div>
+    <img class="logo" src="assets/logo-on-light.svg" alt="1FCode">
+  </div>
+</section>
+
+<!-- 05 THE BIRTHDAY ISSUE: a magazine cover, echoing his Enterprise World feature -->
+<section class="slide v5" data-name="05-the-birthday-issue">
+  <div class="strap"><span>1FC Group of Companies</span><span>The Birthday Issue · 2026</span></div>
+  <div class="mast">LEGACY</div>
+  <div class="pwrap"><img class="photo" src="assets/rishabh-cutout-hd.png" alt=""></div>
+  <div class="fade"></div>
+  <div class="line" style="left:60px;top:440px"><b>16 years</b>in banking and investment services</div>
+  <div class="line r" style="right:60px;top:440px"><b>Cover star</b>The Most Visionary FinTech Leader to Watch in 2026</div>
+  <div class="bottom"><span class="serif">Happy Birthday,</span><span class="sans">Rishabh M Shah</span></div>
+  <div class="foot"><span>Founder &amp; CEO, 1FC Group of Companies</span><img class="logo" src="assets/logo-on-dark.svg" alt="1FCode"></div>
+</section>
+
+<!-- 06 COMPILED: a code editor, playing on the 1FCode name -->
+<section class="slide l v6" data-name="06-compiled">
+  <h1>Another year,<br>compiled.</h1>
+  <div class="editor">
+    <div class="bar"><i></i><i></i><i></i><span>happy_birthday.js</span></div>
+    <div class="code">
+<div><span class="k">const</span> founder = {</div>
+<div>  <span class="p">name:</span> <span class="s">"Rishabh M Shah"</span>,</div>
+<div>  <span class="p">role:</span> <span class="s">"Founder &amp; CEO"</span>,</div>
+<div>  <span class="p">building:</span> <span class="s">"legacies"</span>,</div>
+<div>};</div>
+<div> </div>
+<div><span class="f">celebrate</span>(founder);</div>
+<div><span class="cm">// Happy Birthday, Rishabh!</span></div>
+    </div>
+    <div class="status"><span>✓ Build succeeded</span><span>0 errors · 1 birthday</span></div>
+  </div>
+  <img class="face" src="assets/rishabh-portrait-hd.jpg" alt="">
+  <div class="foot">
+    <div class="byline"><div><b>From all of us at 1FC</b><span>Happy birthday to our Founder &amp; CEO</span></div></div>
+    <img class="logo" src="assets/logo-on-light.svg" alt="1FCode">
+  </div>
+</section>
+
+<!-- 07 STATEMENT: a birthday account statement, the fintech way -->
+<section class="slide g v7" data-name="07-birthday-statement">
+  <h1>Your birthday statement is ready, <span class="serif">Rishabh.</span></h1>
+  <div class="rwrap"><div class="receipt">
+    <div class="rhead"><img src="assets/logo-on-light.svg" alt="1FCode"><b>BIRTHDAY STATEMENT</b><span>ISSUED TODAY · 1FC GROUP OF COMPANIES</span></div>
+    <hr>
+    <div class="row"><span>Account holder</span><span>RISHABH M SHAH</span></div>
+    <div class="row"><span>Role</span><span>FOUNDER &amp; CEO</span></div>
+    <hr>
+    <div class="row"><span>Experience</span><span>16 YEARS</span></div>
+    <div class="row"><span>Vision</span><span>UNLIMITED</span></div>
+    <div class="row"><span>Wishes from Team 1FC</span><span>COUNTLESS</span></div>
+    <div class="row"><span>Legacy</span><span>IN PROGRESS</span></div>
+    <hr>
+    <div class="total"><span>CLOSING BALANCE</span><b>Happy Birthday!</b></div>
+    <div class="barcode"></div>
+    <div class="thanks">THANK YOU FOR BUILDING WITH US</div>
+  </div></div>
+  <div class="sign">With gratitude, Team 1FC</div>
+</section>
+
+<script>
+/* 04: candlestick chart, rising, ending in a birthday candle */
+(() => {
+  const svg = document.querySelector('.v4 .chart'), NS = 'http://www.w3.org/2000/svg';
+  const G = '#043335', L = '#EAE26A', W = '#F4F4ED';
+  const K = 8.4, y = v => 700 - (v - 8) * K;
+  const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+  [20, 40, 60, 80].forEach(v => el('line', {x1: 0, x2: 1080, y1: y(v), y2: y(v), stroke: G, 'stroke-opacity': .12, 'stroke-width': 2, 'stroke-dasharray': '6 10'}));
+  const d = [[14,20,10,18],[18,24,15,22],[22,25,16,19],[19,28,18,27],[27,33,24,31],[31,34,25,28],[28,39,27,38],[38,44,35,42],[42,46,37,40],[40,52,39,51],[51,60,49,58]];
+  const step = 80, x0 = 60, w = 54;
+  d.forEach(([o, h, l, c], i) => {
+    const x = x0 + i * step, up = c >= o;
+    el('line', {x1: x + w/2, x2: x + w/2, y1: y(h), y2: y(l), stroke: G, 'stroke-width': 5, 'stroke-linecap': 'round'});
+    el('rect', {x, y: y(Math.max(o, c)), width: w, height: Math.max(Math.abs(c - o) * K, 6), rx: 6, fill: up ? G : W, stroke: G, 'stroke-width': up ? 0 : 5});
+  });
+  // birthday candle
+  const bx = x0 + d.length * step - 6, bw = 62, top = 74, bot = 58;
+  const defs = el('defs', {});
+  defs.innerHTML = `<pattern id="bstripe" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="22" height="22" fill="${L}"/><rect width="9" height="22" fill="${G}"/></pattern>
+    <radialGradient id="bglow"><stop offset="0" stop-color="${L}" stop-opacity=".9"/><stop offset=".5" stop-color="${L}" stop-opacity=".25"/><stop offset="1" stop-color="${L}" stop-opacity="0"/></radialGradient>`;
+  const fx = bx + bw/2, fy = y(top) - 64;
+  el('circle', {cx: fx, cy: fy, r: 120, fill: 'url(#bglow)'});
+  el('rect', {x: bx, y: y(top), width: bw, height: (top - bot) * K, rx: 8, fill: 'url(#bstripe)', stroke: G, 'stroke-width': 5});
+  el('line', {x1: fx, x2: fx, y1: y(top), y2: y(top) - 26, stroke: G, 'stroke-width': 5, 'stroke-linecap': 'round'});
+  el('path', {d: `M ${fx} ${fy-58} C ${fx+14} ${fy-30} ${fx+30} ${fy-14} ${fx+30} ${fy+12} A 30 30 0 0 1 ${fx-30} ${fy+12} C ${fx-30} ${fy-14} ${fx-14} ${fy-30} ${fx} ${fy-58} Z`, fill: L, stroke: G, 'stroke-width': 5, 'stroke-linejoin': 'round'});
+  const t = el('text', {x: fx, y: y(bot) + 50, 'text-anchor': 'middle', fill: G, 'font-family': 'JetBrains Mono', 'font-weight': 700, 'font-size': 26, 'letter-spacing': 2}); t.textContent = 'TODAY';
+  el('path', {d: `M ${fx} ${fy-18} C ${fx+6} ${fy-4} ${fx+14} ${fy+4} ${fx+14} ${fy+16} A 14 14 0 0 1 ${fx-14} ${fy+16} C ${fx-14} ${fy+4} ${fx-6} ${fy-4} ${fx} ${fy-18} Z`, fill: W});
+})();
+</script>
+</body></html>

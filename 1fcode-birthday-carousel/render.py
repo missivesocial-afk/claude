@@ -37,7 +37,8 @@ with sync_playwright() as p:
     slides = pg.query_selector_all(".slide")
     paths = []
     for i, s in enumerate(slides, 1):
-        f = out / f"slide-{i:02d}.png"
+        name = s.get_attribute("data-name")
+        f = out / (f"{name}.png" if name else f"slide-{i:02d}.png")
         s.screenshot(path=str(f))
         paths.append(f)
     b.close()
