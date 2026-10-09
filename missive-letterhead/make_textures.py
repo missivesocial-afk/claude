@@ -39,3 +39,11 @@ mesh(mm(100), mm(60), AQUA, [
     (0.0, 0.0, 0.6, MINT, 0.8), (1.0, 1.0, 0.9, TEAL, 1.0), (0.85, 0.15, 0.3, OPAL, 0.45)],
     seed=5).save(OUT / "bento-tile.jpg", quality=88, dpi=(DPI, DPI))
 print("ok")
+
+# Uncoated cream paper with fine tooth (riso / airmail backgrounds), 200 dpi keeps it light
+def paper(w_mm, h_mm, base="#F4F1EA", grain=5, dpi=200, seed=21):
+    rng = np.random.default_rng(seed)
+    w, h = int(w_mm / 25.4 * dpi), int(h_mm / 25.4 * dpi)
+    img = np.ones((h, w, 3)) * hexrgb(base) + rng.normal(0, grain, (h, w, 1))
+    return Image.fromarray(np.clip(img, 0, 255).astype(np.uint8))
+paper(210, 297).save(OUT / "paper.jpg", quality=80, dpi=(200, 200))

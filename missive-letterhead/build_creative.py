@@ -66,41 +66,50 @@ page("g-billboard", "Missive Letterhead G", """
       <path fill="url(#wf2)" d="{WORD}"/><circle cx="{DOT_CX}" cy="88" r="12.5" fill="#1B8F9B"/></svg>"""),
 ])
 
-# ───────────────────────── H · Neo-brutal (boxes, hard shadows, sticker, ticker)
+# ───────────────────────── H · Neo-brutal (one hard-shadow bar, sticker, ticker) — refined
 ticker = " ✦ ".join(["CONTENT", "SEO", "SOCIAL MEDIA", "EMAIL", "WHITE-LABEL"] * 3)
+STICKER = (f'<svg class="sticker" viewBox="0 0 100 100"><defs><path id="ring" d="M50 50m-35 0a35 35 0 1 1 70 0a35 35 0 1 1 -70 0"/></defs>'
+           f'<circle cx="52" cy="52" r="46" fill="#0B0C0E"/><circle cx="50" cy="50" r="46" fill="#BDF2EA" stroke="#0B0C0E" stroke-width="2.4"/>'
+           f'<text font-family="JetBrains Mono" font-weight="700" font-size="8.4" letter-spacing="1.5" fill="#0B0C0E"><textPath href="#ring">CONTENT ✦ SEO ✦ SOCIAL ✦ EMAIL ✦</textPath></text>'
+           f'<g transform="translate(35.5 36.5) scale(.22)"><path fill="#5FC7C2" d="{MARK_LIGHT}"/><path fill="#1B8F9B" fill-rule="evenodd" d="{MARK_DARK}"/></g></svg>')
 page("h-neo-brutal", "Missive Letterhead H", """
   .h{background:var(--paper)}
-  .h .box{position:absolute;border:.7mm solid var(--ink);border-radius:2.6mm;box-shadow:1.6mm 1.6mm 0 var(--ink)}
-  .h .b1{top:13mm;left:14mm;width:84mm;height:25mm;background:#fff;display:flex;align-items:center;padding-left:6mm}
-  .h .b1 svg{width:70mm;height:auto}
-  .h .b2{top:13mm;left:103mm;width:44mm;height:25mm;background:var(--aqua);padding:4mm}
-  .h .b3{top:13mm;left:152mm;width:44mm;height:25mm;background:var(--teal);color:#fff;padding:4mm}
-  .h .lbl{font-size:5.6pt;font-weight:700;letter-spacing:.18em;opacity:.8;margin-bottom:2.2mm}
-  .h .val{font-size:7.4pt;font-weight:700;line-height:1.35;word-break:break-all}
-  .h .sticker{position:absolute;top:33mm;right:12mm;width:31mm;height:31mm;transform:rotate(-14deg)}
-  .h .note{position:absolute;top:47mm;right:46mm;font-size:15pt;color:var(--teal);transform:rotate(-4deg);font-weight:700}
-  .h .letter{top:52mm;left:20mm;right:20mm}
-  .h .foot{position:absolute;left:14mm;right:14mm;bottom:19mm;background:#fff;padding:3mm 5mm;font-size:6.8pt;line-height:1.5;display:flex;justify-content:space-between;gap:6mm}
-  .h .foot b{font-weight:700}
-  .h .ticker{position:absolute;left:0;right:0;bottom:0;height:11mm;background:var(--ink);color:var(--aqua);font-size:7.6pt;font-weight:700;letter-spacing:.16em;white-space:nowrap;display:flex;align-items:center;overflow:hidden}
-  .h .ticker span{padding-left:6mm}
-  .h .mark-sm{position:absolute;top:14mm;left:14mm;height:9mm}
+  .h .bar{position:absolute;left:15mm;right:15mm;display:grid;border:.6mm solid var(--ink);border-radius:2.4mm;box-shadow:1.3mm 1.3mm 0 var(--ink);background:#fff;overflow:hidden}
+  .h .cell{padding:0 5mm;display:flex;flex-direction:column;justify-content:center;min-width:0}
+  .h .cell+.cell{border-left:.6mm solid var(--ink)}
+  .h .top{top:14mm;height:20mm;grid-template-columns:1.35fr 1fr 1fr}
+  .h .top .c1 svg{width:44mm}
+  .h .c2{background:var(--aqua)}
+  .h .c3{background:var(--teal);color:#fff}
+  .h .lbl{font-size:5.2pt;font-weight:700;letter-spacing:.18em;opacity:.75;margin-bottom:1.3mm}
+  .h .val{font-size:7.4pt;font-weight:700}
+  .h .sticker{position:absolute;top:24mm;right:8mm;width:25mm;transform:rotate(-12deg)}
+  .h .letter{top:48mm;left:20mm;right:20mm}
+  .h .bot{bottom:14.5mm;height:12mm;grid-template-columns:2.7fr 1.15fr .75fr;font-size:6.2pt;line-height:1.45}
+  .h .bot b{font-weight:700}
+  .h .ticker{position:absolute;left:0;right:0;bottom:0;height:8.5mm;background:var(--ink);color:var(--aqua);font-size:6.8pt;font-weight:700;letter-spacing:.18em;white-space:nowrap;display:flex;align-items:center;overflow:hidden}
+  .h .ticker span{padding-left:15mm}
+  .h .cmark{width:9mm}
 """, [
- ("first", f"""    <div class="box b1">{logo_svg()}</div>
-    <div class="box b2 mono"><div class="lbl">SAY HELLO</div><div class="val">hello@missive<br>digital.com</div></div>
-    <div class="box b3 mono"><div class="lbl">VISIT US ↗</div><div class="val">missive<br>digital.com</div></div>
-    <svg class="sticker" viewBox="0 0 100 100"><defs><path id="ring" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1 -72 0"/></defs>
-      <circle cx="51.5" cy="51.5" r="47" fill="#0B0C0E"/><circle cx="50" cy="50" r="47" fill="#BDF2EA" stroke="#0B0C0E" stroke-width="2"/>
-      <text font-family="JetBrains Mono" font-weight="700" font-size="8.6" letter-spacing="1.6" fill="#0B0C0E"><textPath href="#ring">CONTENT ✦ SEO ✦ SOCIAL ✦ EMAIL ✦</textPath></text>
-      <g transform="translate(35 36) scale(.23)"><path fill="#5FC7C2" d="{MARK_LIGHT}"/><path fill="#1B8F9B" fill-rule="evenodd" d="{MARK_DARK}"/></g></svg>
-    <div class="note hand">psst… this one’s for you ↙</div>
+ ("first", f"""    <div class="bar top mono">
+      <div class="cell c1">{logo_svg()}</div>
+      <div class="cell c2"><div class="lbl">SAY HELLO</div><div class="val">hello@missivedigital.com</div></div>
+      <div class="cell c3"><div class="lbl">VISIT ↗</div><div class="val">missivedigital.com</div></div>
+    </div>
+    {STICKER}
     {LETTER}
-    <div class="box foot mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b><br>{ADDR1} {ADDR2}</span><span style="text-align:right">{LEGAL}<br>LLP Act, 2008</span></div>
+    <div class="bar bot mono">
+      <div class="cell"><div><b>MISSIVE DIGITAL MARKETING LLP</b><br>{ADDR1} {ADDR2}</div></div>
+      <div class="cell"><div>{LEGAL}<br>LLP Act, 2008</div></div>
+      <div class="cell c2" style="align-items:center"><b>AMD · IN</b></div>
+    </div>
     <div class="ticker mono"><span>{ticker}</span></div>"""),
- ("continuation", f"""    <div class="box" style="top:13mm;left:14mm;width:20mm;height:20mm;background:#fff;display:grid;place-items:center">{mark_svg("cmark")}</div>
-    <div class="box foot mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>
-    <div class="ticker mono"><span>{ticker}</span></div>
-    <style>.h .cmark{{width:12mm}}</style>"""),
+ ("continuation", f"""    <div class="bar top mono" style="height:14mm;grid-template-columns:16mm 1fr;right:auto;width:80mm">
+      <div class="cell c2" style="align-items:center;padding:0">{mark_svg("cmark")}</div>
+      <div class="cell"><div class="val">MISSIVE DIGITAL MARKETING LLP</div></div>
+    </div>
+    <div class="bar bot mono" style="height:9mm;grid-template-columns:1fr 1fr"><div class="cell"><div>{LEGAL}</div></div><div class="cell c2">missivedigital.com</div></div>
+    <div class="ticker mono"><span>{ticker}</span></div>"""),
 ])
 
 # ───────────────────────── I · Aura (grain gradient header, wave edge, glass pill)
@@ -174,12 +183,13 @@ page("j-bento", "Missive Letterhead J", """
     <div class="fgrid mono"><div class="t f1"><b>Missive Digital Marketing LLP</b> · missivedigital.com</div><div class="t f2">{LEGAL}</div></div>"""),
 ])
 
-# ───────────────────────── K · Collage (torn paper, tape, die-cut sticker)
-def torn(y0, y1, seed, step=2.4, amp=1.3):
+# ───────────────────────── K · Collage (torn paper, tape, die-cut sticker) — refined
+def torn(y0, y1, seed, step=2.2, amp=1.1):
     """Closed path of a sheet with ragged top edge at y0 and ragged bottom edge at y1 (mm)."""
     rnd = random.Random(seed)
-    top = [(x, y0 + rnd.uniform(-amp, amp) + 1.2 * ((x // 37) % 2)) for x in [i * step for i in range(int(214 / step) + 1)]]
-    bot = [(x, y1 + rnd.uniform(-amp, amp) - 1.0 * ((x // 41) % 2)) for x in [i * step for i in range(int(214 / step) + 1)]][::-1]
+    xs = [i * step for i in range(int(214 / step) + 1)]
+    top = [(x, y0 + rnd.uniform(-amp, amp) + 1.0 * ((x // 37) % 2)) for x in xs]
+    bot = [(x, y1 + rnd.uniform(-amp, amp) - 0.8 * ((x // 41) % 2)) for x in xs][::-1]
     pts = [(-2, y0)] + top + [(212, y0), (212, y1)] + bot + [(-2, y1)]
     return "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in pts) + "Z"
 
@@ -187,33 +197,152 @@ def tape_path(w):
     return f"M0 .6 L2 0 L3.6 .9 L5 0 L{w-4} 0 L{w-2.5} 1 L{w-1} .2 L{w} 9 L{w-1.6} 9.8 L{w-3} 8.9 L{w-5} 9.8 L4 9.8 L2.5 9 L1 9.8 Z"
 def tape(x, y, rot, text="", w=36):
     t = f'<text x="{w/2}" y="6.7" text-anchor="middle" font-family="Caveat" font-weight="700" font-size="5" fill="#0E5961">{text}</text>' if text else ""
-    return f'<g transform="translate({x} {y}) rotate({rot})"><path d="{tape_path(w)}" fill="#EDEAD8" fill-opacity=".88"/>{t}</g>'
+    return f'<g transform="translate({x} {y}) rotate({rot})"><path d="{tape_path(w)}" fill="#EDEAD8" fill-opacity=".9"/>{t}</g>'
 
 def sheet(y0, y1, seed, extras=""):
     p = torn(y0, y1, seed)
-    return (f'<svg class="sheet" viewBox="0 0 210 297"><path d="{p}" fill="#000" fill-opacity=".22" transform="translate(.7 1.1)"/>'
+    return (f'<svg class="sheet" viewBox="0 0 210 297"><path d="{p}" fill="#000" fill-opacity=".2" transform="translate(.6 1)"/>'
             f'<path d="{p}" fill="#FFFEFB"/>{extras}</svg>')
 
+DIECUT = (f'<svg class="sticker" viewBox="-14 -18 159 158"><path fill="#fff" stroke="#fff" stroke-width="26" stroke-linejoin="round" d="{MARK_DARK} {MARK_LIGHT}"/>'
+          f'<path fill="#5FC7C2" d="{MARK_LIGHT}"/><path fill="#1B8F9B" fill-rule="evenodd" d="{MARK_DARK}"/></svg>')
 page("k-collage", "Missive Letterhead K", """
   .k .bg{position:absolute;inset:0;width:210mm;height:297mm;object-fit:cover}
   .k .sheet{position:absolute;inset:0;width:210mm;height:297mm}
-  .k .logo{position:absolute;top:14mm;left:18mm;height:12mm}
-  .k .contact{position:absolute;top:15mm;right:18mm;text-align:right;color:#fff;font-size:6.8pt;line-height:1.6;letter-spacing:.04em}
-  .k .sticker{position:absolute;top:36mm;right:24mm;width:21mm;transform:rotate(12deg)}
-  .k .letter{top:60mm;left:22mm;right:22mm}
-  .k .foot{position:absolute;left:18mm;right:18mm;bottom:9mm;display:flex;justify-content:space-between;align-items:flex-end;color:#fff;font-size:6.4pt;line-height:1.6;letter-spacing:.03em}
+  .k .logo{position:absolute;top:13mm;left:18mm;height:10mm}
+  .k .contact{position:absolute;top:13.4mm;right:18mm;text-align:right;color:#fff;font-size:6.6pt;line-height:1.55;letter-spacing:.04em}
+  .k .sticker{position:absolute;top:27mm;right:17mm;width:17mm;transform:rotate(10deg)}
+  .k .letter{top:47mm;left:20mm;right:20mm}
+  .k .foot{position:absolute;left:18mm;right:18mm;bottom:7mm;display:flex;justify-content:space-between;align-items:flex-end;color:#fff;font-size:6.2pt;line-height:1.55;letter-spacing:.03em}
   .k .foot b{color:var(--mint)}
 """, [
  ("first", f"""    <img class="bg" src="assets/textures/teal-page.jpg" alt="">
-    {sheet(44, 268, 4, tape(10, 38, -9) + tape(138, 262, 4, "made with ♥ in Ahmedabad", w=54))}
+    {sheet(35, 275, 4, tape(12, 30, -7) + tape(142, 270, 3, "made with ♥ in Ahmedabad", w=52))}
     {logo_svg("logo", **WHITE_LOGO)}
     <div class="contact mono">hello@missivedigital.com<br>missivedigital.com</div>
-    <svg class="sticker" viewBox="-14 -18 159 158"><path fill="#fff" stroke="#fff" stroke-width="26" stroke-linejoin="round" d="{MARK_DARK} {MARK_LIGHT}"/><path fill="#5FC7C2" d="{MARK_LIGHT}"/><path fill="#1B8F9B" fill-rule="evenodd" d="{MARK_DARK}"/></svg>
+    {DIECUT}
     {LETTER}
-    <div class="foot mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b><br>{ADDR1} {ADDR2}</span><span style="text-align:right">{LEGAL}<br>Registered under the LLP Act, 2008</span></div>"""),
+    <div class="foot mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b><br>{ADDR1} {ADDR2}</span><span style="text-align:right">{LEGAL}<br>LLP Act, 2008</span></div>"""),
  ("continuation", f"""    <img class="bg" src="assets/textures/teal-page.jpg" alt="">
-    {sheet(22, 274, 9, tape(160, 17, 6))}
+    {sheet(22, 279, 9, tape(160, 17, 6))}
     {logo_svg("logo", **WHITE_LOGO).replace('class="logo"', 'class="logo" style="top:7mm;height:8mm"')}
     <div class="foot mono" style="bottom:7mm"><span><b>MISSIVE DIGITAL MARKETING LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
 ])
-print("built g–k")
+
+# ───────────────────────── L · Airmail (stripe border, perforated stamp, postmark)
+def perforated(w, h, r=1.1, step=3.2):
+    """Stamp outline with semicircular perforations, drawn clockwise from the top-left corner."""
+    def edge(x0, y0, x1, y1):
+        n = max(1, round(((x1 - x0) ** 2 + (y1 - y0) ** 2) ** .5 / step))
+        out = []
+        for i in range(n):
+            t = (i + .5) / n
+            cx, cy = x0 + (x1 - x0) * t, y0 + (y1 - y0) * t
+            dx, dy = (x1 - x0) / ((x1 - x0) ** 2 + (y1 - y0) ** 2) ** .5, (y1 - y0) / ((x1 - x0) ** 2 + (y1 - y0) ** 2) ** .5
+            out.append(f"L{cx - dx * r:.2f} {cy - dy * r:.2f} A{r} {r} 0 0 0 {cx + dx * r:.2f} {cy + dy * r:.2f}")
+        return " ".join(out) + f" L{x1} {y1}"
+    return f"M0 0 {edge(0, 0, w, 0)} {edge(w, 0, w, h)} {edge(w, h, 0, h)} {edge(0, h, 0, 0)} Z"
+
+def stamp(cls, w=28, h=34):
+    p = perforated(w, h)
+    return (f'<svg class="{cls}" viewBox="-1 -1 {w + 3} {h + 3}"><path d="{p}" fill="#0B0C0E" fill-opacity=".14" transform="translate(.8 .8)"/>'
+            f'<path d="{p}" fill="#fff"/><rect x="2.4" y="2.4" width="{w - 4.8}" height="{h - 4.8}" fill="url(#st)"/>'
+            f'<defs><pattern id="st" patternUnits="userSpaceOnUse" width="{w}" height="{h}"><image href="assets/textures/bento-tile.jpg" width="{w}" height="{h}" preserveAspectRatio="xMidYMid slice"/></pattern></defs>'
+            f'<g transform="translate({w / 2 - 7.5} {h / 2 - 9}) scale(.115)"><path fill="#fff" fill-opacity=".6" d="{MARK_LIGHT}"/><path fill="#fff" fill-rule="evenodd" d="{MARK_DARK}"/></g>'
+            f'<text x="4.4" y="7.6" font-family="JetBrains Mono" font-weight="700" font-size="2.6" letter-spacing=".3" fill="#fff">INDIA</text>'
+            f'</svg>')
+
+WAVES = " ".join(f'<path d="M0 {y} q4 -2.2 8 0 t8 0 t8 0 t8 0 t8 0 t8 0" />' for y in (0, 4, 8, 12))
+POSTMARK = (f'<svg class="postmark" viewBox="-60 -20 104 40"><g fill="none" stroke="#0E5961" stroke-width=".7" opacity=".85">'
+            f'<g transform="translate(-58 -6)">{WAVES}</g><circle r="16"/><circle r="11.2"/></g>'
+            f'<defs><path id="pm" d="M0 0m-13.4 0a13.4 13.4 0 1 1 26.8 0a13.4 13.4 0 1 1 -26.8 0"/></defs>'
+            f'<text font-family="JetBrains Mono" font-weight="700" font-size="2.7" letter-spacing=".55" fill="#0E5961" opacity=".85"><textPath href="#pm">AHMEDABAD ✦ GUJARAT ✦ 380015 ✦</textPath></text>'
+            f'<text y="-.6" text-anchor="middle" font-family="Figtree" font-weight="800" font-size="5" fill="#0E5961" opacity=".85">missive.</text>'
+            f'<text y="4.4" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="2.3" letter-spacing=".4" fill="#0E5961" opacity=".85">PRIORITY</text></svg>')
+
+page("l-airmail", "Missive Letterhead L", """
+  .l{background:#fff}
+  .l .border{position:absolute;inset:0;background:repeating-linear-gradient(-45deg,var(--teal) 0 6mm,#fff 6mm 9mm,var(--aqua) 9mm 15mm,#fff 15mm 18mm)}
+  .l .inner{position:absolute;inset:4.5mm;background:url(assets/textures/paper.jpg) center/cover}
+  .l .logo{position:absolute;top:16mm;left:17mm;height:10.5mm}
+  .l .via{position:absolute;top:30.5mm;left:17mm;display:flex;gap:0;font-size:5.8pt;font-weight:700;letter-spacing:.16em}
+  .l .via span{border:.35mm solid var(--teal-ink);padding:.9mm 2.2mm;color:var(--teal-ink)}
+  .l .via span+span{border-left:0;background:var(--teal-ink);color:#fff}
+  .l .stamp{position:absolute;top:13mm;right:15mm;width:30mm;transform:rotate(3deg)}
+  .l .postmark{position:absolute;top:27mm;right:27mm;width:56mm;transform:rotate(-9deg)}
+  .l .letter{top:50mm;left:19mm;right:19mm}
+  .l .foot{position:absolute;left:17mm;right:17mm;bottom:13mm;display:grid;grid-template-columns:auto 1fr auto;gap:5mm;align-items:start;font-size:6.2pt;line-height:1.55;color:var(--grey);border-top:.35mm dashed var(--teal);padding-top:3mm}
+  .l .foot .from{font-size:5.6pt;font-weight:700;letter-spacing:.18em;color:#fff;background:var(--teal);padding:.8mm 2mm}
+  .l .foot b{color:var(--ink)}
+  .l .stamp.sm{width:17mm;top:11mm;right:12mm}
+""", [
+ ("first", f"""    <div class="border"></div><div class="inner"></div>
+    {logo_svg("logo")}
+    <div class="via mono"><span>BY MISSIVE</span><span>PRIORITY POST</span></div>
+    {stamp("stamp")}
+    {POSTMARK}
+    {LETTER}
+    <div class="foot mono"><span class="from">FROM</span><span><b>Missive Digital Marketing LLP</b><br>{ADDR1} {ADDR2}</span><span style="text-align:right">hello@missivedigital.com<br>{LEGAL}</span></div>"""),
+ ("continuation", f"""    <div class="border"></div><div class="inner"></div>
+    {logo_svg("logo").replace('class="logo"', 'class="logo" style="height:8mm"')}
+    {stamp("stamp sm")}
+    <div class="foot mono"><span class="from">FROM</span><span><b>Missive Digital Marketing LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
+])
+
+# ───────────────────────── M · Riso (two-colour overprint, halftone full stop)
+def halftone(cx, cy, R, step=.95, light=(-.55, -.6, .58)):
+    """Halftone sphere: dot size follows shading, so the full stop reads as a lit ball."""
+    import math
+    ln = math.sqrt(sum(v * v for v in light)); L = [v / ln for v in light]
+    teal, aqua = [], []
+    n = int(R / step) + 1
+    for j in range(-n, n + 1):
+        for i in range(-n, n + 1):
+            x, y = i * step + (step / 2 if j % 2 else 0), j * step * .87
+            d2 = (x * x + y * y) / (R * R)
+            if d2 > 1: continue
+            z = math.sqrt(1 - d2)
+            lum = max(0, (x / R) * L[0] + (y / R) * L[1] + z * L[2])
+            r_t = step * .52 * min(1, max(0, 1.05 - lum) ** .9) * (1 - d2) ** .25
+            if r_t > .08: teal.append(f'<circle cx="{cx + x:.2f}" cy="{cy + y:.2f}" r="{r_t:.2f}"/>')
+            aqua.append(f'<circle cx="{cx + x + .55:.2f}" cy="{cy + y + .35:.2f}" r="{step * .52 * math.sqrt(1 - d2) ** .6:.2f}"/>')
+    return f'<g class="ink-a" fill="#5FC7C2">{"".join(aqua)}</g><g class="ink-t" fill="#1B8F9B">{"".join(teal)}</g>'
+
+REG = '<svg class="reg {pos}" viewBox="-5 -5 10 10"><circle r="2.6" fill="none" stroke="#1B8F9B" stroke-width=".35"/><path d="M-4.6 0H4.6M0 -4.6V4.6" stroke="#1B8F9B" stroke-width=".35"/></svg>'
+S = .27   # wordmark scale, mm per logo unit
+WX, WBASE = 15, 40   # wordmark left edge and baseline (mm)
+word_t = f'translate({WX - 162.5 * S:.2f} {WBASE - 97 * S:.2f}) scale({S})'
+word_a = f'translate({WX - 162.5 * S + .7:.2f} {WBASE - 97 * S + .45:.2f}) scale({S})'
+DOT_R = 15
+dot_cx = WX + (596.6 - 162.5) * S + 6 + DOT_R
+page("m-riso", "Missive Letterhead M", f"""
+  .m{{background:url(assets/textures/paper.jpg) center/cover}}
+  .m .head{{position:absolute;inset:0;width:210mm;height:297mm}}
+  .m .ink-a,.m .ink-t{{mix-blend-mode:multiply}}
+  .m .info{{position:absolute;top:46mm;left:15mm;right:15mm;display:flex;justify-content:space-between;font-size:6.4pt;letter-spacing:.08em;color:var(--teal-ink);border-top:.35mm solid var(--teal);padding-top:2.2mm}}
+  .m .info b{{color:var(--ink);font-weight:700}}
+  .m .letter{{top:60mm;left:20mm;right:20mm}}
+  .m .foot{{position:absolute;left:15mm;right:15mm;bottom:13mm;display:flex;justify-content:space-between;align-items:flex-end;font-size:6.2pt;line-height:1.55;color:var(--grey);border-top:.35mm solid var(--teal);padding-top:2.6mm}}
+  .m .foot b{{color:var(--ink)}}
+  .m .swatch{{display:flex;align-items:center;gap:1.6mm;font-size:5.6pt;letter-spacing:.14em;color:var(--teal-ink)}}
+  .m .swatch i{{width:3.2mm;height:3.2mm;display:inline-block;mix-blend-mode:multiply}}
+  .m .swatch i:nth-child(1){{background:var(--aqua)}} .m .swatch i:nth-child(2){{background:var(--teal);margin-left:-1.6mm}}
+  .m .reg{{position:absolute;width:5mm;height:5mm}}
+  .m .reg.tl{{top:5mm;left:5mm}} .m .reg.tr{{top:5mm;right:5mm}} .m .reg.bl{{bottom:5mm;left:5mm}} .m .reg.br{{bottom:5mm;right:5mm}}
+""", [
+ ("first", f"""    <svg class="head" viewBox="0 0 210 297">
+      <path class="ink-a" fill="#5FC7C2" transform="{word_a}" d="{WORD}"/>
+      <path class="ink-t" fill="#1B8F9B" fill-opacity=".9" transform="{word_t}" d="{WORD}"/>
+      {halftone(dot_cx, WBASE - DOT_R, DOT_R)}
+    </svg>
+    <div class="info mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b></span><span>hello@missivedigital.com</span><span>missivedigital.com ↗</span></div>
+    {LETTER}
+    <div class="foot mono"><span><b>{ADDR1}</b><br>{ADDR2} · {LEGAL}</span><span class="swatch"><i></i><i></i>&nbsp;PRINTED IN AQUA + TEAL</span></div>
+    {"".join(REG.format(pos=p) for p in ("tl", "tr", "bl", "br"))}"""),
+ ("continuation", f"""    <svg class="head" viewBox="0 0 210 297">{halftone(24, 22, 8)}</svg>
+    <div class="info mono" style="top:16mm;left:36mm"><span><b>MISSIVE DIGITAL MARKETING LLP</b></span><span>missivedigital.com ↗</span></div>
+    <div class="foot mono"><span>{LEGAL}</span><span class="swatch"><i></i><i></i>&nbsp;PRINTED IN AQUA + TEAL</span></div>
+    {"".join(REG.format(pos=p) for p in ("tl", "tr", "bl", "br"))}"""),
+])
+
+print("built g–m")
