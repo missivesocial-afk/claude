@@ -1,0 +1,391 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>1FCode Birthday Trend Posts</title>
+<style>
+/* ---------- FONTS (offline via npm @fontsource) ---------- */
+@font-face{font-family:"Google Sans";font-weight:500;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-500-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:600;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-600-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:700;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:600;src:url(node_modules/@fontsource/caveat/files/caveat-latin-600-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:700;src:url(node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2)}
+@font-face{font-family:"Archivo Black";src:url(node_modules/@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2)}
+@font-face{font-family:Anton;src:url(node_modules/@fontsource/anton/files/anton-latin-400-normal.woff2)}
+@font-face{font-family:Unbounded;font-weight:600;src:url(node_modules/@fontsource/unbounded/files/unbounded-latin-600-normal.woff2)}
+@font-face{font-family:Unbounded;font-weight:900;src:url(node_modules/@fontsource/unbounded/files/unbounded-latin-900-normal.woff2)}
+
+/* ---------- 1FC BRAND (only these three, plus their gradient) ---------- */
+:root{--green:#043335;--lime:#EAE26A;--white:#F4F4ED;--deep:#022223;
+  --hand:Caveat,cursive;--serif:"Instrument Serif",Georgia,serif;--display:"Google Sans",Inter,sans-serif;--mono:"JetBrains Mono",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#5f5f5f;display:flex;flex-direction:column;gap:40px;padding:40px;font-family:Inter,sans-serif}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden}
+.slide > *{position:absolute}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;z-index:50;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.paper::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;mix-blend-mode:multiply;z-index:50;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .22  0 0 0 0 .18  0 0 0 8 -5.6'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* =====================================================================
+   T1 SCRAPBOOK  (Canva 2026 "Notes App Chic" + flash photo + collage)
+   ===================================================================== */
+.t1{background:radial-gradient(900px 900px at 50% 40%,#0a4a4c,var(--green) 60%,var(--deep))}
+.t1 .note{left:70px;top:58px;width:940px;height:330px;background:var(--white);transform:rotate(-2deg);padding:34px 56px;color:var(--green);
+  box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.t1 .note .l1{font:700 116px/0.9 var(--hand)}
+.t1 .note .l2{font:700 150px/0.95 var(--hand);position:relative;display:inline-block;margin-left:150px}
+.t1 .note .l2::before{content:"";position:absolute;left:-14px;right:-18px;top:52%;height:46%;background:var(--lime);transform:rotate(-2deg);z-index:-1;border-radius:8px}
+.t1 .pol{left:64px;top:420px;width:540px;padding:26px 26px 100px;background:var(--white);transform:rotate(-5deg);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.t1 .pol img{width:488px;height:488px;display:block;object-fit:cover}
+.t1 .pol .cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font:700 54px/1 var(--hand);color:var(--green)}
+.t1 .pol .stamp{position:absolute;right:46px;top:458px;font:700 26px/1 var(--mono);letter-spacing:.08em;color:var(--lime);text-shadow:0 0 10px rgba(234,226,106,.9)}
+.tape{position:absolute;height:56px;background:repeating-linear-gradient(90deg,rgba(234,226,106,.92) 0 18px,rgba(234,226,106,.78) 18px 36px);
+  clip-path:polygon(0 8%,4% 0,8% 10%,12% 0,100% 0,96% 12%,100% 24%,96% 38%,100% 52%,96% 66%,100% 80%,96% 92%,100% 100%,0 100%,4% 86%,0 72%,4% 58%,0 44%,4% 30%,0 18%);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.t1 .notes{left:618px;top:520px;width:410px;background:var(--white);border-radius:34px;transform:rotate(4deg);padding:30px 32px 34px;color:var(--green);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.t1 .notes .bar{display:flex;justify-content:space-between;font:600 26px/1 Inter;color:var(--green);opacity:.7;margin-bottom:22px}
+.t1 .notes h3{font:700 44px/1.05 var(--display);letter-spacing:-.02em}
+.t1 .notes .meta{font:500 22px/1 Inter;opacity:.55;margin:10px 0 22px}
+.t1 .notes li{list-style:none;display:flex;gap:16px;align-items:flex-start;font:500 29px/1.25 Inter;padding:10px 0}
+.t1 .notes li i{flex:none;width:36px;height:36px;border-radius:50%;border:3px solid rgba(4,51,53,.35);margin-top:-1px;display:grid;place-items:center;font:700 22px/1 Inter;font-style:normal}
+.t1 .notes li.done i{background:var(--lime);border-color:var(--lime);color:var(--green)}
+.t1 .notes li.done span{opacity:.6}
+.t1 .clip{left:92px;top:1040px;width:330px;transform:rotate(7deg);box-shadow:0 16px 30px rgba(0,0,0,.45);border:8px solid var(--white)}
+.t1 .clip img{display:block;width:100%}
+.t1 .sticker{left:452px;top:356px;font:400 96px/1 "Archivo Black";color:var(--lime);transform:rotate(-12deg);
+  -webkit-text-stroke:18px var(--white);paint-order:stroke fill;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+.t1 .key{left:850px;top:1120px;width:150px;height:150px;border-radius:34px;background:var(--green);border:10px solid var(--white);display:grid;place-items:center;transform:rotate(9deg);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.t1 .key img{width:90px}
+.t1 .hand{font:700 50px/1 var(--hand);color:var(--lime)}
+.t1 svg.doodles{inset:0;width:1080px;height:1350px;pointer-events:none}
+
+/* =====================================================================
+   T2 NEO-BRUTALISM  (hard shadows, stickers, ticker tape, UI window)
+   ===================================================================== */
+.t2{background:var(--white) radial-gradient(rgba(4,51,53,.16) 2.4px,transparent 2.6px) 0 0/30px 30px;color:var(--green)}
+.t2 .h1{left:62px;top:70px;font:400 112px/1 "Archivo Black";letter-spacing:-.02em}
+.t2 .h2{left:56px;top:196px;font:400 112px/1 "Archivo Black";letter-spacing:-.02em;background:var(--lime);border:6px solid var(--green);box-shadow:12px 12px 0 var(--green);padding:6px 26px 14px;transform:rotate(-2deg);display:flex;align-items:center;gap:22px}
+.t2 .h2 img{height:86px}
+.t2 .sub{left:66px;top:356px;font:600 40px/1.2 var(--display)}
+.t2 .win{left:334px;top:440px;width:690px;height:610px;border:6px solid var(--green);border-radius:24px;background:var(--lime);box-shadow:18px 18px 0 var(--green);overflow:hidden}
+.t2 .win .bar{position:absolute;left:0;right:0;top:0;height:70px;background:var(--white);border-bottom:6px solid var(--green);display:flex;align-items:center;gap:14px;padding:0 24px;font:700 26px/1 var(--mono);z-index:2}
+.t2 .win .bar i{width:24px;height:24px;border-radius:50%;border:5px solid var(--green)}
+.t2 .win .bar i:first-child{background:var(--lime)}
+.t2 .win .bar span{margin-left:10px}
+.t2 .win .bar img{height:30px;margin-left:auto}
+.t2 .win .ph{position:absolute;width:1000px;left:-126px;top:96px}
+.t2 .win .dots{position:absolute;inset:70px 0 0;background:radial-gradient(rgba(4,51,53,.18) 2.4px,transparent 2.6px) 0 0/26px 26px}
+.t2 .burst{left:26px;top:620px;width:340px;height:340px;transform:rotate(-12deg)}
+.t2 .badge{right:46px;top:46px;width:220px;height:220px;animation:none}
+.t2 .tape1,.t2 .tape2{left:-120px;width:1320px;height:96px;border:6px solid var(--green);display:flex;align-items:center;white-space:nowrap;overflow:hidden;font:400 46px/1 "Archivo Black";letter-spacing:.02em}
+.t2 .tape1{top:1128px;background:var(--green);color:var(--lime);transform:rotate(-4deg);z-index:3}
+.t2 .tape2{top:1170px;background:var(--lime);color:var(--green);transform:rotate(5deg)}
+.t2 .cursor{left:742px;top:296px;width:92px;transform:rotate(-8deg)}
+
+/* =====================================================================
+   T3 RISO ZINE  (two-ink overprint, halftone, misregistration)
+   ===================================================================== */
+.t3{background:var(--white);color:var(--green)}
+.t3 .ink{mix-blend-mode:multiply}
+.t3 .sil{width:900px;left:384px;top:262px;opacity:.95;-webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 84%);mask-image:linear-gradient(to bottom,#000 58%,transparent 84%)}
+.t3 .ht{width:900px;left:360px;top:244px;-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent 86%),linear-gradient(to right,transparent 6%,#000 16%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 62%,transparent 86%),linear-gradient(to right,transparent 6%,#000 16%);mask-composite:intersect}
+.t3 .big{left:52px;top:150px;font:400 262px/.84 Anton;letter-spacing:-.005em;text-transform:uppercase}
+.t3 .big.mis{left:66px;top:162px;color:var(--lime)}
+.t3 .name{left:56px;top:1012px;background:var(--lime);padding:14px 26px 10px;font:400 84px/1 Anton;letter-spacing:.01em;transform:rotate(-1.5deg)}
+.t3 .role{left:60px;top:1132px;font:700 26px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.t3 .head{left:56px;right:56px;top:52px;display:flex;justify-content:space-between;font:700 24px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;border-bottom:4px solid var(--green);padding-bottom:16px}
+.t3 .foot{left:56px;right:56px;bottom:52px;display:flex;justify-content:space-between;align-items:flex-end;font:700 22px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-top:4px solid var(--green);padding-top:16px}
+.t3 .foot img{height:38px}
+.t3 .reg{width:46px;height:46px}
+.t3 .stars{font:400 64px/1 Anton;color:var(--lime);-webkit-text-stroke:3px var(--green)}
+
+/* =====================================================================
+   T4 PIXEL STRETCH  (Instagram 2026 pixel-stretch, duotone in brand colours)
+   ===================================================================== */
+.t4{background:var(--green);color:var(--white)}
+.t4 .kick{left:0;right:0;top:56px;text-align:center;font:400 92px/1 var(--serif);font-style:italic;color:var(--white)}
+.t4 .name{left:-10px;right:-10px;top:150px;text-align:center;font:400 352px/.86 Anton;letter-spacing:-.01em;color:var(--lime)}
+.t4 .ph{width:1000px;left:89px;top:206px}
+.t4 .chy{left:0;right:0;bottom:0;height:150px;background:var(--lime);color:var(--green);display:flex;align-items:center;justify-content:space-between;padding:0 64px}
+.t4 .chy b{font:400 50px/1 Anton;letter-spacing:.02em;text-transform:uppercase}
+.t4 .chy span{display:block;font:700 22px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+.t4 .chy img{height:44px}
+.t4 .live{left:64px;top:1150px;font:700 24px/1 var(--mono);letter-spacing:.14em;background:var(--green);color:var(--lime);padding:12px 18px;border:3px solid var(--lime)}
+
+/* =====================================================================
+   T5 LIME CHROME  (restrained Y2K chrome + Pinterest "Glamoratti" sparkle)
+   ===================================================================== */
+.t5{background:radial-gradient(760px 700px at 50% 52%,#0d5a58 0%,var(--green) 52%,var(--deep) 100%);color:var(--white)}
+.t5 .halo{left:190px;top:330px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(234,226,106,.42),rgba(234,226,106,.1) 48%,transparent 70%)}
+.t5 .ring{left:170px;top:380px;width:740px;height:220px;border-radius:50%;border:5px solid rgba(234,226,106,.75);transform:rotate(-10deg);box-shadow:0 0 30px rgba(234,226,106,.5)}
+.t5 .ph{width:900px;left:96px;top:420px;filter:drop-shadow(0 0 22px rgba(234,226,106,.55));
+  -webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 80%);mask-image:linear-gradient(to bottom,#000 60%,transparent 80%)}
+.chrome{font-family:Unbounded;font-weight:900;letter-spacing:-.04em;line-height:.92;
+  background:linear-gradient(180deg,#ffffff 0%,#F4F4ED 22%,#EAE26A 44%,#5c6a2a 52%,#c9c25a 60%,#fbfbe6 78%,#b5ad45 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 -2px 0 rgba(255,255,240,.7)) drop-shadow(0 2px 0 #9b9440) drop-shadow(0 4px 0 #6f6a2c) drop-shadow(0 6px 0 #2d3a1c) drop-shadow(0 18px 24px rgba(0,0,0,.55))}
+.t5 .c1{left:0;right:0;top:76px;text-align:center;font-size:178px}
+.t5 .c2{left:0;right:0;top:238px;text-align:center;font-size:148px}
+.t5 .pill{left:50%;transform:translateX(-50%);top:1062px;white-space:nowrap;font:600 46px/1 Unbounded;letter-spacing:-.01em;color:var(--green);padding:26px 46px;border-radius:999px;
+  background:linear-gradient(180deg,#fffff2,#EAE26A 48%,#bdb44a 52%,#f2edb0);box-shadow:inset 0 2px 0 #fff,0 14px 34px rgba(0,0,0,.45),0 0 0 4px rgba(234,226,106,.35)}
+.t5 .role{left:0;right:0;top:1180px;text-align:center;font:600 28px/1 Unbounded;letter-spacing:.06em;color:var(--lime);text-transform:uppercase}
+.t5 .logo{left:0;right:0;margin:auto;bottom:54px;height:36px}
+.t5 svg.sp{inset:0;width:1080px;height:1350px}
+
+/* =====================================================================
+   T6 BENTO  (bento grid, all brand tiles)
+   ===================================================================== */
+.t6{background:var(--white);padding:46px;display:grid;gap:18px;grid-template-columns:repeat(3,1fr);grid-template-rows:300px 300px 330px 264px;
+  grid-template-areas:"photo photo hbd" "photo photo hbd" "stat cover candle" "role role wish"}
+.t6 > *{position:relative;border-radius:34px;overflow:hidden}
+.t6 .photo{grid-area:photo;background:var(--lime)}
+.t6 .photo img{position:absolute;width:1000px;left:-126px;top:44px}
+.t6 .photo .tag{position:absolute;left:26px;top:24px;font:700 22px/1 var(--mono);letter-spacing:.1em;background:var(--green);color:var(--lime);padding:10px 14px;border-radius:12px}
+.t6 .hbd{grid-area:hbd;background:var(--green);color:var(--white)}
+.t6 .hbd .v{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);white-space:nowrap;text-align:center}
+.t6 .hbd .v b{display:block;font:400 150px/.86 Anton;letter-spacing:.005em;color:var(--lime)}
+.t6 .hbd .v span{display:block;font:400 150px/.86 Anton;letter-spacing:.005em}
+.t6 .stat{grid-area:stat;background:var(--green);color:var(--white);padding:30px}
+.t6 .stat b{display:block;font:600 190px/.82 var(--display);letter-spacing:-.06em;color:var(--lime)}
+.t6 .stat span{display:block;font:500 28px/1.25 Inter;margin-top:20px}
+.t6 .cover{grid-area:cover;background:#000}
+.t6 .cover img{width:100%;height:100%;object-fit:cover;object-position:50% 0}
+.t6 .cover em{position:absolute;left:14px;right:14px;bottom:14px;font:600 24px/1.15 var(--display);font-style:normal;background:var(--lime);color:var(--green);padding:12px 14px;border-radius:16px}
+.t6 .candle{grid-area:candle;background:var(--lime);color:var(--green)}
+.t6 .candle svg{position:absolute;left:24px;top:20px;width:268px;height:214px}
+.t6 .candle span{position:absolute;left:0;right:0;bottom:22px;text-align:center;font:700 54px/1 var(--hand)}
+.t6 .role{grid-area:role;background:var(--white);border:4px solid var(--green);color:var(--green);padding:34px 38px;display:flex;flex-direction:column;justify-content:space-between}
+.t6 .role b{font:600 64px/1 var(--display);letter-spacing:-.03em}
+.t6 .role span{font:500 28px/1.3 Inter;opacity:.8}
+.t6 .role img{position:absolute;right:36px;bottom:34px;height:40px}
+.t6 .wish{grid-area:wish;background:var(--green);color:var(--lime);display:grid;place-items:center;text-align:center;padding:20px}
+.t6 .wish p{font:700 60px/.95 var(--hand)}
+
+/* =====================================================================
+   T7 AURA  (grainy mesh gradient + frosted glass)
+   ===================================================================== */
+.t7{background:var(--green)}
+.t7 .blob{border-radius:50%;filter:blur(90px)}
+.t7 .card{left:84px;right:84px;top:150px;height:1050px;border-radius:56px;background:rgba(244,244,237,.16);border:2px solid rgba(255,255,255,.45);
+  -webkit-backdrop-filter:blur(26px) saturate(1.25);backdrop-filter:blur(26px) saturate(1.25);box-shadow:0 30px 80px rgba(2,34,35,.35),inset 0 1px 0 rgba(255,255,255,.6)}
+.t7 .ring{left:330px;top:220px;width:420px;height:420px;border-radius:50%;padding:12px;background:conic-gradient(from 200deg,var(--lime),var(--white),var(--lime),#9fb24a,var(--lime));box-shadow:0 0 60px rgba(234,226,106,.7)}
+.t7 .ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 14%;display:block;border:8px solid rgba(244,244,237,.9)}
+.t7 .h{left:84px;right:84px;top:700px;text-align:center;color:var(--green)}
+.t7 .h .s{display:block;font:400 112px/1 var(--serif);font-style:italic}
+.t7 .h b{display:block;font:600 124px/.95 var(--display);letter-spacing:-.045em}
+.t7 .pills{left:84px;right:84px;top:990px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.t7 .pills span{font:600 26px/1 Inter;color:var(--green);padding:16px 24px;border-radius:999px;background:rgba(244,244,237,.55);border:1.5px solid rgba(255,255,255,.7)}
+.t7 .foot{left:0;right:0;bottom:62px;display:flex;justify-content:center}
+.t7 .foot span{display:flex;align-items:center;gap:14px;padding:16px 30px;border-radius:999px;background:rgba(4,51,53,.35);border:1.5px solid rgba(244,244,237,.35);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.t7 .foot img{height:34px}
+
+/* =====================================================================
+   T8 LOCK SCREEN  (depth-effect clock + notification stack)
+   ===================================================================== */
+.t8{background:linear-gradient(180deg,var(--white) 0%,var(--lime) 38%,#7f8a4a 62%,var(--green) 86%);color:var(--green)}
+.t8 .sb{left:60px;right:56px;top:34px;display:flex;justify-content:space-between;align-items:center;font:600 30px/1 Inter}
+.t8 .sb svg{height:26px}
+.t8 .lock{left:0;right:0;top:104px;display:flex;justify-content:center}
+.t8 .lock img{height:46px}
+.t8 .date{left:0;right:0;top:176px;text-align:center;font:600 40px/1 var(--display);letter-spacing:-.01em}
+.t8 .clock{left:0;right:0;top:214px;text-align:center;font:600 290px/1 var(--display);letter-spacing:-.06em;color:var(--green)}
+.t8 .pw{inset:0;-webkit-mask-image:linear-gradient(to right,transparent 20px,#000 190px,#000 calc(100% - 190px),transparent calc(100% - 20px));mask-image:linear-gradient(to right,transparent 20px,#000 190px,#000 calc(100% - 190px),transparent calc(100% - 20px))}
+.t8 .pw img{position:absolute;width:1100px;left:16px;top:392px}
+.t8 .stack{left:46px;right:46px;top:800px;display:flex;flex-direction:column;gap:16px}
+.t8 .nt{display:flex;gap:22px;padding:26px 28px;border-radius:40px;background:rgba(244,244,237,.62);border:1.5px solid rgba(255,255,255,.7);
+  -webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);box-shadow:0 10px 30px rgba(2,34,35,.18)}
+.t8 .nt.back{transform:scale(.94);margin-top:-118px;opacity:.75;z-index:-1}
+.t8 .ic{flex:none;width:76px;height:76px;border-radius:20px;display:grid;place-items:center}
+.t8 .ic img{width:48px}
+.t8 .nt .tx{flex:1;min-width:0}
+.t8 .nt .top{display:flex;justify-content:space-between;font:600 24px/1 Inter;opacity:.6;letter-spacing:.02em;text-transform:uppercase}
+.t8 .nt b{display:block;font:700 34px/1.2 Inter;margin-top:10px}
+.t8 .nt p{font:400 30px/1.3 Inter;margin-top:4px}
+.t8 .btn{bottom:84px;width:100px;height:100px;border-radius:50%;background:rgba(244,244,237,.22);border:1.5px solid rgba(244,244,237,.4);display:grid;place-items:center;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.t8 .btn svg{width:44px;height:44px}
+.t8 .home{left:0;right:0;margin:auto;bottom:30px;width:300px;height:12px;border-radius:99px;background:var(--white)}
+</style></head>
+<body>
+
+<!-- T1 SCRAPBOOK -->
+<section class="slide t1 grain" data-name="t1-scrapbook">
+  <div class="note"><div class="l1">Happy birthday,</div><div class="l2">Rishabh!</div></div>
+  <div class="pol"><img src="assets/fx-flash.jpg" alt=""><div class="stamp">★ HBD ★</div><div class="cap">the boss, 2026 ★</div></div>
+  <div class="tape" style="left:250px;top:398px;width:200px;transform:rotate(-4deg)"></div>
+  <div class="notes">
+    <div class="bar"><span>‹ Notes</span><span>•••</span></div>
+    <h3>Today ✨</h3>
+    <div class="meta">Birthday edition</div>
+    <ul>
+      <li class="done"><i>✓</i><span>16 years in banking &amp; investment</span></li>
+      <li class="done"><i>✓</i><span>Magazine cover, Sept 2026</span></li>
+      <li><i></i><span>Cut the cake 🎂</span></li>
+      <li><i></i><span>Read every wish 💬</span></li>
+    </ul>
+  </div>
+  <div class="tape" style="left:760px;top:494px;width:170px;transform:rotate(10deg)"></div>
+  <div class="clip"><img src="assets/enterprise-world-cover-top.png" alt=""></div>
+  <div class="tape" style="left:250px;top:1040px;width:140px;transform:rotate(12deg)"></div>
+  <div class="sticker">HBD!</div>
+  <div class="key"><img src="assets/icon-lime.svg" alt=""></div>
+  <div class="hand" style="left:470px;top:1110px;transform:rotate(-6deg)">cover star!!</div>
+  <div class="hand" style="left:560px;top:1215px;color:var(--white);font-size:46px;transform:rotate(-3deg)">love, Team 1FC ♡</div>
+  <svg class="doodles" viewBox="0 0 1080 1350" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- arrow from note to clipping -->
+    <path d="M 468 1150 C 430 1170 420 1150 400 1130" stroke="#EAE26A" stroke-width="6"/>
+    <path d="M 396 1146 L 398 1126 L 418 1128" stroke="#EAE26A" stroke-width="6"/>
+    <!-- stars -->
+    <path d="M 990 430 l 10 26 l 28 2 l -22 18 l 8 28 l -24 -16 l -24 16 l 8 -28 l -22 -18 l 28 -2 z" stroke="#EAE26A" stroke-width="5"/>
+    <path d="M 640 1060 l 6 16 l 17 1 l -13 11 l 5 17 l -15 -10 l -15 10 l 5 -17 l -13 -11 l 17 -1 z" stroke="#F4F4ED" stroke-width="4"/>
+    <!-- squiggle -->
+    <path d="M 650 1310 q 20 -20 40 0 t 40 0 t 40 0 t 40 0" stroke="#EAE26A" stroke-width="5"/>
+    <!-- sparkle lines near sticker -->
+    <path d="M 690 360 l 22 -18 M 702 392 l 30 -4 M 676 334 l 6 -26" stroke="#EAE26A" stroke-width="6"/>
+  </svg>
+</section>
+
+<!-- T2 NEO-BRUTALISM -->
+<section class="slide t2" data-name="t2-neo-brutal">
+  <div class="h1">NEW LEVEL</div>
+  <div class="h2">UNLOCKED</div>
+  <div class="sub">Happy birthday, Rishabh M Shah.</div>
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>founder.png</span><img src="assets/logo-on-light.svg" alt="1FCode"></div>
+    <div class="dots"></div>
+    <img class="ph" src="assets/rishabh-cutout-hd.png" alt="">
+  </div>
+  <svg class="burst" viewBox="0 0 340 340" aria-hidden="true">
+    <polygon id="bp" fill="#EAE26A" stroke="#043335" stroke-width="7" stroke-linejoin="round"/>
+    <text x="170" y="168" text-anchor="middle" font-family="Archivo Black" font-size="60" fill="#043335">16 YRS</text>
+    <text x="170" y="214" text-anchor="middle" font-family="Inter" font-weight="700" font-size="22" fill="#043335">IN BANKING &amp;</text>
+    <text x="170" y="242" text-anchor="middle" font-family="Inter" font-weight="700" font-size="22" fill="#043335">INVESTMENT</text>
+  </svg>
+  <svg class="badge" viewBox="0 0 220 220" aria-hidden="true">
+    <defs><path id="circ" d="M 110 110 m -78 0 a 78 78 0 1 1 156 0 a 78 78 0 1 1 -156 0"/></defs>
+    <circle cx="110" cy="110" r="104" fill="#043335" stroke="#043335" stroke-width="4"/>
+    <text font-family="Archivo Black" font-size="22" fill="#EAE26A" letter-spacing="3.2"><textPath href="#circ">FOUNDER ✦ CEO ✦ 1FC GROUP ✦ LEGEND ✦</textPath></text>
+    <image href="assets/icon-lime.svg" x="72" y="80" width="76" height="61"/>
+  </svg>
+  <svg class="cursor" viewBox="0 0 92 110" aria-hidden="true"><path d="M8 6 L8 86 L28 68 L42 100 L58 93 L44 62 L72 62 Z" fill="#F4F4ED" stroke="#043335" stroke-width="7" stroke-linejoin="round"/></svg>
+  <div class="tape2" id="tp2"></div>
+  <div class="tape1" id="tp1"></div>
+</section>
+
+<!-- T3 RISO ZINE -->
+<section class="slide t3 paper" data-name="t3-riso-zine">
+  <div class="head"><span>The Birthday Zine</span><span>Nº 01 · 1FC</span></div>
+  <img class="sil ink" src="assets/fx-silhouette.png" alt="">
+  <img class="ht ink" src="assets/fx-halftone.png" alt="">
+  <div class="big mis ink">Happy<br>Birth<br>day</div>
+  <div class="big ink">Happy<br>Birth<br>day</div>
+  <div class="name ink">RISHABH M SHAH</div>
+  <div class="role">Founder &amp; CEO<br>1FC Group of Companies</div>
+  <svg class="reg" style="right:60px;top:110px" viewBox="0 0 46 46"><circle cx="23" cy="23" r="12" fill="none" stroke="#043335" stroke-width="3"/><path d="M23 0v46M0 23h46" stroke="#043335" stroke-width="3"/></svg>
+  <svg class="reg" style="left:56px;top:1196px" viewBox="0 0 46 46"><circle cx="23" cy="23" r="12" fill="none" stroke="#043335" stroke-width="3"/><path d="M23 0v46M0 23h46" stroke="#043335" stroke-width="3"/></svg>
+  <div class="stars" style="right:70px;top:1000px">✦ ✦</div>
+  <div class="foot"><span>Printed with love<br>by Team 1FC</span><img src="assets/logo-on-light.svg" alt="1FCode"></div>
+</section>
+
+<!-- T4 PIXEL STRETCH -->
+<section class="slide t4" data-name="t4-pixel-stretch">
+  <div class="kick">Happy birthday,</div>
+  <div class="name">RISHABH</div>
+  <img class="ph" src="assets/fx-stretch.png" alt="">
+  <div class="live">● LIVE · TODAY</div>
+  <div class="chy"><div><b>Rishabh M Shah</b><span>Founder &amp; CEO · 1FC Group of Companies</span></div><img src="assets/logo-on-light.svg" alt="1FCode"></div>
+</section>
+
+<!-- T5 LIME CHROME -->
+<section class="slide t5 grain" data-name="t5-lime-chrome">
+  <div class="halo"></div>
+  <img class="ph" src="assets/rishabh-cutout-hd.png" alt="">
+  <div class="chrome c1">Happy</div>
+  <div class="chrome c2">Birthday</div>
+  <div class="pill">Rishabh M Shah</div>
+  <div class="role">Founder &amp; CEO ✦ 1FC Group</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+  <svg class="sp" viewBox="0 0 1080 1350" id="sparkles" aria-hidden="true"></svg>
+</section>
+
+<!-- T6 BENTO -->
+<section class="slide t6" data-name="t6-bento">
+  <div class="photo"><img src="assets/rishabh-cutout-hd.png" alt=""><div class="tag">TODAY'S MAIN CHARACTER</div></div>
+  <div class="hbd"><div class="v"><b>HAPPY</b><span>BIRTHDAY</span></div></div>
+  <div class="stat"><b>16</b><span>years in banking &amp; investment</span></div>
+  <div class="cover"><img src="assets/enterprise-world-cover-top.png" alt=""><em>Cover star, Sept 2026</em></div>
+  <div class="candle">
+    <svg viewBox="602 478 154 124" aria-hidden="true">
+      <defs><pattern id="st6" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="8" height="8" fill="#F4F4ED"/><rect width="3.4" height="8" fill="#043335"/></pattern></defs>
+      <path fill="#043335" d="M 603.65625 600.113281 L 603.65625 479.886719 L 634.078125 479.886719 L 634.078125 493.625 L 618.117188 493.625 L 618.117188 586.375 L 634.078125 586.375 L 634.078125 600.113281 Z"/>
+      <path fill="#043335" d="M 723.578125 600.113281 L 723.578125 586.375 L 739.535156 586.375 L 739.535156 493.625 L 723.578125 493.625 L 723.578125 479.886719 L 753.996094 479.886719 L 753.996094 600.113281 Z"/>
+      <line x1="678.8" y1="531.6" x2="678.8" y2="522" stroke="#043335" stroke-width="1.6" stroke-linecap="round"/>
+      <path fill="url(#st6)" stroke="#043335" stroke-width="1.4" d="M 660.3125 584.5 L 671.761719 531.601562 L 685.875 531.601562 L 697.339844 584.5 Z"/>
+      <path fill="#F4F4ED" stroke="#043335" stroke-width="1.4" d="M 678.8 488 C 682.6 496.5 688.4 502 688.4 512.6 A 9.6 9.6 0 0 1 669.2 512.6 C 669.2 502 675 496.5 678.8 488 Z"/>
+    </svg>
+    <span>make a wish ✦</span>
+  </div>
+  <div class="role"><b>Rishabh M Shah</b><span>Founder &amp; CEO,<br>1FC Group of Companies</span><img src="assets/logo-on-light.svg" alt="1FCode"></div>
+  <div class="wish"><p>love,<br>Team 1FC ♡</p></div>
+</section>
+
+<!-- T7 AURA -->
+<section class="slide t7 grain" data-name="t7-aura-glass">
+  <div class="blob" style="left:-220px;top:-160px;width:900px;height:900px;background:var(--lime)"></div>
+  <div class="blob" style="left:140px;top:520px;width:820px;height:700px;background:var(--white);opacity:.9"></div>
+  <div class="blob" style="left:-260px;top:1040px;width:760px;height:700px;background:#0b5c5b"></div>
+  <div class="blob" style="left:560px;top:-200px;width:600px;height:600px;background:#9fb24a;opacity:.7"></div>
+  <div class="blob" style="left:420px;top:980px;width:760px;height:620px;background:var(--lime);opacity:.85"></div>
+  <div class="card"></div>
+  <div class="ring"><img src="assets/rishabh-portrait-hd.jpg" alt=""></div>
+  <div class="h"><span class="s">Happy birthday,</span><b>Rishabh</b></div>
+  <div class="pills"><span>Founder &amp; CEO</span><span>16 yrs in finance</span><span>Cover star 2026 ✦</span></div>
+  <div class="foot"><span><img src="assets/logo-on-dark.svg" alt="1FCode"></span></div>
+</section>
+
+<!-- T8 LOCK SCREEN -->
+<section class="slide t8" data-name="t8-lock-screen">
+  <div class="sb"><span>1FC</span>
+    <svg viewBox="0 0 120 26" aria-hidden="true"><g fill="#043335"><rect x="0" y="16" width="6" height="10" rx="1.5"/><rect x="9" y="11" width="6" height="15" rx="1.5"/><rect x="18" y="6" width="6" height="20" rx="1.5"/><rect x="27" y="0" width="6" height="26" rx="1.5"/></g>
+      <path d="M48 9 a18 18 0 0 1 24 0 M52 14 a11 11 0 0 1 16 0 M57 19 a4 4 0 0 1 6 0" stroke="#043335" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+      <rect x="82" y="2" width="32" height="22" rx="6" fill="none" stroke="#043335" stroke-width="2.4" opacity=".6"/><rect x="85" y="5" width="26" height="16" rx="3.5" fill="#043335"/><rect x="116" y="9" width="3" height="8" rx="1.5" fill="#043335" opacity=".6"/></svg></div>
+  <div class="lock"><img src="assets/icon-green.svg" alt=""></div>
+  <div class="date">Today · Rishabh’s birthday</div>
+  <div class="clock">HBD</div>
+  <div class="pw"><img src="assets/rishabh-cutout-hd.png" alt=""></div>
+  <div class="stack">
+    <div class="nt"><div class="ic" style="background:var(--green)"><img src="assets/icon-lime.svg" alt=""></div>
+      <div class="tx"><div class="top"><span>Team 1FC</span><span>now</span></div><b>Happy birthday, Rishabh! 🎂</b><p>Thank you for building legacies with us. Here’s to the next chapter.</p></div></div>
+    <div class="nt"><div class="ic" style="background:var(--white)"><span style="font:700 40px/1 Inter;color:var(--green)">✦</span></div>
+      <div class="tx"><div class="top"><span>Calendar</span><span>all day</span></div><b>Founder’s birthday 🎉</b><p>Rishabh M Shah · Founder &amp; CEO, 1FC Group</p></div></div>
+  </div>
+  <div class="btn" style="left:84px"><svg viewBox="0 0 44 44"><path d="M14 4h16v8l-4 6v22h-8V18l-4-6z" fill="none" stroke="#F4F4ED" stroke-width="3" stroke-linejoin="round"/></svg></div>
+  <div class="btn" style="right:84px"><svg viewBox="0 0 44 44"><rect x="4" y="12" width="36" height="26" rx="6" fill="none" stroke="#F4F4ED" stroke-width="3"/><circle cx="22" cy="25" r="7" fill="none" stroke="#F4F4ED" stroke-width="3"/><path d="M15 12l3-5h8l3 5" fill="none" stroke="#F4F4ED" stroke-width="3"/></svg></div>
+  <div class="home"></div>
+</section>
+
+<script>
+/* T2: starburst points + ticker text */
+(() => {
+  const pts = [], n = 18, cx = 170, cy = 170;
+  for (let i = 0; i < n * 2; i++) { const r = i % 2 ? 128 : 162, a = Math.PI * i / n; pts.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); }
+  document.getElementById('bp').setAttribute('points', pts.join(' '));
+  const t = ' HAPPY BIRTHDAY RISHABH ✦'.repeat(6);
+  document.getElementById('tp1').textContent = t;
+  document.getElementById('tp2').textContent = ' MAKE A WISH ✦ 1FC ✦'.repeat(8);
+})();
+/* T5: four-point sparkles */
+(() => {
+  const s = document.getElementById('sparkles'), NS = 'http://www.w3.org/2000/svg';
+  const star = (x, y, r, c, o) => { const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', `M ${x} ${y-r} C ${x+r*.14} ${y-r*.14} ${x+r*.14} ${y-r*.14} ${x+r} ${y} C ${x+r*.14} ${y+r*.14} ${x+r*.14} ${y+r*.14} ${x} ${y+r} C ${x-r*.14} ${y+r*.14} ${x-r*.14} ${y+r*.14} ${x-r} ${y} C ${x-r*.14} ${y-r*.14} ${x-r*.14} ${y-r*.14} ${x} ${y-r} Z`);
+    p.setAttribute('fill', c); p.setAttribute('opacity', o); p.style.filter = 'drop-shadow(0 0 8px rgba(234,226,106,.9))'; s.appendChild(p); };
+  [[120,120,34,'#F4F4ED',1],[960,150,46,'#EAE26A',1],[905,92,16,'#F4F4ED',.9],[70,520,22,'#EAE26A',.9],[1010,560,30,'#F4F4ED',1],[180,880,40,'#EAE26A',1],[930,900,24,'#EAE26A',.9],
+   [240,420,14,'#F4F4ED',.8],[860,420,18,'#F4F4ED',.8],[80,1120,26,'#F4F4ED',.9],[1000,1110,38,'#EAE26A',1],[520,40,14,'#EAE26A',.8],[300,1250,16,'#EAE26A',.8],[800,1240,14,'#F4F4ED',.8]]
+   .forEach(a => star(...a));
+})();
+</script>
+</body></html>
