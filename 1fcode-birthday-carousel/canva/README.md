@@ -35,3 +35,7 @@ Local reference render: `../locked-post/locked-celebrating-the-visionary.png` (f
 - Design: "1FCode founder birthday Instagram post" (`DAHXgFsHbwM`)
 - Edit link: https://www.canva.com/d/VZEVkJb9WtxT0zE
 - Canva generated the page at 1080 x 1440 (3:4), which Instagram accepts for portrait posts. The local render in `../locked-post/` is 1080 x 1350 (4:5).
+
+## Typography update
+
+Canva's editing tools can't set a font family, so the headline (Anton) and the name block (Inter + Google Sans) are placed as transparent graphics rendered from `typo.html`: `headline.png` and `name-block.png`. The photo, logo and colour shapes are still separate Canva elements. To edit the words, change `typo.html`, re-render, and replace the two images in Canva.
