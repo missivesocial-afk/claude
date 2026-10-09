@@ -1,0 +1,166 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>1FCode Birthday, Editorial Set</title>
+<style>
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:normal;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:700;src:url(node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2)}
+
+:root{--green:#043335;--lime:#EAE26A;--white:#F4F4ED;--ink:#011718;
+  --serif:"Instrument Serif",Georgia,serif;--mono:"JetBrains Mono",monospace;--hand:Caveat,cursive}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#5f5f5f;display:flex;flex-direction:column;gap:40px;padding:40px;font-family:Inter,sans-serif}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden}
+.slide > *{position:absolute}
+/* film grain */
+.film::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;z-index:90;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+/* paper tooth */
+.tooth::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;mix-blend-mode:multiply;z-index:89;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .2  0 0 0 0 .2  0 0 0 7 -5.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* ===== A1 FILM STILL ===== */
+.a1{background:var(--ink);color:var(--white)}
+.a1 .frame{left:0;top:170px;width:1080px;height:1010px;overflow:hidden}
+.a1 .frame img{position:absolute;width:1080px;left:0;top:-96px}
+.a1 .frame::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 160px rgba(1,23,24,.55)}
+.a1 .scene{left:56px;top:76px;font:700 18px/1 var(--mono);letter-spacing:.2em;color:rgba(244,244,237,.55)}
+.a1 .logo{right:56px;top:66px;height:34px;opacity:.9}
+.a1 .sub{left:0;right:0;top:1214px;text-align:center;font:500 38px/1.35 Inter;color:var(--lime);letter-spacing:.005em}
+
+/* ===== A2 JOURNAL COVER ===== */
+.a2{background:#d9cfb6;color:var(--green)}
+.a2 img.ph{left:0;top:0;width:1080px}
+.a2 .fade{left:0;right:0;bottom:0;height:420px;background:linear-gradient(to bottom,rgba(1,23,24,0),rgba(1,23,24,.62))}
+.a2 .mast{left:64px;right:64px;top:50px;display:flex;justify-content:space-between;font:600 21px/1 Inter;letter-spacing:.24em;text-transform:uppercase;border-bottom:1.5px solid var(--green);padding-bottom:16px}
+.a2 .h1{left:62px;top:102px;font:400 100px/1 var(--serif);font-style:italic}
+.a2 .h2{left:60px;top:196px;font:400 140px/.9 var(--serif);letter-spacing:-.01em}
+.a2 .tag{left:64px;top:1170px;font:700 18px/1 var(--mono);letter-spacing:.14em;background:var(--lime);color:var(--green);padding:10px 14px}
+.a2 .cap{left:64px;top:1222px;width:640px;font:500 28px/1.35 Inter;color:var(--white)}
+.a2 .logo{right:64px;bottom:62px;height:40px}
+
+/* ===== A3 CONTACT SHEET ===== */
+.a3{background:var(--white);color:var(--green)}
+.a3 .hd{left:64px;right:64px;top:58px;display:flex;justify-content:space-between;align-items:center;font:700 19px/1 var(--mono);letter-spacing:.2em}
+.a3 .hd img{height:34px}
+.a3 .title{left:58px;top:118px;font:700 118px/1 var(--hand);transform:rotate(-2deg);transform-origin:left}
+.a3 .strip{left:-140px;top:390px;width:1360px;height:600px;background:#0b1515;box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.a3 .holes{left:-140px;width:1360px;height:24px;background:repeating-linear-gradient(90deg,transparent 0 18px,#e9e8dc 18px 40px,transparent 40px 56px);border-radius:4px}
+.a3 .fr{top:440px;width:320px;height:480px;overflow:hidden;background:#222}
+.a3 .fr img{width:100%;height:100%;object-fit:cover}
+.a3 .num{top:928px;font:700 18px/1 var(--mono);color:var(--lime);letter-spacing:.1em}
+.a3 svg.mk{left:0;top:0;width:1080px;height:1350px;overflow:visible}
+.a3 .n1{left:600px;top:1018px;font:700 52px/1 var(--hand);transform:rotate(-3deg)}
+.a3 .n2{left:64px;top:1150px;font:700 19px/1.6 var(--mono);letter-spacing:.12em}
+.a3 .n3{right:64px;top:1214px;font:700 50px/1 var(--hand);transform:rotate(-4deg)}
+
+/* ===== A4 GALLERY WALL ===== */
+.a4{background:radial-gradient(700px 520px at 400px 520px,#fdfdf8 0%,#f4f4ed 55%,#e4e3d6 100%);color:var(--green)}
+.a4 .floor{left:0;right:0;bottom:0;height:150px;background:linear-gradient(to bottom,#06393b,var(--green) 40%,#022223)}
+.a4 .floor::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:rgba(0,0,0,.25)}
+.a4 .wt1{left:92px;top:92px;font:400 92px/1 var(--serif);font-style:italic}
+.a4 .wt2{left:90px;top:182px;font:400 124px/1 var(--serif);letter-spacing:-.01em}
+.a4 .room{right:72px;top:104px;text-align:right;font:600 18px/1.6 Inter;letter-spacing:.22em}
+.a4 .fr{left:140px;top:352px;width:516px;height:716px;background:#fbfbf7;border:12px solid var(--green);padding:46px;box-shadow:0 38px 60px rgba(4,51,53,.22),0 10px 18px rgba(4,51,53,.18)}
+.a4 .fr img{width:100%;height:100%;object-fit:cover;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.a4 .plac{left:722px;top:842px;width:300px;background:#fdfdfa;padding:24px 24px 26px;box-shadow:0 6px 14px rgba(4,51,53,.14);font:400 19px/1.42 Inter}
+.a4 .plac b{display:block;font:700 23px/1.2 Inter;margin-bottom:4px}
+.a4 .plac em{display:block;font-style:italic;margin-bottom:10px}
+.a4 .plac .dot{display:flex;align-items:center;gap:10px;margin-top:12px;font-weight:600}
+.a4 .plac .dot i{width:18px;height:18px;border-radius:50%;background:var(--lime);box-shadow:inset 0 0 0 2px rgba(4,51,53,.25)}
+.a4 .logo{right:72px;bottom:56px;height:38px}
+
+/* ===== A5 BOOK COVER (tri-band) ===== */
+.a5{background:var(--white);color:var(--green)}
+.a5 .top{left:0;right:0;top:0;height:362px;background:var(--lime)}
+.a5 .series{left:0;right:0;top:48px;text-align:center;font:700 20px/1 Inter;letter-spacing:.34em}
+.a5 .rule{left:420px;right:420px;top:84px;border-top:2px solid var(--green)}
+.a5 .ttl{left:0;right:0;top:104px;text-align:center;font:400 156px/1 var(--serif)}
+.a5 .subt{left:0;right:0;top:274px;text-align:center;font:400 40px/1 var(--serif);font-style:italic}
+.a5 .mid{left:0;right:0;top:370px;height:640px;overflow:hidden}
+.a5 .mid img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.a5 .bot{left:0;right:0;top:1018px;bottom:0;background:var(--green)}
+.a5 .ed{left:0;right:0;top:1078px;text-align:center;font:700 20px/1 Inter;letter-spacing:.34em;color:var(--lime)}
+.a5 .by{left:0;right:0;top:1124px;text-align:center;font:400 64px/1 var(--serif);color:var(--white)}
+.a5 .by em{font-style:italic}
+.a5 .logo{left:0;right:0;margin:auto;bottom:62px;height:40px}
+</style></head>
+<body>
+
+<!-- A1 FILM STILL -->
+<section class="slide a1 film" data-name="a1-film-still">
+  <div class="scene">SCENE 16 · TAKE 01</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+  <div class="frame"><img src="assets/photo-beige.jpg" alt=""></div>
+  <div class="sub">Happy birthday, Rishabh.<br>Here’s to the next chapter.</div>
+</section>
+
+<!-- A2 JOURNAL COVER -->
+<section class="slide a2 film" data-name="a2-journal-cover">
+  <img class="ph" src="assets/photo-chair.jpg" alt="">
+  <div class="fade"></div>
+  <div class="mast"><span>The 1FC Journal</span><span>Birthday Issue</span></div>
+  <div class="h1">Happy birthday,</div>
+  <div class="h2">Rishabh.</div>
+  <div class="tag">16 YEARS IN BANKING &amp; INVESTMENT</div>
+  <div class="cap">Rishabh M Shah, Founder &amp; CEO, 1FC Group of Companies.</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<!-- A3 CONTACT SHEET -->
+<section class="slide a3 tooth film" data-name="a3-contact-sheet">
+  <div class="hd"><span>CONTACT SHEET · ROLL 1FC</span><img src="assets/logo-on-light.svg" alt="1FCode"></div>
+  <div class="title">Happy birthday, Rishabh!</div>
+  <div class="strip"></div>
+  <div class="holes" style="top:402px"></div>
+  <div class="holes" style="top:954px"></div>
+  <div class="fr" style="left:-262px"><img src="assets/photo-beige.jpg" alt="" style="object-position:50% 40%"></div>
+  <div class="fr" style="left:80px"><img src="assets/photo-lean.jpg" alt="" style="object-position:30% 30%"></div>
+  <div class="fr" style="left:420px"><img src="assets/photo-chair.jpg" alt="" style="object-position:50% 30%"></div>
+  <div class="fr" style="left:760px"><img src="assets/photo-beige.jpg" alt="" style="object-position:50% 25%"></div>
+  <div class="fr" style="left:1100px"><img src="assets/photo-lean.jpg" alt="" style="object-position:20% 60%"></div>
+  <div class="num" style="left:84px">15A</div>
+  <div class="num" style="left:424px">16 ▸</div>
+  <div class="num" style="left:764px">16A</div>
+  <svg class="mk" viewBox="0 0 1080 1350" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M 400 446 C 470 420, 700 414, 752 452 C 786 520, 774 850, 748 912 C 690 940, 470 944, 416 914 C 376 850, 370 540, 394 454 C 398 442, 422 432, 448 428" stroke="#EAE26A" stroke-width="10"/>
+    <path d="M 690 384 l 22 26 l 44 -60" stroke="#EAE26A" stroke-width="10"/>
+    <path d="M 660 1012 C 620 1004, 590 996, 560 990" stroke="#043335" stroke-width="5"/>
+    <path d="M 574 978 L 558 990 L 574 1002" stroke="#043335" stroke-width="5"/>
+  </svg>
+  <div class="n1">frame 16. this one ✓</div>
+  <div class="n2">RISHABH M SHAH<br>FOUNDER &amp; CEO, 1FC GROUP OF COMPANIES<br>16 YEARS IN BANKING &amp; INVESTMENT</div>
+  <div class="n3">love, Team 1FC ♡</div>
+</section>
+
+<!-- A4 GALLERY WALL -->
+<section class="slide a4 tooth" data-name="a4-gallery-wall">
+  <div class="wt1">Happy birthday,</div>
+  <div class="wt2">Rishabh.</div>
+  <div class="room">1FC GALLERY<br>ROOM 16</div>
+  <div class="fr"><img src="assets/photo-lean.jpg" alt=""></div>
+  <div class="plac"><b>Rishabh M Shah</b><em>The Founder, 2026</em>Photograph. 16 years of banking and investment, one clear framework.<br><br>Collection of 1FC Group of Companies.<div class="dot"><i></i>Not for sale. Priceless.</div></div>
+  <div class="floor"></div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<!-- A5 BOOK COVER -->
+<section class="slide a5 tooth film" data-name="a5-book-cover">
+  <div class="top"></div>
+  <div class="series">1FC CLASSICS</div>
+  <div class="rule"></div>
+  <div class="ttl">Rishabh</div>
+  <div class="subt">or, How to Stay Bullish for 16 Years</div>
+  <div class="mid"><img src="assets/photo-beige.jpg" alt=""></div>
+  <div class="bot"></div>
+  <div class="ed">A BIRTHDAY EDITION</div>
+  <div class="by"><em>with love from</em> Team 1FC</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+</body></html>
