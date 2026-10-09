@@ -345,4 +345,105 @@ page("m-riso", "Missive Letterhead M", f"""
     {"".join(REG.format(pos=p) for p in ("tl", "tr", "bl", "br"))}"""),
 ])
 
-print("built g–m")
+# ═════════════════════════ Minimal-creative set (N–Q): white page, one idea each
+WORD_ONLY = (f'<svg class="{{cls}}" viewBox="160 -2 470 104"><path fill="#0B0C0E" d="{WORD}"/>'
+             f'<circle cx="{DOT_CX}" cy="88" r="12.5" fill="#1B8F9B"/></svg>')
+MIN_FOOT_CSS = """
+  .{p} .fine{{font-size:6.2pt;line-height:1.65;color:var(--grey);letter-spacing:.02em}}
+  .{p} .fine b{{color:var(--ink);font-weight:700}}
+  .{p} .foot span{{white-space:nowrap}}
+"""
+
+# ───────────────────────── N · Dog-ear (the corner of the letter is folded down)
+def dogear(size, cls="ear"):
+    s = size
+    return (f'<svg class="{cls}" viewBox="0 0 {s} {s}" style="width:{s}mm;height:{s}mm">'
+            f'<defs><linearGradient id="eg{s}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5FC7C2"/><stop offset="1" stop-color="#1B8F9B"/></linearGradient>'
+            f'<linearGradient id="es{s}" x1="1" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#0B0C0E" stop-opacity=".16"/><stop offset=".62" stop-color="#0B0C0E" stop-opacity="0"/></linearGradient></defs>'
+            f'<path d="M0 0 L{s} {s} L{s} 0 Z" fill="#F1F4F4"/>'                      # the gap where the corner was
+            f'<path d="M0 0 L{s} {s} L{s * .1} {s * .98} Q0 {s} 0 {s * .9} Z" fill="url(#es{s})" transform="translate(.8 .8)"/>'  # soft shadow
+            f'<path d="M0 0 L{s} {s} L{s * .1} {s} Q0 {s} 0 {s * .9} Z" fill="url(#eg{s})"/>'  # the folded flap (back of the page)
+            f'<g transform="translate({s * .14} {s * .52}) scale({s * .0026})"><path fill="#fff" fill-opacity=".55" d="{MARK_LIGHT}"/><path fill="#fff" fill-rule="evenodd" d="{MARK_DARK}"/></g></svg>')
+
+page("n-dog-ear", "Missive Letterhead N", MIN_FOOT_CSS.format(p="n") + """
+  .n .ear{position:absolute;top:0;right:0}
+  .n .logo{position:absolute;top:19mm;left:20mm;height:9mm}
+  .n .letter{top:44mm;left:20mm;right:20mm}
+  .n .foot{position:absolute;left:20mm;right:20mm;bottom:13mm;display:flex;justify-content:space-between;align-items:flex-end}
+""", [
+ ("first", f"""    {dogear(30)}
+    {logo_svg("logo")}
+    {LETTER}
+    <div class="foot fine mono"><span><b>Missive Digital Marketing LLP</b><br>{ADDR1}<br>{ADDR2}</span><span style="text-align:right">hello@missivedigital.com<br>missivedigital.com<br>{LEGAL}</span></div>"""),
+ ("continuation", f"""    {dogear(18)}
+    {mark_svg("logo").replace('class="logo"', 'class="logo" style="height:7mm"')}
+    <div class="foot fine mono"><span><b>Missive Digital Marketing LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
+])
+
+# ───────────────────────── O · The line (a hairline runs down the margin and ends in the full stop)
+page("o-the-line", "Missive Letterhead O", MIN_FOOT_CSS.format(p="o") + """
+  .o .logo{position:absolute;top:18mm;left:20mm;height:9.5mm}
+  .o .contact{position:absolute;top:19mm;right:20mm;text-align:right}
+  .o .rule{position:absolute;left:22.6mm;top:34mm;bottom:27mm;width:.3mm;background:linear-gradient(var(--aqua),var(--teal))}
+  .o .dot{position:absolute;left:20.75mm;bottom:23.3mm;width:4mm;height:4mm;border-radius:50%;background:var(--teal)}
+  .o .letter{top:44mm;left:32mm;right:20mm}
+  .o .foot{position:absolute;left:32mm;right:20mm;bottom:21.5mm;display:flex;justify-content:space-between;align-items:flex-end}
+""", [
+ ("first", f"""    {logo_svg("logo")}
+    <div class="contact fine mono">hello@missivedigital.com<br><b style="color:var(--teal)">missivedigital.com</b></div>
+    <div class="rule"></div><div class="dot"></div>
+    {LETTER}
+    <div class="foot fine mono"><span><b>Missive Digital Marketing LLP</b><br>{ADDR1}<br>{ADDR2}</span><span style="text-align:right">{LEGAL}<br>Registered under<br>the LLP Act, 2008</span></div>"""),
+ ("continuation", f"""    {mark_svg("logo").replace('class="logo"', 'class="logo" style="height:7mm"')}
+    <div class="rule" style="top:29mm"></div><div class="dot"></div>
+    <div class="foot fine mono"><span><b>Missive Digital Marketing LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
+])
+
+# ───────────────────────── P · Index column (Swiss editorial grid, numbered details in the margin)
+page("p-index", "Missive Letterhead P", MIN_FOOT_CSS.format(p="p") + """
+  .p .col{position:absolute;top:18mm;left:16mm;width:40mm;bottom:16mm}
+  .p .col .mk{height:10mm;display:block}
+  .p .col .item{margin-top:9mm}
+  .p .col .n{font-size:6pt;font-weight:700;color:var(--teal);letter-spacing:.12em;margin-bottom:1.4mm}
+  .p .col .wm{position:absolute;bottom:0;left:0;width:30mm}
+  .p .vr{position:absolute;left:61mm;top:18mm;bottom:16mm;width:.25mm;background:var(--hair)}
+  .p .vr::after{content:"";position:absolute;left:-.85mm;bottom:-1mm;width:2mm;height:2mm;border-radius:50%;background:var(--teal)}
+  .p .letter{top:19mm;left:69mm;right:18mm}
+""", [
+ ("first", f"""    <div class="col fine mono">
+      {mark_svg("mk")}
+      <div class="item"><div class="n">01 — STUDIO</div><b>Missive Digital<br>Marketing LLP</b></div>
+      <div class="item"><div class="n">02 — ADDRESS</div>825, Iconic Shyamal,<br>Shyamal Cross Road,<br>132 Feet Ring Road,<br>Ahmedabad, Gujarat 380015</div>
+      <div class="item"><div class="n">03 — CONTACT</div>hello@missivedigital.com<br>missivedigital.com</div>
+      <div class="item"><div class="n">04 — LEGAL</div>{LEGAL}<br>LLP Act, 2008</div>
+      {WORD_ONLY.format(cls="wm")}
+    </div>
+    <div class="vr"></div>
+    {LETTER}"""),
+ ("continuation", f"""    <div class="col fine mono">{mark_svg("mk").replace('class="mk"', 'class="mk" style="height:7mm"')}{WORD_ONLY.format(cls="wm")}</div>
+    <div class="vr"></div>"""),
+])
+
+# ───────────────────────── Q · Envelope (flap hairlines from the corners, the mark as a wax seal)
+FLAP_Y = 40
+SEAL = (f'<svg class="seal" viewBox="-20 -20 40 40"><circle r="19" fill="#1B8F9B"/><circle r="15.6" fill="none" stroke="#5FC7C2" stroke-width=".7" stroke-dasharray="1.2 1.1"/>'
+        f'<g transform="translate(-9.2 -8.6) scale(.142)"><path fill="#fff" fill-opacity=".55" d="{MARK_LIGHT}"/><path fill="#fff" fill-rule="evenodd" d="{MARK_DARK}"/></g></svg>')
+page("q-envelope", "Missive Letterhead Q", MIN_FOOT_CSS.format(p="q") + f"""
+  .q .flap{{position:absolute;inset:0;width:210mm;height:297mm}}
+  .q .flap path{{fill:none;stroke:var(--teal);stroke-width:.28}}
+  .q .seal{{position:absolute;left:96mm;top:{FLAP_Y - 9}mm;width:18mm}}
+  .q .wm{{position:absolute;left:50%;transform:translateX(-50%);top:{FLAP_Y + 12}mm;width:30mm}}
+  .q .letter{{top:{FLAP_Y + 30}mm;left:22mm;right:22mm}}
+  .q .foot{{position:absolute;left:20mm;right:20mm;bottom:12mm;text-align:center;border-top:.25mm solid var(--hair);padding-top:3mm}}
+""", [
+ ("first", f"""    <svg class="flap" viewBox="0 0 210 297"><path d="M0 0 L105 {FLAP_Y} L210 0"/></svg>
+    {SEAL}
+    {WORD_ONLY.format(cls="wm")}
+    {LETTER}
+    <div class="foot fine mono"><b>Missive Digital Marketing LLP</b> · {ADDR1} {ADDR2}<br>hello@missivedigital.com · missivedigital.com · {LEGAL}</div>"""),
+ ("continuation", f"""    <svg class="flap" viewBox="0 0 210 297"><path d="M0 0 L105 18 L210 0"/></svg>
+    {SEAL.replace('class="seal"', 'class="seal" style="top:11mm;left:99mm;width:12mm"')}
+    <div class="foot fine mono"><b>Missive Digital Marketing LLP</b> · {LEGAL} · missivedigital.com</div>"""),
+])
+
+print("built g–q")
