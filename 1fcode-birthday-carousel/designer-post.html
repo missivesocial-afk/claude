@@ -1,0 +1,424 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>1FCode Birthday Designer Posts</title>
+<style>
+/* ---------- FONTS (offline via npm @fontsource) ---------- */
+@font-face{font-family:"Google Sans";font-weight:500;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-500-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:600;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;unicode-range:U+0100-024F,U+1E00-1EFF;src:url(node_modules/@fontsource/inter/files/inter-latin-ext-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;unicode-range:U+0100-024F,U+1E00-1EFF;src:url(node_modules/@fontsource/inter/files/inter-latin-ext-500-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:normal;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-ext-400-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-ext-400-italic.woff2)}
+@font-face{font-family:"Noto Serif Devanagari";font-weight:400;src:url(node_modules/@fontsource/noto-serif-devanagari/files/noto-serif-devanagari-devanagari-400-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:700;src:url(node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2)}
+@font-face{font-family:"Archivo Black";src:url(node_modules/@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2)}
+
+/* ---------- 1FC BRAND ---------- */
+:root{--green:#043335;--lime:#EAE26A;--white:#F4F4ED;--deep:#022223;
+  --hand:Caveat,cursive;--serif:"Instrument Serif",Georgia,serif;--display:"Google Sans",Inter,sans-serif;--mono:"JetBrains Mono",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#5f5f5f;display:flex;flex-direction:column;gap:40px;padding:40px;font-family:Inter,sans-serif}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden}
+.slide > *{position:absolute}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;mix-blend-mode:overlay;z-index:50;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.paper::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;mix-blend-mode:multiply;z-index:50;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .22  0 0 0 0 .18  0 0 0 8 -5.6'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.serif{font-family:var(--serif)}
+.it{font-family:var(--serif);font-style:italic}
+
+/* ===== R1 SCRAPBOOK (revised) ===== */
+.r1{background:radial-gradient(900px 900px at 50% 40%,#0a4a4c,var(--green) 60%,var(--deep))}
+.r1 .note{left:70px;top:58px;width:940px;height:330px;background:var(--white);transform:rotate(-2deg);padding:34px 56px;color:var(--green);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.r1 .note .l1{font:700 116px/0.9 var(--hand)}
+.r1 .note .l2{font:700 150px/0.95 var(--hand);position:relative;display:inline-block;margin-left:150px}
+.r1 .note .l2::before{content:"";position:absolute;left:-14px;right:-18px;top:52%;height:46%;background:var(--lime);transform:rotate(-2deg);z-index:-1;border-radius:8px}
+.r1 .pol{left:64px;top:420px;width:540px;padding:26px 26px 100px;background:var(--white);transform:rotate(-5deg);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.r1 .pol img{width:488px;height:488px;display:block;object-fit:cover}
+.r1 .pol .cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font:700 54px/1 var(--hand);color:var(--green)}
+.r1 .pol .stamp{position:absolute;right:46px;top:458px;font:700 26px/1 var(--mono);letter-spacing:.08em;color:var(--lime);text-shadow:0 0 10px rgba(234,226,106,.9)}
+.tape{position:absolute;height:56px;background:repeating-linear-gradient(90deg,rgba(234,226,106,.92) 0 18px,rgba(234,226,106,.78) 18px 36px);
+  clip-path:polygon(0 8%,4% 0,8% 10%,12% 0,100% 0,96% 12%,100% 24%,96% 38%,100% 52%,96% 66%,100% 80%,96% 92%,100% 100%,0 100%,4% 86%,0 72%,4% 58%,0 44%,4% 30%,0 18%);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.r1 .notes{left:618px;top:520px;width:410px;background:var(--white);border-radius:34px;transform:rotate(4deg);padding:30px 32px 34px;color:var(--green);box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.r1 .notes .bar{display:flex;justify-content:space-between;font:600 26px/1 Inter;opacity:.7;margin-bottom:22px}
+.r1 .notes h3{font:600 44px/1.05 var(--display);letter-spacing:-.02em}
+.r1 .notes .meta{font:500 22px/1 Inter;opacity:.55;margin:10px 0 22px}
+.r1 .notes li{list-style:none;display:flex;gap:16px;align-items:flex-start;font:500 29px/1.25 Inter;padding:10px 0}
+.r1 .notes li i{flex:none;width:36px;height:36px;border-radius:50%;border:3px solid rgba(4,51,53,.35);display:grid;place-items:center;font:700 22px/1 Inter;font-style:normal}
+.r1 .notes li.done i{background:var(--lime);border-color:var(--lime);color:var(--green)}
+.r1 .notes li.done span{opacity:.6}
+.r1 .sticker{left:452px;top:356px;font:400 96px/1 "Archivo Black";color:var(--lime);transform:rotate(-12deg);-webkit-text-stroke:18px var(--white);paint-order:stroke fill;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+.r1 .sticky{left:84px;top:1056px;width:360px;height:250px;background:var(--lime);color:var(--green);transform:rotate(-5deg);padding:26px 28px;box-shadow:0 16px 30px rgba(0,0,0,.4);font:700 40px/1.02 var(--hand)}
+.r1 .sticky b{font-size:46px;display:block;margin-bottom:6px;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
+.r1 .diecut{right:74px;bottom:120px;height:66px;transform:rotate(-4deg);filter:url(#diecut) drop-shadow(0 10px 14px rgba(0,0,0,.4))}
+.r1 .hand{font:700 50px/1 var(--hand)}
+.r1 svg.doodles{inset:0;width:1080px;height:1350px;pointer-events:none}
+
+/* ===== R2 NEO-BRUTAL (revised) ===== */
+.r2{background:var(--white) radial-gradient(rgba(4,51,53,.16) 2.4px,transparent 2.6px) 0 0/30px 30px;color:var(--green)}
+.r2 .h1{left:62px;top:70px;font:400 112px/1 "Archivo Black";letter-spacing:-.02em}
+.r2 .h2{left:56px;top:196px;font:400 112px/1 "Archivo Black";letter-spacing:-.02em;background:var(--lime);border:6px solid var(--green);box-shadow:12px 12px 0 var(--green);padding:6px 26px 14px;transform:rotate(-2deg)}
+.r2 .sub{left:66px;top:356px;font:600 40px/1.2 var(--display)}
+.r2 .tag{right:30px;top:1012px;z-index:3;font:400 34px/1 "Archivo Black";background:var(--green);color:var(--lime);padding:16px 22px;border:6px solid var(--green);box-shadow:8px 8px 0 var(--lime);transform:rotate(-6deg)}
+.r2 .win{left:334px;top:440px;width:690px;height:610px;border:6px solid var(--green);border-radius:24px;background:var(--lime);box-shadow:18px 18px 0 var(--green);overflow:hidden}
+.r2 .win .bar{position:absolute;left:0;right:0;top:0;height:70px;background:var(--white);border-bottom:6px solid var(--green);display:flex;align-items:center;gap:14px;padding:0 24px;font:700 26px/1 var(--mono);z-index:2}
+.r2 .win .bar i{width:24px;height:24px;border-radius:50%;border:5px solid var(--green)}
+.r2 .win .bar i:first-child{background:var(--lime)}
+.r2 .win .bar span{margin-left:10px}
+.r2 .win .ph{position:absolute;width:1000px;left:-126px;top:96px}
+.r2 .win .dots{position:absolute;inset:70px 0 0;background:radial-gradient(rgba(4,51,53,.18) 2.4px,transparent 2.6px) 0 0/26px 26px}
+.r2 .burst{left:26px;top:620px;width:340px;height:340px;transform:rotate(-12deg)}
+.r2 .tape1{left:-120px;width:1320px;height:96px;top:1110px;border:6px solid var(--green);display:flex;align-items:center;white-space:nowrap;overflow:hidden;font:400 46px/1 "Archivo Black";background:var(--green);color:var(--lime);transform:rotate(-4deg)}
+.r2 .cursor{left:742px;top:296px;width:92px;transform:rotate(-8deg)}
+.r2 .logo{right:64px;bottom:52px;height:50px}
+.r2 .from{left:66px;bottom:58px;font:600 30px/1 var(--display)}
+
+/* ===== N1 DICTIONARY: Rishabh = bull ===== */
+.n1{background:var(--white);color:var(--green)}
+.n1 .hd{left:80px;right:80px;top:70px;display:flex;justify-content:space-between;font:600 22px/1 Inter;letter-spacing:.18em;text-transform:uppercase;border-bottom:2px solid var(--green);padding-bottom:18px}
+.n1 .word{left:72px;top:150px;font:400 250px/1 var(--serif);letter-spacing:-.02em}
+.n1 .word span{color:var(--lime);-webkit-text-stroke:0}
+.n1 .pron{left:84px;top:432px;font:400 34px/1.3 Inter;display:flex;gap:26px;align-items:baseline}
+.n1 .pron em{font-family:var(--serif);font-size:40px}
+.n1 .pron .dv{font-family:"Noto Serif Devanagari";font-size:36px}
+.n1 ol{left:84px;right:84px;top:540px;list-style:none;counter-reset:d}
+.n1 li{counter-increment:d;display:grid;grid-template-columns:66px 1fr;font:400 50px/1.22 var(--serif);padding:22px 0;border-top:1.5px solid rgba(4,51,53,.2)}
+.n1 li::before{content:counter(d);font:600 30px/1.9 Inter;color:var(--green);opacity:.6}
+.n1 li .hl{background:linear-gradient(transparent 55%,var(--lime) 55%,var(--lime) 92%,transparent 92%)}
+.n1 .see{left:84px;top:1050px;font:400 36px/1.3 var(--serif);font-style:italic;opacity:.8}
+.n1 .plate{right:84px;top:1000px;width:300px}
+.n1 .plate svg{display:block;width:300px;height:150px}
+.n1 .plate span{display:block;font:500 20px/1 Inter;letter-spacing:.06em;margin-top:10px;opacity:.7}
+.n1 .ft{left:80px;right:80px;bottom:62px;display:flex;justify-content:space-between;align-items:flex-end;border-top:2px solid var(--green);padding-top:26px}
+.n1 .ft b{font:400 70px/1 var(--serif);font-style:italic;font-weight:400;white-space:nowrap}
+.n1 .ft img{height:42px;margin-bottom:10px}
+
+/* ===== N2 LEGACY NOTE ===== */
+.n2{background:radial-gradient(900px 800px at 50% 55%,#0b4d4f,var(--green) 55%,var(--deep));color:var(--white)}
+.n2 .head{left:80px;right:80px;top:70px;font:600 74px/1.02 var(--display);letter-spacing:-.03em}
+.n2 .head span{color:var(--lime)}
+.n2 .note{width:600px;height:960px;left:240px;top:262px;background:var(--white);border-radius:6px;color:var(--green);overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5),0 6px 14px rgba(0,0,0,.3)}
+.n2 .note.back{transform:translate(64px,-20px) rotate(7deg) scale(.86);transform-origin:50% 40%;background:#e9e7cf}
+.n2 .note.front{transform:rotate(-4deg) scale(.86);transform-origin:50% 40%}
+.n2 .note svg.guil{position:absolute;inset:0;width:600px;height:960px}
+.n2 .note > *{position:absolute}
+.n2 .t1{left:0;right:0;top:66px;text-align:center;font:400 30px/1 var(--serif);letter-spacing:.4em}
+.n2 .t2{left:0;right:0;top:104px;text-align:center;font:600 18px/1 Inter;letter-spacing:.3em;opacity:.7}
+.n2 .oval{left:110px;top:150px;width:380px;height:470px;border-radius:50%;overflow:hidden;border:3px solid var(--green);box-shadow:0 0 0 8px var(--white),0 0 0 10px var(--green)}
+.n2 .oval{background:radial-gradient(circle at 50% 38%,#fbf8c8,var(--lime) 70%)}
+.n2 .oval img{position:absolute;width:640px;left:-142px;top:22px}
+.n2 .nm{left:0;right:0;top:658px;text-align:center;font:400 40px/1 var(--serif);letter-spacing:.14em}
+.n2 .rl{left:0;right:0;top:708px;text-align:center;font:600 16px/1 Inter;letter-spacing:.32em;opacity:.75}
+.n2 .hb{left:0;right:0;top:752px;text-align:center;font:400 78px/1 var(--serif);letter-spacing:.04em}
+.n2 .den{font:400 96px/1 var(--serif)}
+.n2 .den small{display:block;font:600 14px/1 Inter;letter-spacing:.3em;margin-top:-4px}
+.n2 .ser{font:700 22px/1 var(--mono);letter-spacing:.12em}
+.n2 .sig{left:60px;top:858px;font:700 46px/1 var(--hand)}
+.n2 .sigl{left:60px;top:906px;width:200px;border-top:2px solid var(--green);font:600 12px/1 Inter;letter-spacing:.2em;padding-top:6px}
+.n2 .issued{right:44px;top:880px;text-align:right;font:600 12px/1 Inter;letter-spacing:.2em}
+.n2 .issued img{display:block;height:30px;margin:8px 0 0 auto}
+.n2 .thread{left:528px;top:0;bottom:150px;width:22px;background:repeating-linear-gradient(180deg,rgba(234,226,106,.95) 0 28px,rgba(234,226,106,.35) 28px 40px)}
+.n2 .micro{left:0;right:0;bottom:12px;text-align:center;font:600 10px/1 Inter;letter-spacing:.25em;opacity:.6;white-space:nowrap}
+.n2 .tag{left:80px;bottom:60px;font:400 46px/1 var(--serif);font-style:italic}
+.n2 .tag b{font-style:normal;font-family:var(--display);font-weight:600;font-size:30px;display:block;margin-top:10px;color:var(--lime);letter-spacing:.01em}
+.n2 .logo{right:80px;bottom:70px;height:44px}
+
+/* ===== N3 FOUNDER CARD ===== */
+.n3{background:linear-gradient(160deg,#f1ea8a 0%,var(--lime) 45%,#d9d05a 100%);color:var(--green)}
+.n3 .h{left:80px;top:84px;font:600 112px/.98 var(--display);letter-spacing:-.045em}
+.n3 .s{left:84px;top:330px;font:400 70px/1 var(--serif);font-style:italic}
+.n3 .shadow{left:180px;top:1060px;width:760px;height:120px;border-radius:50%;background:rgba(4,51,53,.45);filter:blur(36px)}
+.n3 .stage{left:110px;top:470px;width:860px;height:542px;perspective:2200px}
+.n3 .card{position:absolute;inset:0;border-radius:40px;transform:rotateX(26deg) rotateY(-14deg) rotateZ(-9deg);transform-origin:50% 60%;
+  background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.14) 44%,rgba(255,255,255,0) 58%),repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px),linear-gradient(135deg,#0b4a4c 0%,#043335 45%,#063c3e 70%,#021e1f 100%);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.18),inset 0 -2px 0 rgba(0,0,0,.4),0 2px 0 #021b1c,0 8px 0 #011415;color:var(--white);overflow:hidden}
+.n3 .card > *{position:absolute}
+.n3 .card .lg{left:54px;top:50px;height:56px}
+.n3 .card .nfc{right:56px;top:52px;width:48px;height:56px}
+.n3 .card .chip{left:58px;top:196px;width:118px;height:90px;border-radius:16px;background:linear-gradient(135deg,#f6f0a2,var(--lime) 45%,#b7ae3e);box-shadow:inset 0 0 0 2px rgba(4,51,53,.25)}
+.n3 .card .chip::before{content:"";position:absolute;inset:18px 0;border-top:2px solid rgba(4,51,53,.35);border-bottom:2px solid rgba(4,51,53,.35)}
+.n3 .card .chip::after{content:"";position:absolute;left:40px;right:40px;top:0;bottom:0;border-left:2px solid rgba(4,51,53,.35);border-right:2px solid rgba(4,51,53,.35)}
+.emb{color:#e9e9de;text-shadow:0 -1px 0 rgba(255,255,255,.55),0 2px 1px rgba(0,0,0,.65)}
+.n3 .card .num{left:58px;top:322px;font:700 50px/1 var(--mono);letter-spacing:.1em}
+.n3 .card .since{left:58px;top:398px;font:700 17px/1.4 var(--mono);letter-spacing:.14em;opacity:.8}
+.n3 .card .name{left:58px;bottom:48px;font:600 40px/1 var(--display);letter-spacing:.12em}
+.n3 .card .thru{right:58px;bottom:50px;text-align:right;font:700 17px/1.3 var(--mono);letter-spacing:.14em}
+.n3 .card .thru b{display:block;font-size:44px;color:var(--lime)}
+.n3 .ft{left:80px;right:80px;bottom:64px;display:flex;justify-content:space-between;align-items:center;font:600 30px/1 var(--display)}
+.n3 .ft img{height:42px}
+
+/* ===== N4 LAYER-CAKE CHART ===== */
+.n4{background:var(--white);color:var(--green)}
+.n4 .h{left:80px;top:82px;font:600 100px/1 var(--display);letter-spacing:-.045em}
+.n4 .s{left:84px;top:300px;font:400 66px/1 var(--serif);font-style:italic}
+.n4 svg.ch{left:0;top:372px;width:1080px;height:830px}
+.n4 .src{left:80px;bottom:66px;font:400 26px/1.3 Inter;font-style:italic;opacity:.7}
+.n4 .logo{right:80px;bottom:62px;height:44px}
+
+/* ===== N5 EDITORIAL (Tata-style restraint) ===== */
+.n5{background:var(--white);color:var(--green)}
+.n5 .pw{inset:0;-webkit-mask-image:linear-gradient(to right,transparent 40px,#000 230px,#000 calc(100% - 230px),transparent calc(100% - 40px));mask-image:linear-gradient(to right,transparent 40px,#000 230px,#000 calc(100% - 230px),transparent calc(100% - 40px))}
+.n5 .pw img{position:absolute;width:1060px;left:-21px;top:130px;-webkit-mask-image:linear-gradient(to bottom,#000 52%,transparent 72%);mask-image:linear-gradient(to bottom,#000 52%,transparent 72%)}
+.n5 .k{left:0;right:0;top:900px;text-align:center;font:600 22px/1 Inter;letter-spacing:.22em;text-transform:uppercase}
+.n5 .sun{left:190px;top:110px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#f3ec8e,var(--lime) 60%,#dcd25a)}
+.n5 .q{left:40px;right:40px;top:944px;text-align:center;font:400 94px/1 var(--serif);letter-spacing:-.02em;white-space:nowrap}
+.n5 .q2{left:120px;right:120px;top:1060px;text-align:center;font:400 40px/1.3 Inter;opacity:.85;text-wrap:balance}
+.n5 .q em{font-style:italic}
+.n5 .rule{left:50%;top:1196px;width:80px;margin-left:-40px;border-top:2px solid var(--green)}
+.n5 .logo{left:0;right:0;margin:auto;bottom:58px;height:40px}
+
+/* ===== N6 +1 COMPOUNDED ===== */
+.n6{background:var(--green);color:var(--white)}
+.n6 svg.plus{left:0;top:96px;width:1080px;height:760px}
+.n6 .h{left:80px;top:870px;font:600 96px/1 var(--display);letter-spacing:-.04em}
+.n6 .s{left:84px;top:1080px;font:400 64px/1 var(--serif);font-style:italic;color:var(--lime)}
+.n6 .fn{left:84px;bottom:66px;font:700 22px/1.4 var(--mono);letter-spacing:.04em;opacity:.65}
+.n6 .logo{right:80px;bottom:62px;height:44px}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <filter id="diecut" x="-20%" y="-40%" width="140%" height="180%">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="6" result="d"/>
+    <feFlood flood-color="#F4F4ED"/><feComposite in2="d" operator="in" result="o"/>
+    <feMerge><feMergeNode in="o"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</svg>
+
+<!-- R1 SCRAPBOOK, revised: real logo as a die-cut sticker, name-meaning sticky note -->
+<section class="slide r1 grain" data-name="r1-scrapbook">
+  <div class="note"><div class="l1">Happy birthday,</div><div class="l2">Rishabh!</div></div>
+  <div class="pol"><img src="assets/fx-flash.jpg" alt=""><div class="stamp">★ HBD ★</div><div class="cap">the boss, 2026 ★</div></div>
+  <div class="tape" style="left:250px;top:398px;width:200px;transform:rotate(-4deg)"></div>
+  <div class="notes">
+    <div class="bar"><span>‹ Notes</span><span>•••</span></div>
+    <h3>Today ✨</h3>
+    <div class="meta">Birthday edition</div>
+    <ul>
+      <li class="done"><i>✓</i><span>16 years in banking &amp; investment</span></li>
+      <li class="done"><i>✓</i><span>Started 1FC</span></li>
+      <li><i></i><span>Cut the cake 🎂</span></li>
+      <li><i></i><span>Read every wish 💬</span></li>
+    </ul>
+  </div>
+  <div class="tape" style="left:760px;top:494px;width:170px;transform:rotate(10deg)"></div>
+  <div class="sticky"><b>fun fact:</b>“Rishabh” means <u>bull</u> in Sanskrit. Born bullish! 📈</div>
+  <div class="tape" style="left:190px;top:1032px;width:150px;transform:rotate(-8deg)"></div>
+  <div class="sticker">HBD!</div>
+  <div class="hand" style="left:560px;top:1080px;color:var(--white);font-size:52px;transform:rotate(-3deg)">love, Team 1FC ♡</div>
+  <img class="diecut" src="assets/logo-on-light.svg" alt="1FCode">
+  <svg class="doodles" viewBox="0 0 1080 1350" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 990 430 l 10 26 l 28 2 l -22 18 l 8 28 l -24 -16 l -24 16 l 8 -28 l -22 -18 l 28 -2 z" stroke="#EAE26A" stroke-width="5"/>
+    <path d="M 500 1080 l 6 16 l 17 1 l -13 11 l 5 17 l -15 -10 l -15 10 l 5 -17 l -13 -11 l 17 -1 z" stroke="#F4F4ED" stroke-width="4"/>
+    <path d="M 690 360 l 22 -18 M 702 392 l 30 -4 M 676 334 l 6 -26" stroke="#EAE26A" stroke-width="6"/>
+  </svg>
+</section>
+
+<!-- R2 NEO-BRUTAL, revised: no logo-in-circle; real logo, bullish tag -->
+<section class="slide r2" data-name="r2-neo-brutal">
+  <div class="h1">NEW LEVEL</div>
+  <div class="h2">UNLOCKED</div>
+  <div class="sub">Happy birthday, Rishabh M Shah.</div>
+  <div class="tag">BORN BULLISH ↗</div>
+  <div class="win">
+    <div class="bar"><i></i><i></i><i></i><span>founder.png</span></div>
+    <div class="dots"></div>
+    <img class="ph" src="assets/rishabh-cutout-hd.png" alt="">
+  </div>
+  <svg class="burst" viewBox="0 0 340 340" aria-hidden="true">
+    <polygon id="bp" fill="#EAE26A" stroke="#043335" stroke-width="7" stroke-linejoin="round"/>
+    <text x="170" y="168" text-anchor="middle" font-family="Archivo Black" font-size="60" fill="#043335">16 YRS</text>
+    <text x="170" y="210" text-anchor="middle" font-family="Inter" font-weight="700" font-size="22" fill="#043335">IN BANKING &amp;</text>
+    <text x="170" y="238" text-anchor="middle" font-family="Inter" font-weight="700" font-size="22" fill="#043335">INVESTMENT</text>
+  </svg>
+  <svg class="cursor" viewBox="0 0 92 110" aria-hidden="true"><path d="M8 6 L8 86 L28 68 L42 100 L58 93 L44 62 L72 62 Z" fill="#F4F4ED" stroke="#043335" stroke-width="7" stroke-linejoin="round"/></svg>
+  <div class="tape1" id="tp1"></div>
+  <div class="from">From all of us at</div>
+  <img class="logo" src="assets/logo-on-light.svg" alt="1FCode">
+</section>
+
+<!-- N1 DICTIONARY: "Rishabh" is Sanskrit for bull -->
+<section class="slide n1 paper" data-name="n1-born-bullish">
+  <div class="hd"><span>The 1FC Dictionary</span><span>Birthday Edition</span></div>
+  <div class="word">Ri<span>·</span>shabh</div>
+  <div class="pron"><span>/ri·shuhb/</span><em>noun</em><span>from Sanskrit <span class="dv">ऋषभ</span> (ṛṣabha)</span></div>
+  <ol>
+    <li><span>A <span class="hl">bull</span>. The strong, steady kind every market hopes for.</span></li>
+    <li><span>The best; the most excellent.</span></li>
+    <li><span>Our Founder &amp; CEO, who has spent 16 years being bullish on India’s families.</span></li>
+  </ol>
+  <div class="see">See also: <b style="font-style:normal">bullish</b>, adj.</div>
+  <div class="plate"><svg viewBox="0 0 300 150"><rect x="1" y="1" width="298" height="148" fill="none" stroke="#043335" stroke-width="2"/>
+    <path d="M 20 120 L 60 104 L 92 112 L 130 84 L 160 92 L 200 58 L 230 66 L 270 26" fill="none" stroke="#043335" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 20 120 L 60 104 L 92 112 L 130 84 L 160 92 L 200 58 L 230 66 L 270 26 L 270 140 L 20 140 Z" fill="#EAE26A" opacity=".6"/>
+    <circle cx="270" cy="26" r="8" fill="#EAE26A" stroke="#043335" stroke-width="4"/></svg><span>FIG. 1: A BULL MARKET</span></div>
+  <div class="ft"><b>Happy birthday, Rishabh.</b><img src="assets/logo-on-light.svg" alt="1FCode"></div>
+</section>
+
+<!-- N2 LEGACY NOTE: an engraved note, the fintech way -->
+<section class="slide n2 grain" data-name="n2-legacy-note">
+  <div class="head">Our most valuable asset<br><span>just got a year richer.</span></div>
+  <div class="note back"><svg class="guil g-back" viewBox="0 0 600 960"></svg></div>
+  <div class="note front">
+    <svg class="guil g-front" viewBox="0 0 600 960"></svg>
+    <div class="thread"></div>
+    <div class="t1">LEGACY NOTE</div>
+    <div class="t2">SERIES 2026</div>
+    <div class="oval"><img src="assets/rishabh-cutout-hd.png" alt=""></div>
+    <div class="nm">RISHABH M SHAH</div>
+    <div class="rl">FOUNDER &amp; CEO · 1FC GROUP</div>
+    <div class="hb">Happy Birthday</div>
+    <div class="den" style="left:44px;top:40px">∞<small>WISHES</small></div>
+    <div class="den" style="right:64px;top:40px;text-align:right">∞<small>WISHES</small></div>
+    <div class="ser" style="left:44px;top:600px;transform:rotate(-90deg);transform-origin:left top">1FC 000001</div>
+    <div class="sig">Team 1FC</div>
+    <div class="sigl">FOR EVERYONE AT 1FC</div>
+    <div class="issued">ISSUED BY<img src="assets/logo-on-light.svg" alt="1FCode"></div>
+    <div class="micro">NOT LEGAL TENDER · VALID FOREVER · NOT LEGAL TENDER · VALID FOREVER</div>
+  </div>
+  <div class="tag">Happy birthday, Rishabh.</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<!-- N3 FOUNDER CARD -->
+<section class="slide n3 grain" data-name="n3-founder-card">
+  <div class="h">No limit on<br>our wishes.</div>
+  <div class="s">Happy birthday, Rishabh.</div>
+  <div class="shadow"></div>
+  <div class="stage"><div class="card">
+    <img class="lg" src="assets/logo-on-dark.svg" alt="1FCode">
+    <svg class="nfc" viewBox="0 0 48 56" fill="none" stroke="#EAE26A" stroke-width="4" stroke-linecap="round"><path d="M10 18 a14 14 0 0 1 0 20"/><path d="M20 12 a22 22 0 0 1 0 32"/><path d="M30 6 a30 30 0 0 1 0 44"/></svg>
+    <div class="chip"></div>
+    <div class="num emb">0000 0000 0000 0001</div>
+    <div class="since emb">FOUNDER NO. 1 · MEMBER SINCE DAY ONE</div>
+    <div class="name emb">RISHABH M SHAH</div>
+    <div class="thru emb">VALID THRU<b>∞</b></div>
+  </div></div>
+  <div class="ft"><span>From all of us at</span><img src="assets/logo-on-light.svg" alt="1FCode"></div>
+</section>
+
+<!-- N4 LAYER-CAKE CHART: a stacked bar that is also a cake -->
+<section class="slide n4 paper" data-name="n4-diversified-year">
+  <div class="h">A well-diversified<br>year.</div>
+  <div class="s">Happy birthday, Rishabh.</div>
+  <svg class="ch" viewBox="0 0 1080 820" id="cake"></svg>
+  <div class="src">Source: Team 1FC. Slightly biased.</div>
+  <img class="logo" src="assets/logo-on-light.svg" alt="1FCode">
+</section>
+
+<!-- N5 EDITORIAL: one portrait, one dignified line -->
+<section class="slide n5 paper" data-name="n5-editorial">
+  <div class="sun"></div>
+  <div class="pw"><img src="assets/rishabh-cutout-hd.png" alt=""></div>
+  <div class="k">Rishabh M Shah · Founder &amp; CEO, 1FC Group of Companies</div>
+  <div class="q"><em>Happy birthday,</em> Rishabh.</div>
+  <div class="q2">To the man building what families will pass on.</div>
+  <div class="rule"></div>
+  <img class="logo" src="assets/logo-on-light.svg" alt="1FCode">
+</section>
+
+<!-- N6 +1 COMPOUNDED: the "1" is the 1FCode wordmark's own 1 -->
+<section class="slide n6 grain" data-name="n6-compounded">
+  <svg class="plus" viewBox="0 0 1080 760" aria-hidden="true">
+    <g fill="#EAE26A">
+      <rect x="280" y="347" width="300" height="66" rx="2"/>
+      <rect x="397" y="230" width="66" height="300" rx="2"/>
+      <path transform="translate(-2861.3 -1995.6) scale(4.4)" d="M 816.835938 508.773438 C 812.382812 510.445312 806.875 510.390625 800.304688 508.605469 L 800.304688 494.410156 C 806.539062 495.636719 810.851562 495.191406 813.246094 493.078125 C 815.640625 490.964844 816.835938 486.5625 816.835938 479.886719 L 831.867188 479.886719 L 831.867188 600.113281 L 816.835938 600.113281 Z"/>
+    </g>
+  </svg>
+  <div class="h">Another year,<br>compounded.</div>
+  <div class="s">Happy birthday, Rishabh.</div>
+  <div class="fn">A = P(1 + r)<sup>n</sup>, where n just went up by one.</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<script>
+/* R2: starburst + ticker */
+(() => {
+  const pts = [], n = 18, cx = 170, cy = 170;
+  for (let i = 0; i < n * 2; i++) { const r = i % 2 ? 128 : 162, a = Math.PI * i / n; pts.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); }
+  document.getElementById('bp').setAttribute('points', pts.join(' '));
+  document.getElementById('tp1').textContent = ' HAPPY BIRTHDAY RISHABH ✦'.repeat(6);
+})();
+
+/* N2: guilloche rosettes + wave frame */
+const NS = 'http://www.w3.org/2000/svg';
+function el(p, t, a) { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; }
+function rosette(svg, cx, cy, R, r, d, color, op, sw, turns) {
+  let s = ''; const k = (R - r) / r;
+  for (let i = 0; i <= 2400; i++) { const t = i / 2400 * Math.PI * 2 * turns;
+    const x = cx + (R - r) * Math.cos(t) + d * Math.cos(k * t), y = cy + (R - r) * Math.sin(t) - d * Math.sin(k * t);
+    s += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
+  el(svg, 'path', {d: s, fill: 'none', stroke: color, 'stroke-opacity': op, 'stroke-width': sw});
+}
+function frame(svg, color) {
+  el(svg, 'rect', {x: 14, y: 14, width: 572, height: 932, fill: 'none', stroke: color, 'stroke-width': 3});
+  el(svg, 'rect', {x: 34, y: 34, width: 532, height: 892, fill: 'none', stroke: color, 'stroke-width': 1.5});
+  for (let ph = 0; ph < 3; ph++) {
+    let top = '', bot = '', l = '', r = '';
+    for (let x = 14; x <= 586; x += 2) { const w = Math.sin(x / 9 + ph * 2.1) * 6; top += (x > 14 ? 'L' : 'M') + x + ' ' + (24 + w).toFixed(1); bot += (x > 14 ? 'L' : 'M') + x + ' ' + (936 + w).toFixed(1); }
+    for (let y = 14; y <= 946; y += 2) { const w = Math.sin(y / 9 + ph * 2.1) * 6; l += (y > 14 ? 'L' : 'M') + (24 + w).toFixed(1) + ' ' + y; r += (y > 14 ? 'L' : 'M') + (576 + w).toFixed(1) + ' ' + y; }
+    [top, bot, l, r].forEach(d => el(svg, 'path', {d, fill: 'none', stroke: color, 'stroke-width': 1, 'stroke-opacity': .8}));
+  }
+}
+(() => {
+  const f = document.querySelector('.g-front');
+  rosette(f, 300, 385, 230, 46, 120, '#EAE26A', .55, 1, 23);
+  rosette(f, 300, 385, 262, 58, 150, '#043335', .14, .8, 29);
+  rosette(f, 300, 805, 150, 30, 74, '#EAE26A', .6, .9, 15);
+  rosette(f, 96, 96, 70, 14, 34, '#043335', .25, .7, 7);
+  rosette(f, 504, 96, 70, 14, 34, '#043335', .25, .7, 7);
+  frame(f, '#043335');
+  const b = document.querySelector('.g-back');
+  rosette(b, 300, 480, 260, 52, 140, '#043335', .25, 1, 26);
+  rosette(b, 300, 480, 180, 36, 90, '#043335', .2, .8, 18);
+  frame(b, '#043335');
+})();
+
+/* N4: layered cake as a stacked bar chart */
+(() => {
+  const svg = document.getElementById('cake'), G = '#043335', L = '#EAE26A', W = '#F4F4ED';
+  const defs = el(svg, 'defs', {});
+  defs.innerHTML = `<pattern id="str" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><rect width="18" height="18" fill="${W}"/><rect width="7" height="18" fill="${G}"/></pattern>
+    <pattern id="dot" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="${G}"/><circle cx="11" cy="11" r="4" fill="${L}"/></pattern>
+    <radialGradient id="glo"><stop offset="0" stop-color="${L}" stop-opacity=".9"/><stop offset="1" stop-color="${L}" stop-opacity="0"/></radialGradient>`;
+  const base = 770, H = 540, x0 = 220, w = 460;
+  // axis
+  el(svg, 'line', {x1: 150, x2: 150, y1: base - H, y2: base, stroke: G, 'stroke-width': 3});
+  [0, 25, 50, 75, 100].forEach(p => { const y = base - H * p / 100;
+    el(svg, 'line', {x1: 140, x2: 160, y1: y, y2: y, stroke: G, 'stroke-width': 3});
+    const t = el(svg, 'text', {x: 128, y: y + 8, 'text-anchor': 'end', 'font-family': 'Inter', 'font-weight': 600, 'font-size': 22, fill: G, opacity: .7}); t.textContent = p + '%'; });
+  const layers = [['Clarity', 30, G, null], ['Grit', 25, L, G], ['Family', 25, 'url(#str)', G], ['Legacy', 20, 'url(#dot)', null]];
+  let y = base;
+  layers.forEach(([name, p, fill, stroke], i) => {
+    const h = H * p / 100; y -= h;
+    el(svg, 'rect', {x: x0, y, width: w, height: h, fill, stroke: G, 'stroke-width': 4, rx: i === 3 ? 18 : 0});
+    const my = y + h / 2, lx = 760;
+    el(svg, 'line', {x1: x0 + w + 12, x2: lx - 16, y1: my, y2: my, stroke: G, 'stroke-width': 2.5, 'stroke-dasharray': '2 8', 'stroke-linecap': 'round'});
+    el(svg, 'circle', {cx: x0 + w + 12, cy: my, r: 6, fill: G});
+    const t = el(svg, 'text', {x: lx, y: my + 6, 'font-family': 'Google Sans', 'font-weight': 600, 'font-size': 52, fill: G}); t.textContent = name;
+    const v = el(svg, 'text', {x: lx, y: my + 44, 'font-family': 'JetBrains Mono', 'font-weight': 700, 'font-size': 28, fill: G, opacity: .7}); v.textContent = p + '%';
+  });
+  // icing drip on top layer
+  let d = `M ${x0} ${y + 10} `;
+  for (let i = 0; i <= 10; i++) { const xx = x0 + i * w / 10, dd = (i % 2 ? 34 : 14) + (i % 3) * 6; d += `L ${xx} ${y + dd} `; }
+  d += `L ${x0 + w} ${y + 10} Q ${x0 + w} ${y - 4} ${x0 + w - 18} ${y - 4} L ${x0 + 18} ${y - 4} Q ${x0} ${y - 4} ${x0} ${y + 10} Z`;
+  el(svg, 'path', {d, fill: L, stroke: G, 'stroke-width': 4, 'stroke-linejoin': 'round'});
+  // plate
+  el(svg, 'rect', {x: x0 - 50, y: base, width: w + 100, height: 16, rx: 8, fill: G});
+  // candle: the 1FC keyhole shape, scaled from the logo
+  const cx = x0 + w / 2, top = y - 4;
+  el(svg, 'circle', {cx, cy: top - 150, r: 80, fill: 'url(#glo)'});
+  el(svg, 'path', {d: `M ${cx - 20} ${top} L ${cx - 10} ${top - 92} L ${cx + 10} ${top - 92} L ${cx + 20} ${top} Z`, fill: 'url(#str)', stroke: G, 'stroke-width': 4});
+  el(svg, 'line', {x1: cx, x2: cx, y1: top - 92, y2: top - 110, stroke: G, 'stroke-width': 4, 'stroke-linecap': 'round'});
+  const fy = top - 140;
+  el(svg, 'path', {d: `M ${cx} ${fy - 46} C ${cx + 10} ${fy - 24} ${cx + 24} ${fy - 12} ${cx + 24} ${fy + 8} A 24 24 0 0 1 ${cx - 24} ${fy + 8} C ${cx - 24} ${fy - 12} ${cx - 10} ${fy - 24} ${cx} ${fy - 46} Z`, fill: L, stroke: G, 'stroke-width': 4, 'stroke-linejoin': 'round'});
+})();
+</script>
+</body></html>
