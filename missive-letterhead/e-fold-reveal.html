@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Missive Letterhead E</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  .e .logo{position:absolute;top:19mm;left:20mm;height:10.5mm}
+  .e .head-contact{position:absolute;top:20mm;right:20mm;text-align:right;font-size:8pt;line-height:1.55;color:var(--grey)}
+  .e .head-contact b{color:var(--teal);font-weight:600}
+  .e .tick{position:absolute;width:6mm;height:.3mm;background:var(--aqua)}
+  .e .tick.l{left:0}.e .tick.r{right:0}
+  .e .tick.t{top:99mm}.e .tick.b{top:198mm}
+  .e .fold-note{position:absolute;right:7.5mm;top:96.6mm;font-size:5.4pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--aqua)}
+  .e .letter{top:46mm;left:20mm;right:20mm}
+  .e .foot{position:absolute;left:20mm;right:20mm;bottom:12mm;display:flex;justify-content:space-between;align-items:flex-end;font-size:7.4pt;line-height:1.55;color:var(--grey);border-top:.25mm solid var(--hair);padding-top:4mm}
+  .e .foot strong{color:var(--ink);font-weight:700}
+  .e .foot .r{text-align:right}
+  /* Reverse side: top third reads correctly once folded (hence rotated), middle third is the cover */
+  .e .sender{position:absolute;left:0;right:0;top:0;height:99mm;transform:rotate(180deg);padding:0 22mm 22mm;display:flex;flex-direction:column;justify-content:flex-end;font-size:8pt;line-height:1.6;color:var(--grey)}
+  .e .sender .cap{margin-bottom:2mm}
+  .e .sender img{height:8mm;width:auto;align-self:flex-start;margin-bottom:3mm}
+  .e .cover{position:absolute;left:0;right:0;top:99mm;height:99mm;background:var(--teal);overflow:hidden;color:#fff}
+  .e .cover::before{content:"";position:absolute;inset:0;background:var(--aqua);clip-path:polygon(0 0,62% 0,0 100%)}
+  .e .cover .big{position:absolute;left:22mm;bottom:22mm;font-size:30pt;font-weight:800;line-height:1.02;letter-spacing:-.02em}
+  .e .cover .big i{font-style:normal;color:var(--aqua)}
+  .e .cover .open{position:absolute;right:20mm;bottom:23mm;font-size:7pt;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+  .e .cover svg{position:absolute;right:16mm;top:14mm;width:38mm;opacity:.9}
+  .e .mark-sm{position:absolute;top:18mm;left:20mm;height:8mm}
+</style></head>
+<body>
+  <section class="page e" data-name="first">
+    <img class="logo" src="assets/missive-logo.svg" alt="missive.">
+    <div class="head-contact">hello@missivedigital.com<br><b>missivedigital.com</b></div>
+    <span class="tick l t"></span><span class="tick r t"></span><span class="tick l b"></span><span class="tick r b"></span>
+    <span class="fold-note">fold</span>
+    <div class="letter">
+      <p class="meta">9 October 2026</p>
+      <p>Ms. Ananya Rao<br>Head of Marketing<br>Northwind Cloud Pvt. Ltd.<br>Bengaluru, Karnataka</p>
+      <p class="subject">Subject: Proposal for a content &amp; SEO partnership, FY 2026–27</p>
+      <p>Dear Ms. Rao,</p>
+      <p>Thank you for taking the time to walk us through Northwind’s growth plans last week. As discussed, we have put together a twelve-month programme that brings your product story, search visibility and demand generation under one plan.</p>
+      <p>The programme opens with a technical SEO and content audit, followed by a quarterly editorial calendar built around your buyers’ real questions. Each month you will receive a clear report on rankings, qualified traffic and pipeline influenced.</p>
+      <p>The detailed scope, timelines and commercials are enclosed with this letter. We would be glad to take you through them at your convenience.</p>
+      <p class="sign">Warm regards,<b>[Name]</b>[Designation], Missive Digital Marketing LLP</p>
+    </div>
+    <footer class="foot">
+      <div><strong>Missive Digital Marketing LLP</strong><br>825, Iconic Shyamal, Shyamal Cross Road, 132 Feet Ring Road,<br>Ahmedabad, Gujarat 380015, India</div>
+      <div class="r">LLPIN: <span class="todo">XXX-XXXX</span><br>Registered under the LLP Act, 2008</div>
+    </footer>
+  </section>
+  <section class="page e" data-name="reverse">
+    <div class="sender">
+      <span class="cap">From</span>
+      <img src="assets/missive-logo.svg" alt="missive.">
+      <strong style="color:var(--ink)">Missive Digital Marketing LLP</strong>
+      825, Iconic Shyamal, Shyamal Cross Road, 132 Feet Ring Road, Ahmedabad, Gujarat 380015
+    </div>
+    <div class="cover">
+      <svg viewBox="0 -4 131 122"><path fill="#fff" fill-opacity=".18" fill-rule="evenodd" d="M121 2Q127 -3 130 4V92Q130 97 125 97H46Q16 98 0 117L18 98ZM115 27V80Q115 82 113 82H64Z"/></svg>
+      <div class="big">You’ve got<br>a missive<i>.</i></div>
+      <div class="open">Open me →</div>
+    </div>
+  </section>
+  <section class="page e" data-name="continuation">
+    <img class="mark-sm" src="assets/missive-mark.svg" alt="">
+    <span class="tick l t"></span><span class="tick r t"></span><span class="tick l b"></span><span class="tick r b"></span>
+    <footer class="foot"><div><strong>Missive Digital Marketing LLP</strong> · LLPIN: <span class="todo">XXX-XXXX</span></div><div class="r">missivedigital.com</div></footer>
+  </section>
+</body></html>
