@@ -1,0 +1,100 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>1FCode Birthday, Final Round</title>
+<style>
+@font-face{font-family:"Google Sans";font-weight:500;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-500-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:600;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-600-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:700;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:700;src:url(node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2)}
+@font-face{font-family:Anton;src:url(node_modules/@fontsource/anton/files/anton-latin-400-normal.woff2)}
+@font-face{font-family:Sig;src:url(node_modules/@fontsource/herr-von-muellerhoff/files/herr-von-muellerhoff-latin-400-normal.woff2)}
+
+:root{--green:#043335;--lime:#EAE26A;--white:#F4F4ED;--ink:#021d1e;
+  --display:"Google Sans",Inter,sans-serif;--serif:"Instrument Serif",Georgia,serif;--hand:Caveat,cursive;--sig:Sig,cursive}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#5f5f5f;display:flex;flex-direction:column;gap:40px;padding:40px;font-family:Inter,sans-serif}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden}
+.slide > *{position:absolute}
+/* fine paper tooth so flat colour fields don't read as digital */
+.tooth::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:multiply;z-index:80;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .2  0 0 0 0 .2  0 0 0 7 -5.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.note{font:700 40px/1.05 var(--hand);color:var(--green);text-align:center}
+.arrow{overflow:visible}
+
+/* ===== F1 LEANING ON THE BRACKET (colour-drenched lime, navy suit pops) ===== */
+.f1{background:var(--lime);color:var(--green)}
+.f1 .sig{left:62px;top:2px;font:400 140px/1 var(--sig);transform:rotate(-6deg)}
+.f1 .name{left:0;right:0;top:168px;text-align:center;font:400 300px/.86 Anton;letter-spacing:.01em}
+.f1 .brk{left:592px;top:668px;width:262px;height:652px;border:84px solid var(--green);border-left:0}
+.f1 .blabel{left:812px;top:994px;transform:translate(-50%,-50%) rotate(90deg);white-space:nowrap;font:700 22px/1 var(--mono);letter-spacing:.3em;color:var(--lime);z-index:2}
+.f1 .floor{left:220px;top:1300px;width:470px;height:40px;border-radius:50%;background:radial-gradient(closest-side,rgba(4,51,53,.35),transparent)}
+.f1 .ph{width:768px;left:217px;top:197px;filter:drop-shadow(10px 14px 16px rgba(4,51,53,.22)) brightness(1.06)}
+.f1 .logo{left:40px;bottom:52px;height:38px}
+.f1 .from{left:900px;top:1210px;font:700 34px/1 var(--hand);transform:rotate(-4deg)}
+
+/* ===== F2 BEIGE ON DEEP GREEN (the Koncept recipe with the contrast fixed) ===== */
+.f2{background:radial-gradient(1000px 1000px at 64% 46%,#073f40 0%,#032829 45%,var(--ink) 80%);color:var(--white)}
+.f2 .tex{inset:0;opacity:.28;mix-blend-mode:screen;background-repeat:no-repeat;background-size:1080px 1350px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1350'><filter id='c' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.011' numOctaves='5' seed='21' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .12  0 0 0 0 .3  0 0 0 0 .3  0 0 0 1.5 -.5'/></filter><rect width='100%' height='100%' filter='url(%23c)'/></svg>")}
+.f2 .glow{left:330px;top:250px;width:740px;height:740px;border-radius:50%;background:radial-gradient(circle,rgba(234,226,106,.5) 0%,rgba(234,226,106,.16) 40%,transparent 68%)}
+.f2 .happy{left:70px;top:100px;font:400 160px/1 var(--serif);font-style:italic;z-index:2}
+.f2 .bd{left:0;right:0;top:236px;text-align:center;font:400 286px/.88 Anton;letter-spacing:.01em;color:var(--lime)}
+.f2 .ph{width:789px;left:256px;top:244px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.45))}
+.f2 .tag{left:64px;top:900px;font:700 24px/1 Inter;letter-spacing:.08em;background:var(--lime);color:var(--green);padding:12px 16px}
+.f2 .sel{left:58px;top:956px;width:400px;padding:14px 20px 22px;border:2px solid var(--lime);font:600 92px/.98 var(--display);letter-spacing:-.04em}
+.f2 .sel i{position:absolute;width:16px;height:16px;background:var(--white);border:2px solid var(--lime)}
+.f2 .tr{left:64px;top:1210px;width:400px;font:400 24px/1.45 Inter;color:rgba(244,244,237,.85)}
+.f2 .tr b{color:var(--lime);font-weight:700}
+.f2 .cur{left:454px;top:1170px;z-index:3}
+.f2 .logo{right:64px;top:64px;height:44px}
+
+/* ===== F3 CLOUD-DANCER WHITE, HANDS ON THE NAME LEDGE ===== */
+.f3{background:var(--white);color:var(--green)}
+.f3 .hl{left:64px;top:96px;width:520px;height:150px;background:var(--lime);transform:rotate(-1.5deg)}
+.f3 .l1{left:70px;top:58px;font:400 236px/.9 Anton;letter-spacing:.01em}
+.f3 .l2{left:66px;top:262px;font:400 236px/.9 Anton;letter-spacing:.01em}
+.f3 .sig{left:560px;top:92px;font:400 128px/1 var(--sig);transform:rotate(-8deg)}
+.f3 .ledge{left:0;right:0;top:1062px;bottom:0;background:var(--green)}
+.f3 .ledge .sh{position:absolute;left:250px;right:240px;top:0;height:46px;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);filter:blur(4px)}
+.f3 .ph{width:1013px;left:54px;top:81px;filter:drop-shadow(10px 16px 18px rgba(4,51,53,.2))}
+.f3 .nm{left:70px;top:1176px;font:600 74px/1 var(--display);letter-spacing:-.03em;color:var(--lime)}
+.f3 .rl{left:72px;top:1262px;font:500 28px/1 Inter;color:rgba(244,244,237,.85)}
+.f3 .logo{right:70px;top:1196px;height:46px}
+.f3 .n1{left:44px;top:760px;width:220px;transform:rotate(-5deg)}
+.f3 .n2{right:40px;top:720px;width:230px;transform:rotate(5deg)}
+
+/* ===== F4 BORN BULLISH: leaning on today's bar ===== */
+.f4{background:var(--white);color:var(--green)}
+.f4 .t1{left:60px;top:40px;font:400 190px/.9 Anton;letter-spacing:.01em}
+.f4 .t1 span{background:linear-gradient(transparent 60%,var(--lime) 60%,var(--lime) 92%,transparent 92%)}
+.f4 svg.bars{left:0;top:0;width:1080px;height:1350px}
+.f4 .ph{width:768px;left:157px;top:167px;filter:drop-shadow(10px 14px 16px rgba(4,51,53,.2)) brightness(1.06)}
+.f4 .hb{left:468px;top:126px;font:400 56px/1 var(--serif);font-style:italic;white-space:nowrap}
+.f4 .logo{right:64px;top:56px;height:38px}
+.f4 .n1{left:700px;top:252px;width:350px;transform:rotate(4deg)}
+.f4 .n2{left:700px;top:372px;width:330px;transform:rotate(-3deg)}
+
+.f3 .hl{left:56px;top:96px;width:830px;height:112px;background:var(--lime);transform:rotate(-1.2deg)}
+.f3 .l1{left:68px;top:74px;font:400 128px/1 Anton;letter-spacing:.01em}
+.f3 .l2{left:62px;top:212px;font:400 250px/.9 Anton;letter-spacing:.005em}
+.f3 .hb{left:72px;top:1156px;font:700 26px/1 Inter;letter-spacing:.24em;color:var(--white)}
+.f3 .nm{left:70px;top:1196px}
+.f3 .rl{left:72px;top:1284px}
+</style></head>
+<body>
+<section class="slide f3 tooth" data-name="locked-celebrating-the-visionary">
+  <div class="hl"></div>
+  <div class="l1">CELEBRATING THE</div>
+  <div class="l2">VISIONARY</div>
+  <div class="ledge"><div class="sh"></div></div>
+  <img class="ph" src="assets/rishabh-chair.png" alt="">
+  <div class="hb">HAPPY BIRTHDAY</div>
+  <div class="nm">Rishabh M Shah</div>
+  <div class="rl">Founder &amp; CEO, 1FC Group of Companies</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+</body></html>
