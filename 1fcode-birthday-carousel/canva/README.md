@@ -49,3 +49,9 @@ Page 2 of the same design has every word as editable Canva text, in fonts close 
 - Name, "HAPPY BIRTHDAY" and the title: a Poppins-style geometric sans.
 
 It was built in a helper design, "Helper: editable page 2 source (safe to delete)" (`DAHXgDxJ_9A`), and copied in. A worker restart also left a blank page 3 and a partial copy of page 1 as page 4. The user chose to keep them, and they can be deleted in Canva.
+
+## 9:16 Story
+
+- Canva design: "1FCode founder birthday Instagram Story" (`DAHXg2l7WkA`), 1080 x 1920, all text editable.
+- Centred layout: logo at the top, headline, photo with hands on the green band, then HAPPY BIRTHDAY (44 px), name and title centred in the band. Text stays clear of the Story UI at the top and bottom.
+- Ready-to-post image with the exact original typography: `../story-post/story-celebrating-the-visionary.png` (from `../story-post.html`).
