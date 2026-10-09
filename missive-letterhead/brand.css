@@ -1,0 +1,33 @@
+/* Missive brand tokens — colours sampled from the colour logo */
+@font-face{font-family:"Figtree";font-weight:400;src:url(fonts/figtree-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Figtree";font-weight:500;src:url(fonts/figtree-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Figtree";font-weight:600;src:url(fonts/figtree-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Figtree";font-weight:700;src:url(fonts/figtree-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Figtree";font-weight:800;src:url(fonts/figtree-latin-800-normal.woff2) format("woff2")}
+
+:root{
+  --aqua:#5FC7C2;      /* light teal — left panel of the mark */
+  --teal:#1B8F9B;      /* deep teal — fold of the mark + full stop */
+  --teal-ink:#0F5E67;  /* darker teal for small text on white */
+  --ink:#0B0C0E;       /* wordmark black */
+  --grey:#5B6168;      /* secondary text */
+  --hair:#DCE3E4;      /* hairlines */
+  --mist:#EEF7F7;      /* tint for panels/watermarks */
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:"Figtree",system-ui,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;background:#fff;page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto;break-after:auto}
+.logo{display:block}
+.logo .word{font-family:"Figtree";font-weight:800;fill:var(--ink)}
+.cap{font-size:6.2pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+/* Sample letter content (hidden on the blank print master) */
+.letter{position:absolute;font-size:10pt;line-height:1.6;color:#1d2125;display:none}
+body.sample .letter{display:block}
+.letter p{margin:0 0 3.4mm}
+.letter .meta{color:var(--grey);margin-bottom:7mm}
+.letter .subject{font-weight:700;margin:6mm 0 5mm}
+.letter .sign{margin-top:9mm}
+.letter .sign b{display:block;font-weight:700}

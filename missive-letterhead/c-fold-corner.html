@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Missive Letterhead C</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  .c .corner{position:absolute;top:0;right:0;width:40mm;height:40mm}
+  .c .water{position:absolute;right:-34mm;bottom:-26mm;width:150mm;opacity:1}
+  .c .logo{position:absolute;top:20mm;left:20mm;height:11.5mm}
+  .c .tag{position:absolute;top:35mm;left:20mm;font-size:7pt;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--teal)}
+  .c .letter{top:56mm;left:20mm;right:24mm}
+  .c .foot{position:absolute;left:20mm;right:20mm;bottom:13mm;display:grid;grid-template-columns:1fr;align-items:end;font-size:7.4pt;line-height:1.55;color:var(--grey)}
+  .c .foot .cols{display:grid;grid-template-columns:1.3fr 1fr;gap:8mm;border-left:.9mm solid var(--aqua);padding-left:5mm}
+  .c .foot strong{color:var(--ink);font-weight:700}
+  .c .foot .web{color:var(--teal);font-weight:700;font-size:9pt}
+  .c .corner-sm{position:absolute;top:0;right:0;width:22mm;height:22mm}
+  .c .mark-sm{position:absolute;top:18mm;left:20mm;height:8mm}
+</style></head>
+<body>
+  <!-- Page 1 — first page -->
+  <section class="page c">
+    <svg class="water" viewBox="0 -4 131 122"><path fill="var(--mist)" fill-rule="evenodd" d="M121 2Q127 -3 130 4V92Q130 97 125 97H46Q16 98 0 117L18 98ZM115 27V80Q115 82 113 82H64Z"/></svg>
+    <svg class="corner" viewBox="0 0 52 52"><path d="M0 0H52V52Z" fill="var(--aqua)"/><path d="M0 0L52 52H6Q0 52 0 46Z" fill="var(--teal)"/><path d="M8 20V43Q8 44 9 44H32Z" fill="#fff"/></svg>
+    <img class="logo" src="assets/missive-logo.svg" alt="missive.">
+    <div class="tag">Content · SEO · Growth</div>
+    <div class="letter">
+      <p class="meta">9 October 2026</p>
+      <p>Ms. Ananya Rao<br>Head of Marketing<br>Northwind Cloud Pvt. Ltd.<br>Bengaluru, Karnataka</p>
+      <p class="subject">Subject: Proposal for a content &amp; SEO partnership, FY 2026–27</p>
+      <p>Dear Ms. Rao,</p>
+      <p>Thank you for taking the time to walk us through Northwind’s growth plans last week. As discussed, we have put together a twelve-month programme that brings your product story, search visibility and demand generation under one plan.</p>
+      <p>The programme opens with a technical SEO and content audit, followed by a quarterly editorial calendar built around your buyers’ real questions. Each month you will receive a clear report on rankings, qualified traffic and pipeline influenced.</p>
+      <p>The detailed scope, timelines and commercials are enclosed with this letter. We would be glad to take you through them at your convenience.</p>
+      <p class="sign">Warm regards,<b>[Name]</b>[Designation], Missive Digital Marketing LLP</p>
+    </div>
+    <footer class="foot">
+      <div class="cols">
+        <div><strong>Missive Digital Marketing LLP</strong><br>825, Iconic Shyamal, Shyamal Cross Road,<br>132 Feet Ring Road, Ahmedabad, Gujarat 380015<br>LLPIN: <span class="todo">XXX-XXXX</span> · Registered under the LLP Act, 2008</div>
+        <div><span class="web">missivedigital.com</span><br>hello@missivedigital.com</div>
+      </div>
+    </footer>
+  </section>
+  <!-- Page 2 — continuation sheet -->
+  <section class="page c">
+    <svg class="corner-sm" viewBox="0 0 52 52"><path d="M0 0H52V52Z" fill="var(--aqua)"/><path d="M0 0L52 52H6Q0 52 0 46Z" fill="var(--teal)"/><path d="M8 20V43Q8 44 9 44H32Z" fill="#fff"/></svg>
+    <img class="mark-sm" src="assets/missive-mark.svg" alt="">
+    <footer class="foot">
+      <div class="cols"><div><strong>Missive Digital Marketing LLP</strong> · LLPIN: <span class="todo">XXX-XXXX</span></div><div><span class="web">missivedigital.com</span></div></div>
+    </footer>
+  </section>
+</body></html>
