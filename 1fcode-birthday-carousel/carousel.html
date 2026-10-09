@@ -1,0 +1,219 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>1FCode Birthday Carousel</title>
+<style>
+/* ---------- FONTS (offline via npm @fontsource) ---------- */
+@font-face{font-family:"Google Sans";font-weight:400;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-400-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:500;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-500-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:600;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-600-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:700;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+
+/* ---------- 1FC BRAND (from 1FC Logo & Colors guide) ---------- */
+:root{
+  --green:#043335;   /* Legacy Green */
+  --lime:#EAE26A;    /* Light Lime */
+  --white:#F4F4ED;   /* Bond White */
+  --w:1080px;--h:1350px;--pad:96px;
+  --display:"Google Sans",Inter,sans-serif;
+  --text:Inter,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#6b6b6b;display:flex;flex-direction:column;gap:40px;padding:40px;font-family:var(--text)}
+
+.slide{width:var(--w);height:var(--h);position:relative;overflow:hidden;padding:var(--pad);
+  display:flex;flex-direction:column;justify-content:center;gap:40px}
+.slide.top{justify-content:flex-start;padding-top:150px}
+.g{background:var(--green);color:var(--white)}
+.w{background:var(--white);color:var(--green)}
+.l{background:var(--lime);color:var(--green)}
+
+/* paper speckle, as on the brand guide's Bond White pages */
+.paper::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .25  0 0 0 0 .26  0 0 0 0 .22  0 0 0 9 -6.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.slide > *{position:relative}
+
+/* ---------- type ---------- */
+.pill{align-self:flex-start;font:500 30px/1 var(--text);letter-spacing:.06em;text-transform:uppercase;
+  padding:16px 30px;border-radius:999px;background:var(--lime);color:var(--green)}
+.l .pill{background:var(--green);color:var(--lime)}
+.h{font:500 84px/1.06 var(--display);letter-spacing:-.025em}
+.h.xl{font-size:96px}
+.body{font:400 46px/1.36 var(--text);max-width:880px;text-wrap:pretty}
+.h{text-wrap:pretty}
+.body b{font-weight:600}
+.g .body b{color:var(--lime)}
+.hl{background:var(--lime);color:var(--green);padding:0 .14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.lime{color:var(--lime)}
+.muted{opacity:.72}
+
+/* ---------- chrome ---------- */
+.progress{position:absolute;left:0;top:0;height:10px;background:var(--lime)}
+.w .progress,.l .progress{background:var(--green)}
+.chrome{position:absolute;left:var(--pad);right:var(--pad);bottom:58px;display:flex;align-items:center;justify-content:space-between;
+  font:600 28px/1 var(--text);letter-spacing:.04em}
+.chrome img{height:36px;display:block}
+.swipe{opacity:.85}
+
+/* ---------- 1. COVER ---------- */
+.cover{padding:0}
+.cover .glow{position:absolute;inset:0;background:
+  radial-gradient(620px 560px at 50% 64%, rgba(234,226,106,.30), rgba(234,226,106,.08) 55%, transparent 75%)}
+.cv-kicker{position:absolute;top:92px;left:0;right:0;text-align:center;font:500 30px/1 var(--text);letter-spacing:.22em;text-transform:uppercase;color:var(--lime)}
+.cv-title{position:absolute;top:146px;left:0;right:0;text-align:center;line-height:.86}
+.cv-title .serif{display:block;font-size:200px;color:var(--lime)}
+.cv-title .sans{display:block;font:600 186px/.95 var(--display);letter-spacing:-.045em;color:var(--white)}
+.cv-photo{position:absolute;width:880px;left:104px;top:520px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 66%,transparent 84%);mask-image:linear-gradient(to bottom,#000 0,#000 66%,transparent 84%)}
+.brk{position:absolute;width:118px;border:36px solid var(--lime)}
+.brk.left{border-right:0}
+.brk.right{border-left:0}
+.cv-fade{position:absolute;left:0;right:0;bottom:0;height:380px;background:linear-gradient(to bottom,rgba(4,51,53,0),rgba(4,51,53,.85) 40%,var(--green) 62%)}
+.cv-name{position:absolute;left:0;right:0;top:1104px;text-align:center;font:600 76px/1 var(--display);letter-spacing:-.025em}
+.cv-role{position:absolute;left:0;right:0;top:1196px;text-align:center;font:500 32px/1 var(--text);letter-spacing:.04em;color:var(--lime)}
+
+/* ---------- 3. big number ---------- */
+.num{font:600 400px/.78 var(--display);letter-spacing:-.06em;color:var(--lime);margin-left:-18px}
+
+/* ---------- 4. acronym ---------- */
+.acro{display:flex;flex-direction:column;gap:18px}
+.acro div{display:flex;align-items:center;gap:32px;font:600 104px/1 var(--display);letter-spacing:-.035em}
+.acro span{display:inline-grid;place-items:center;width:132px;height:132px;border-radius:30px;background:var(--green);color:var(--lime);font-size:84px;letter-spacing:-.02em}
+.chips{display:flex;flex-wrap:wrap;gap:16px;max-width:900px}
+.chips span{font:500 38px/1 var(--text);padding:20px 30px;border:3px solid var(--green);border-radius:999px}
+
+/* ---------- 5. magazine ---------- */
+.mag-wrap{position:relative;align-self:center;margin:20px 0 14px}
+.mag{display:block;width:680px;border:12px solid var(--white);border-radius:6px;transform:rotate(-2.5deg);
+  box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.mag-wrap::before,.mag-wrap::after{content:"";position:absolute;width:90px;height:90px;border:16px solid var(--lime)}
+.mag-wrap::before{left:-44px;top:-34px;border-right:0;border-bottom:0}
+.mag-wrap::after{right:-44px;bottom:-34px;border-left:0;border-top:0}
+.award{font:500 44px/1.25 var(--display);letter-spacing:-.01em;text-align:center;align-self:center;max-width:860px}
+
+/* ---------- 6. gradient ---------- */
+.grad{background:linear-gradient(176deg,var(--white) 0%,var(--white) 30%,var(--lime) 60%,#7f8a4a 76%,var(--green) 96%);color:var(--green)}
+.grad .chrome{color:var(--white)}
+.grad .progress{background:var(--green)}
+.grad .key{position:absolute;right:96px;bottom:150px;width:250px;opacity:.95}
+
+/* ---------- 7. list ---------- */
+.list{display:flex;flex-direction:column}
+.list div{display:flex;gap:36px;align-items:flex-start;padding:38px 0;border-top:3px solid rgba(4,51,53,.16)}
+.list div:last-child{border-bottom:3px solid rgba(4,51,53,.16)}
+.list b{flex:none;font:600 52px/1 var(--display);background:var(--lime);border-radius:20px;width:104px;height:104px;display:grid;place-items:center}
+.list p{font:400 44px/1.3 var(--text);padding-top:6px}
+.list p strong{font-weight:600}
+
+/* ---------- 8. wish ---------- */
+.end{align-items:center;text-align:center;gap:34px}
+.ring{width:380px;height:380px;border-radius:50%;padding:14px;background:var(--lime);box-shadow:0 0 0 16px rgba(234,226,106,.16)}
+.ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.end .title{line-height:.92;display:flex;flex-direction:column;gap:22px}
+.end .title .serif{display:block;font-size:136px;color:var(--lime)}
+.end .title .sans{display:block;font:600 124px/.98 var(--display);letter-spacing:-.04em}
+.end .body{font-size:42px;max-width:840px;text-wrap:balance}
+.sign{font:600 30px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+.cta{font:500 34px/1 var(--text);padding:22px 36px;border-radius:999px;border:3px solid var(--lime);color:var(--lime)}
+</style></head>
+
+<body>
+
+<!-- 1. COVER: real face + one idea. Founder framed inside the logo's [ ] where the keyhole sits -->
+<section class="slide g cover">
+  <div class="glow"></div>
+  <div class="cv-kicker">[ Birthday Edition ]</div>
+  <h1 class="cv-title"><span class="serif">Happy</span><span class="sans">Birthday</span></h1>
+  <img class="cv-photo bleed" src="assets/rishabh-cutout@2x.png" alt="">
+  <div class="cv-fade"></div>
+  <div class="brk left" style="left:184px;top:596px;height:500px"></div>
+  <div class="brk right" style="right:184px;top:596px;height:500px"></div>
+  <div class="cv-name">Rishabh M Shah</div>
+  <div class="cv-role">Founder &amp; CEO, 1FC Group of Companies</div>
+</section>
+
+<!-- 2. SECOND HOOK (standalone): the origin story -->
+<section class="slide w paper">
+  <div class="pill">Where it began</div>
+  <div class="h">He watched a family spend months piecing together a loved one’s finances.</div>
+  <div class="body">Statements here. Folders there. Answers nowhere. <span class="hl"><b>He decided no family should go through that again.</b></span></div>
+</section>
+
+<!-- 3. BIG NUMBER: credibility -->
+<section class="slide g">
+  <div class="pill">The experience</div>
+  <div class="num">16</div>
+  <div class="h">years in banking and investment services.</div>
+  <div class="body">Long enough to see the real problem: a family’s money spread across <b>disconnected systems,</b> with no single framework holding it together.</div>
+</section>
+
+<!-- 4. THE ANSWER: what 1FC means + what 1FCode brings together -->
+<section class="slide l">
+  <div class="pill">So he built</div>
+  <div class="acro">
+    <div><span>1</span>One</div>
+    <div><span>F</span>Financial</div>
+    <div><span>C</span>Code</div>
+  </div>
+  <div class="body">One framework for a family’s <b>entire financial life.</b></div>
+  <div class="chips">
+    <span>Investing</span><span>Stock broking</span><span>Insurance</span><span>Tax filing</span><span>Digital wills</span><span>Net worth tracking</span><span>Advisory</span>
+  </div>
+</section>
+
+<!-- 5. REHOOK + PROOF: the magazine cover -->
+<section class="slide g">
+  <div class="pill">September 2026</div>
+  <div class="h">On the cover of <span style="white-space:nowrap">The Enterprise World.</span></div>
+  <div class="mag-wrap"><img class="mag" src="assets/enterprise-world-cover-top.png" alt=""></div>
+  <div class="award">Named <span class="lime">The Most Visionary FinTech Leader</span> to Watch in 2026.</div>
+</section>
+
+<!-- 6. THE BIGGER PICTURE: mission, on the brand gradient -->
+<section class="slide grad top">
+  <div class="pill" style="background:var(--green);color:var(--lime)">The bigger picture</div>
+  <div class="h">India is on the brink of its biggest wealth handover.</div>
+  <div class="body">Rishabh is building the financial operating system it needs. So families can organise, protect and pass on what they’ve built, <b>with clarity and dignity.</b></div>
+  <img class="key" src="assets/icon-lime.svg" alt="">
+</section>
+
+<!-- 7. SAVEABLE: the ideas 1FC is built on -->
+<section class="slide w paper">
+  <div class="pill">What he builds on</div>
+  <div class="h">3 ideas behind everything 1FC does.</div>
+  <div class="list">
+    <div><b>01</b><p>Every financial decision deserves <strong>a clear framework.</strong></p></div>
+    <div><b>02</b><p>Planning doesn’t stop at retirement. <strong>It extends to legacy.</strong></p></div>
+    <div><b>03</b><p>What a family builds should pass on <strong>with clarity, not chaos.</strong></p></div>
+  </div>
+</section>
+
+<!-- 8. THE WISH + one CTA (comments) -->
+<section class="slide g end">
+  <div class="ring"><img src="assets/rishabh-portrait@2x.jpg" alt=""></div>
+  <div class="title"><span class="serif">Happy birthday,</span><span class="sans">Rishabh.</span></div>
+  <div class="body muted">Thank you for building something families will rely on for generations. Here’s to the next chapter.</div>
+  <div class="sign">With gratitude, Team 1FC</div>
+  <div class="cta">Leave your wishes for Rishabh below</div>
+</section>
+
+<script>
+/* chrome: progress bar, logo, swipe cue on every slide but the last */
+const slides=[...document.querySelectorAll('.slide')], n=slides.length;
+slides.forEach((s,i)=>{
+  const dark=s.classList.contains('g')||s.classList.contains('grad');
+  const p=document.createElement('div');p.className='progress';p.style.width=((i+1)/n*100)+'%';s.appendChild(p);
+  const c=document.createElement('div');c.className='chrome';
+  const pad=String(i+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');
+  c.innerHTML=`<img src="assets/${dark?'logo-on-dark':'logo-on-light'}.svg" alt="1FCode">`+
+              `<div class="swipe">${i<n-1?pad+'&nbsp;&nbsp;→':pad}</div>`;
+  s.appendChild(c);
+});
+</script>
+</body></html>
