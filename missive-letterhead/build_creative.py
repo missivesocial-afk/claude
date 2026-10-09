@@ -446,4 +446,187 @@ page("q-envelope", "Missive Letterhead Q", MIN_FOOT_CSS.format(p="q") + f"""
     <div class="foot fine mono"><b>Missive Digital Marketing LLP</b> · {LEGAL} · missivedigital.com</div>"""),
 ])
 
-print("built g–q")
+# ═════════════════════════ Playful set (R–U): same family as H/K, clean grid, tight spacing
+import math
+
+def mark_g(x, y, scale, light="#5FC7C2", dark="#1B8F9B", light_op=1, rot=0):
+    return (f'<g transform="translate({x} {y}) rotate({rot}) scale({scale})"><path fill="{light}" fill-opacity="{light_op}" d="{MARK_LIGHT}"/>'
+            f'<path fill="{dark}" fill-rule="evenodd" d="{MARK_DARK}"/></g>')
+
+def star(cx, cy, r1, r2, n=14):
+    pts = []
+    for i in range(n * 2):
+        r = r1 if i % 2 == 0 else r2
+        a = math.pi * i / n - math.pi / 2
+        pts.append(f"{cx + r * math.cos(a):.2f} {cy + r * math.sin(a):.2f}")
+    return "M" + " L".join(pts) + "Z"
+
+def diecut(d, fill, tf, inner="", border=2.6, outline=True):
+    """A die-cut sticker: soft shadow, white cut border, inked shape, optional contents."""
+    ink = 'stroke="#0B0C0E" stroke-width=".45"' if outline else ""
+    return (f'<g transform="{tf}"><path d="{d}" fill="#0B0C0E" fill-opacity=".14" stroke="#0B0C0E" stroke-opacity=".14" stroke-width="{border}" stroke-linejoin="round" transform="translate(.6 .8)"/>'
+            f'<path d="{d}" fill="#fff" stroke="#fff" stroke-width="{border}" stroke-linejoin="round"/>'
+            f'<path d="{d}" fill="{fill}" {ink}/>{inner}</g>')
+
+# ───────────────────────── R · Sticker sheet
+BUBBLE = "M3 0 H45 Q48 0 48 3 V13 Q48 16 45 16 H13 L6.5 21.5 L8 16 H3 Q0 16 0 13 V3 Q0 0 3 0Z"
+r_stickers = "".join([
+    diecut(BUBBLE, "#5FC7C2", "translate(108 10) rotate(-4)",
+           '<text x="4" y="7.4" font-family="Caveat" font-weight="700" font-size="6.6" fill="#0B0C0E">say hi!</text>'
+           '<text x="4" y="12.6" font-family="JetBrains Mono" font-weight="700" font-size="2.9" fill="#0B0C0E">hello@missivedigital.com</text>'),
+    diecut(star(0, 0, 11, 8.2), "#BDF2EA", "translate(181 21) rotate(10)",
+           '<text y="2.2" text-anchor="middle" font-family="Figtree" font-weight="800" font-size="6.2" fill="#0B0C0E">SEO</text>'),
+    diecut("M4 0 H40 Q44 0 44 4 Q44 8 40 8 H4 Q0 8 0 4 Q0 0 4 0Z", "#0B0C0E", "translate(113 34) rotate(3)",
+           '<text x="22" y="5.4" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="2.9" letter-spacing=".5" fill="#5FC7C2">CONTENT ✦ SOCIAL</text>', outline=False),
+])
+r_mark = (f'<g transform="translate(163 31) rotate(-12) scale(.105)">'
+          f'<path d="{MARK_DARK} {MARK_LIGHT}" fill="#0B0C0E" fill-opacity=".14" stroke="#0B0C0E" stroke-opacity=".14" stroke-width="26" stroke-linejoin="round" transform="translate(6 8)"/>'
+          f'<path d="{MARK_DARK} {MARK_LIGHT}" fill="#fff" stroke="#fff" stroke-width="26" stroke-linejoin="round"/>'
+          f'<path fill="#5FC7C2" d="{MARK_LIGHT}"/><path fill="#1B8F9B" fill-rule="evenodd" d="{MARK_DARK}"/></g>')
+page("r-stickers", "Missive Letterhead R", """
+  .r{background:url(assets/textures/paper.jpg) center/cover}
+  .r .ov{position:absolute;inset:0;width:210mm;height:297mm}
+  .r .logo{position:absolute;top:15mm;left:18mm;height:10.5mm}
+  .r .sub{position:absolute;top:29.5mm;left:18mm;font-size:6.4pt;letter-spacing:.06em;color:var(--teal-ink)}
+  .r .sub b{color:var(--ink)}
+  .r .letter{top:50mm;left:20mm;right:20mm}
+  .r .label{position:absolute;left:18mm;right:39mm;bottom:15mm;background:#fff;border:.45mm solid var(--ink);border-radius:3mm;
+            box-shadow:0 0 0 1.3mm #fff,.7mm .9mm 0 1.3mm rgba(11,12,14,.14);padding:2.6mm 4.5mm;transform:rotate(-.6deg);
+            display:flex;justify-content:space-between;gap:6mm;font-size:6.2pt;line-height:1.5}
+  .r .label b{font-weight:700}
+  .r .seal{position:absolute;right:15mm;bottom:12mm;width:19mm;height:19mm;border-radius:50%;background:var(--teal);color:#fff;border:.45mm solid var(--ink);
+           box-shadow:0 0 0 1.3mm #fff,.7mm .9mm 0 1.3mm rgba(11,12,14,.14);display:grid;place-items:center;text-align:center;transform:rotate(8deg);font-size:5.4pt;font-weight:700;letter-spacing:.12em;line-height:1.3}
+  .r .seal b{font-family:Figtree;font-size:9pt;letter-spacing:0;display:block}
+""", [
+ ("first", f"""    {logo_svg("logo")}
+    <div class="sub mono"><b>missivedigital.com</b> · Ahmedabad, IN</div>
+    <svg class="ov" viewBox="0 0 210 297">{r_stickers}{r_mark}</svg>
+    {LETTER}
+    <div class="label mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b><br>{ADDR1} {ADDR2}</span><span style="text-align:right">{LEGAL}<br>LLP Act, 2008</span></div>
+    <div class="seal mono"><div>MADE IN<b>AMD</b></div></div>"""),
+ ("continuation", f"""    {logo_svg("logo").replace('class="logo"', 'class="logo" style="height:8mm"')}
+    <svg class="ov" viewBox="0 0 210 297">{r_mark.replace('translate(163 31)', 'translate(181 12)')}</svg>
+    <div class="label mono" style="bottom:13mm"><span><b>MISSIVE DIGITAL MARKETING LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
+])
+
+# ───────────────────────── S · Journal (dot grid, washi tape, handwriting, highlighter)
+DOTGRID = ('<svg class="grid" viewBox="0 0 210 297"><defs><pattern id="dg" patternUnits="userSpaceOnUse" width="5" height="5">'
+           '<circle cx="2.5" cy="2.5" r=".22" fill="#BFD6D6"/></pattern></defs><rect width="210" height="297" fill="url(#dg)"/>'
+           + "".join(f'<circle cx="8.5" cy="{y}" r="2.9" fill="#E7EDED"/><circle cx="8.5" cy="{y}" r="2.9" fill="none" stroke="#D3DCDC" stroke-width=".3"/>' for y in (74, 148.5, 223))
+           + '</svg>')
+WASHI = ('<svg class="washi" viewBox="0 0 30 8"><defs><pattern id="ws" patternUnits="userSpaceOnUse" width="3" height="8" patternTransform="rotate(35)">'
+         '<rect width="1.5" height="8" fill="#5FC7C2"/></pattern></defs>'
+         '<path d="M0 .4 L1.2 0 L2.4 .6 L28 0 L29.2 .7 L30 .2 L30 7.6 L28.8 8 L27.6 7.4 L2 8 L.8 7.3 L0 7.8Z" fill="#EAF7F6" fill-opacity=".9"/>'
+         '<path d="M0 .4 L1.2 0 L2.4 .6 L28 0 L29.2 .7 L30 .2 L30 7.6 L28.8 8 L27.6 7.4 L2 8 L.8 7.3 L0 7.8Z" fill="url(#ws)" fill-opacity=".55"/></svg>')
+SWOOSH = '<svg class="swoosh" viewBox="0 0 60 6"><path d="M1 4 C14 1.5 30 1 59 2.6" fill="none" stroke="#1B8F9B" stroke-width="1" stroke-linecap="round"/></svg>'
+page("s-journal", "Missive Letterhead S", """
+  .s{background:#fff}
+  .s .grid{position:absolute;inset:0;width:210mm;height:297mm}
+  .s .card{position:absolute;top:15mm;left:20mm;background:#fff;padding:4mm 6mm;box-shadow:0 .8mm 2.4mm rgba(11,12,14,.14),0 0 0 .25mm #E2E8E8;transform:rotate(-2deg)}
+  .s .card svg{height:9.5mm;display:block}
+  .s .washi{position:absolute;top:12.5mm;left:13mm;width:24mm;transform:rotate(-32deg)}
+  .s .note{position:absolute;top:14mm;right:20mm;text-align:right;transform:rotate(-2deg);color:var(--teal-ink)}
+  .s .note .a{font-size:16pt;font-weight:700;line-height:1}
+  .s .note .b{font-size:13pt;font-weight:500;color:var(--ink);line-height:1.1}
+  .s .swoosh{display:block;width:52mm;margin:.4mm 0 .6mm auto}
+  .s .letter{top:50mm;left:22mm;right:22mm}
+  .s .foot{position:absolute;left:22mm;right:22mm;bottom:14mm;display:flex;justify-content:space-between;align-items:flex-end;font-size:6.3pt;line-height:1.6;color:var(--grey)}
+  .s .hl{color:var(--ink);font-weight:700;padding:0 1mm;margin-left:-1mm;background:linear-gradient(100deg,transparent 0 2%,rgba(95,199,194,.55) 4% 96%,transparent 98%) 0 70%/100% 62% no-repeat}
+""", [
+ ("first", f"""    {DOTGRID}
+    <div class="card">{logo_svg()}</div>{WASHI}
+    <div class="note"><div class="a hand">hello@missivedigital.com</div>{SWOOSH}<div class="b hand">missivedigital.com ↗</div></div>
+    {LETTER}
+    <div class="foot mono"><span><span class="hl">Missive Digital Marketing LLP</span><br>{ADDR1} {ADDR2}</span><span style="text-align:right">{LEGAL}<br>LLP Act, 2008</span></div>"""),
+ ("continuation", f"""    {DOTGRID}
+    <div class="card" style="padding:3mm 4mm">{mark_svg().replace('<svg ', '<svg style="height:7mm" ')}</div>{WASHI}
+    <div class="foot mono"><span><span class="hl">Missive Digital Marketing LLP</span> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
+])
+
+# ───────────────────────── T · Boarding pass
+rnd = random.Random(42)
+bars, x = [], 0.0
+while x < 40:
+    w = rnd.choice([.35, .35, .6, .9, 1.2]); bars.append(f'<rect x="{x:.2f}" width="{w}" height="9" fill="#0B0C0E"/>'); x += w + rnd.choice([.35, .5, .8])
+BARCODE = f'<svg class="bc" viewBox="0 0 {x:.1f} 9" preserveAspectRatio="none">{"".join(bars)}</svg>'
+page("t-boarding-pass", "Missive Letterhead T", """
+  .t{background:url(assets/textures/paper.jpg) center/cover}
+  .t .ticket{position:absolute;top:13mm;left:15mm;right:15mm;height:45mm;display:grid;grid-template-columns:1fr 50mm;border:.6mm solid var(--ink);border-radius:3mm;box-shadow:1.3mm 1.3mm 0 var(--ink);background:#fff}
+  .t .main{padding:4.6mm 6mm;display:flex;flex-direction:column;justify-content:space-between}
+  .t .stub{background:var(--aqua);border-left:.5mm dashed var(--ink);border-radius:0 2.4mm 2.4mm 0;padding:4.6mm 5mm;display:flex;flex-direction:column;justify-content:space-between;font-size:6.4pt;line-height:1.5}
+  .t .notch{position:absolute;right:50mm;width:5mm;height:5mm;margin-right:-2.5mm;border-radius:50%;background:#F4F1EA;border:.6mm solid var(--ink)}
+  .t .notch.top{top:-3.1mm;clip-path:inset(50% -1mm -1mm -1mm)} .t .notch.bot{bottom:-3.1mm;clip-path:inset(-1mm -1mm 50% -1mm)}
+  .t .row1{display:flex;justify-content:space-between;align-items:center}
+  .t .row1 svg{height:7.5mm}
+  .t .kind{font-size:6pt;font-weight:700;letter-spacing:.24em;color:var(--teal)}
+  .t .route{display:flex;align-items:center;gap:4mm}
+  .t .code{font-size:25pt;font-weight:800;line-height:.9;letter-spacing:-.01em}
+  .t .city{font-size:5.4pt;letter-spacing:.14em;color:var(--grey);margin-top:1mm}
+  .t .path{flex:1;position:relative;height:6mm;border-top:.4mm dashed var(--teal);margin-top:4mm}
+  .t .path svg{position:absolute;left:50%;top:-4mm;width:8mm;transform:translateX(-50%)}
+  .t .fields{display:flex;gap:9mm;font-size:5.4pt;letter-spacing:.14em;color:var(--grey)}
+  .t .fields b{display:block;font-family:Figtree;font-size:9pt;font-weight:800;letter-spacing:0;color:var(--ink);margin-top:.4mm}
+  .t .stub .k{font-size:5.4pt;font-weight:700;letter-spacing:.18em;opacity:.7;margin-bottom:.8mm}
+  .t .stub b{font-weight:700}
+  .t .bc{width:100%;height:8mm;display:block}
+  .t .letter{top:70mm;left:20mm;right:20mm}
+  .t .foot{position:absolute;left:15mm;right:15mm;bottom:12mm;border-top:.4mm dashed var(--ink);padding-top:3mm;display:flex;justify-content:space-between;font-size:6.2pt;line-height:1.55}
+  .t .foot b{font-weight:700}
+  .t .cut{position:absolute;left:15mm;bottom:21.6mm;font-size:9pt;background:#F4F1EA;padding:0 1.2mm;line-height:1}
+""", [
+ ("first", f"""    <div class="ticket">
+      <div class="main">
+        <div class="row1">{logo_svg()}<span class="kind mono">BOARDING PASS ✦</span></div>
+        <div class="route"><div><div class="code">AMD</div><div class="city mono">AHMEDABAD, IN</div></div>
+          <div class="path">{mark_svg()}</div>
+          <div style="text-align:right"><div class="code">YOU</div><div class="city mono">WHEREVER YOU ARE</div></div></div>
+        <div class="fields mono"><span>FLIGHT<b>MSV 001</b></span><span>GATE<b>SEO</b></span><span>SEAT<b>1A</b></span><span>STATUS<b>Boarding</b></span></div>
+      </div>
+      <div class="stub mono"><div><div class="k">CONTACT</div><b>hello@missive<br>digital.com</b><br>missivedigital.com</div>{BARCODE}</div>
+      <span class="notch top"></span><span class="notch bot"></span>
+    </div>
+    {LETTER}
+    <span class="cut">✂</span>
+    <div class="foot mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b><br>{ADDR1} {ADDR2}</span><span style="text-align:right">{LEGAL}<br>LLP Act, 2008</span></div>"""),
+ ("continuation", f"""    <div class="ticket" style="height:16mm;right:auto;width:96mm;grid-template-columns:1fr 26mm">
+      <div class="main" style="padding:3mm 5mm;justify-content:center"><div class="row1">{logo_svg().replace('<svg ', '<svg style="height:6.5mm" ')}</div></div>
+      <div class="stub mono" style="padding:3mm;justify-content:center">{BARCODE}</div>
+      <span class="notch top" style="right:26mm"></span><span class="notch bot" style="right:26mm"></span>
+    </div>
+    <span class="cut">✂</span>
+    <div class="foot mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
+])
+
+# ───────────────────────── U · Comic (speech bubble, Ben-Day dots, starburst)
+SPEECH = "M30 13 H170 Q185 13 185 28 Q185 43 170 43 H44 L30 53 L33 43 H30 Q15 43 15 28 Q15 13 30 13Z"
+BURST = star(185, 22, 15.5, 11.5, 16)
+page("u-comic", "Missive Letterhead U", f"""
+  .u{{background:#fff}}
+  .u .ov{{position:absolute;inset:0;width:210mm;height:297mm}}
+  .u .logo{{position:absolute;top:21.6mm;left:27mm;height:10.5mm}}
+  .u .contact{{position:absolute;top:22.6mm;right:42mm;text-align:right;font-size:6.6pt;line-height:1.6}}
+  .u .contact b{{color:var(--teal)}}
+  .u .letter{{top:62mm;left:20mm;right:20mm}}
+  .u .capbox{{position:absolute;left:15mm;right:15mm;bottom:14mm;background:var(--mint);border:.6mm solid var(--ink);box-shadow:1.3mm 1.3mm 0 var(--ink);padding:2.8mm 5mm;display:flex;justify-content:space-between;font-size:6.2pt;line-height:1.5}}
+  .u .capbox b{{font-weight:700}}
+""", [
+ ("first", f"""    <svg class="ov" viewBox="0 0 210 297"><defs>
+        <pattern id="bd" patternUnits="userSpaceOnUse" width="3" height="3"><circle cx="1.5" cy="1.5" r=".8" fill="#5FC7C2"/></pattern>
+        <radialGradient id="bf" cx="1" cy="0" r="1"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></radialGradient>
+        <mask id="bm"><rect width="210" height="297" fill="url(#bf)"/></mask></defs>
+      <rect x="96" y="0" width="114" height="66" fill="url(#bd)" mask="url(#bm)"/>
+      <path d="{SPEECH}" fill="#0B0C0E" transform="translate(1.3 1.3)"/><path d="{SPEECH}" fill="#fff" stroke="#0B0C0E" stroke-width=".7" stroke-linejoin="round"/>
+      <path d="{BURST}" fill="#0B0C0E" transform="translate(1.3 1.3)"/><path d="{BURST}" fill="#BDF2EA" stroke="#0B0C0E" stroke-width=".7" stroke-linejoin="round"/>
+      {mark_g(177.6, 15.5, .115)}
+    </svg>
+    {logo_svg("logo")}
+    <div class="contact mono">hello@missivedigital.com<br><b>missivedigital.com ↗</b></div>
+    {LETTER}
+    <div class="capbox mono"><span><b>MISSIVE DIGITAL MARKETING LLP</b><br>{ADDR1} {ADDR2}</span><span style="text-align:right">{LEGAL}<br>LLP Act, 2008</span></div>"""),
+ ("continuation", f"""    <svg class="ov" viewBox="0 0 210 297">
+      <path d="{star(28, 22, 11, 8.2, 14)}" fill="#0B0C0E" transform="translate(1.1 1.1)"/><path d="{star(28, 22, 11, 8.2, 14)}" fill="#BDF2EA" stroke="#0B0C0E" stroke-width=".6" stroke-linejoin="round"/>
+      {mark_g(21.8, 16.4, .095)}</svg>
+    <div class="capbox mono" style="padding:2.2mm 5mm"><span><b>MISSIVE DIGITAL MARKETING LLP</b> · {LEGAL}</span><span>missivedigital.com</span></div>"""),
+])
+
+print("built g–u")
