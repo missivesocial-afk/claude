@@ -1,0 +1,192 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>1FCode Birthday, Reference-Led Posts</title>
+<style>
+@font-face{font-family:"Google Sans";font-weight:400;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-400-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:500;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-500-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:600;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-600-normal.woff2)}
+@font-face{font-family:"Google Sans";font-weight:700;src:url(node_modules/@fontsource/google-sans/files/google-sans-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:normal;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2)}
+@font-face{font-family:"Instrument Serif";font-style:italic;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Caveat;font-weight:600;src:url(node_modules/@fontsource/caveat/files/caveat-latin-600-normal.woff2)}
+@font-face{font-family:Caveat;font-weight:700;src:url(node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2)}
+@font-face{font-family:Anton;src:url(node_modules/@fontsource/anton/files/anton-latin-400-normal.woff2)}
+@font-face{font-family:"Archivo Black";src:url(node_modules/@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2)}
+@font-face{font-family:Sig;src:url(node_modules/@fontsource/herr-von-muellerhoff/files/herr-von-muellerhoff-latin-400-normal.woff2)}
+
+:root{--green:#043335;--lime:#EAE26A;--white:#F4F4ED;--deep:#022223;--olive:#9aa84a;
+  --display:"Google Sans",Inter,sans-serif;--serif:"Instrument Serif",Georgia,serif;--hand:Caveat,cursive;--sig:Sig,cursive}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#5f5f5f;display:flex;flex-direction:column;gap:40px;padding:40px;font-family:Inter,sans-serif}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden}
+.slide > *{position:absolute}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:overlay;z-index:60;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.photo-fade{-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 82%);mask-image:linear-gradient(to bottom,#000 60%,transparent 82%)}
+
+/* ===== P1 NAME COVER (ref: pixel-serif name, handwritten notes around the person) ===== */
+.p1{background:radial-gradient(760px 820px at 50% 46%,#0e605e 0%,#08494a 42%,var(--green) 70%,var(--deep) 100%);color:var(--white)}
+.p1 canvas.px{left:50%;top:118px;transform:translateX(-50%);image-rendering:pixelated}
+.p1 .sig{left:64px;top:22px;font:400 140px/1 var(--sig);color:var(--white);transform:rotate(-8deg);text-shadow:0 4px 18px rgba(2,34,35,.5);z-index:3}
+.p1 .ph{width:940px;left:116px;top:318px}
+.p1 .note{font:600 40px/1.08 var(--hand);text-align:center;color:var(--white)}
+.p1 .note b{font:700 30px/1.3 var(--display);letter-spacing:.06em;display:block}
+.p1 .tagline{left:0;right:0;top:1150px;text-align:center;font:600 44px/1 var(--display);letter-spacing:-.01em}
+.p1 .logo{left:0;right:0;margin:auto;bottom:58px;height:42px}
+
+/* ===== P2 CLEAN WHITE (ref: HAPPY + signature "Birthday", portrait right, bokeh) ===== */
+.p2{background:var(--white) radial-gradient(rgba(4,51,53,.09) 2px,transparent 2.2px) 0 0/28px 28px;color:var(--green)}
+.p2 .logo{left:80px;top:78px;height:52px}
+.p2 .ph{width:1100px;left:263px;top:322px;-webkit-mask-image:linear-gradient(to right,transparent 6%,#000 30%),linear-gradient(to bottom,#000 56%,transparent 80%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 6%,#000 30%),linear-gradient(to bottom,#000 56%,transparent 80%);mask-composite:intersect}
+.p2 .happy{left:76px;top:400px;font:400 250px/.9 Anton;letter-spacing:.005em;color:var(--lime);-webkit-text-stroke:3px var(--green)}
+.p2 .bday{left:40px;top:500px;font:400 200px/1 var(--sig);color:var(--green);transform:rotate(-6deg)}
+.p2 .name{left:80px;top:760px;font:600 70px/1 var(--display);letter-spacing:-.03em}
+.p2 .name span{display:block;font-weight:400}
+.p2 .role{left:82px;top:916px;font:500 28px/1.3 Inter}
+.p2 .quote{left:80px;top:1036px;width:560px;font:400 36px/1.32 Inter}
+.p2 .ft{left:80px;right:80px;bottom:56px;display:flex;justify-content:space-between;font:500 24px/1 Inter;opacity:.8}
+.p2 svg.bk{inset:0;width:1080px;height:1350px}
+
+/* ===== P3 DARK GLOW (ref: HAPPY / BIRTHDAY behind head, name in selection box) ===== */
+.p3{background:radial-gradient(900px 900px at 50% 45%,#063b3c,#021c1d 70%,#011112);color:var(--white)}
+.p3 .tex{inset:0;opacity:.35;mix-blend-mode:screen;background-size:1080px 1350px;background-repeat:no-repeat;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1350'><filter id='c' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='5' seed='9' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .25  0 0 0 0 .25  0 0 0 1.4 -.45'/></filter><rect width='100%' height='100%' filter='url(%23c)'/></svg>")}
+.p3 .glow{left:140px;top:250px;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(234,226,106,.62) 0%,rgba(234,226,106,.2) 38%,transparent 66%)}
+.p3 .happy{left:0;right:0;top:118px;text-align:center;font:400 150px/1 var(--serif);font-style:italic;color:var(--white);z-index:2}
+.p3 .bd{left:0;right:0;top:240px;text-align:center;font:400 286px/.9 Anton;letter-spacing:.01em;color:var(--lime);text-shadow:0 0 50px rgba(234,226,106,.35)}
+.p3 .ph{width:900px;left:134px;top:300px}
+.p3 .chip{left:50%;transform:translateX(-50%);top:1004px;font:700 26px/1 Inter;letter-spacing:.06em;background:var(--lime);color:var(--green);padding:12px 18px}
+.p3 .sel{left:50%;transform:translateX(-50%);top:1062px;white-space:nowrap;padding:8px 34px 18px;border:2px solid var(--lime);font:600 104px/1 var(--display);letter-spacing:-.04em}
+.p3 .sel i{position:absolute;width:16px;height:16px;background:var(--white);border:2px solid var(--lime)}
+.p3 .tr{left:120px;right:120px;top:1250px;text-align:center;font:400 25px/1.45 Inter;color:rgba(244,244,237,.85)}
+.p3 .tr b{color:var(--lime);font-weight:700}
+.p3 .logo{right:64px;top:62px;height:44px}
+.p3 .cur{left:790px;top:1186px;z-index:4}
+
+/* ===== P4 LIME TONAL (ref: big heading + script overlay, head over the type, clean side notes) ===== */
+.p4{background:radial-gradient(800px 900px at 50% 42%,#f6f0a0 0%,var(--lime) 46%,#d3ca55 100%);color:var(--green)}
+.p4 .l1{left:66px;top:84px;font:400 162px/1 "Archivo Black";letter-spacing:-.04em}
+.p4 .l2{left:58px;top:232px;font:400 184px/1 "Archivo Black";letter-spacing:-.05em}
+.p4 .sig{left:500px;top:40px;font:400 190px/1 var(--sig);color:var(--white);transform:rotate(-10deg);text-shadow:0 3px 0 rgba(4,51,53,.35),0 8px 24px rgba(4,51,53,.35);z-index:3}
+.p4 .ph{width:880px;left:136px;top:296px}
+.p4 .n{font:500 32px/1.25 Inter;color:var(--green)}
+.p4 .n.r{text-align:right}
+.p4 .n b{font-weight:700}
+.p4 .line{left:0;right:0;top:1056px;text-align:center;font:600 56px/1 var(--display);letter-spacing:-.03em}
+.p4 .ft{left:70px;right:70px;bottom:58px;display:flex;justify-content:space-between;align-items:center;font:600 30px/1 var(--display)}
+.p4 .ft img{height:44px}
+
+/* ===== P5 BORN BULLISH (brand gradient, name-meaning headline) ===== */
+.p5{background:linear-gradient(180deg,var(--white) 0%,var(--white) 18%,var(--lime) 48%,#7f8a4a 66%,var(--green) 84%);color:var(--green)}
+.p5 .born{left:90px;top:14px;font:400 200px/1 var(--sig);transform:rotate(-8deg);z-index:3}
+.p5 .bull{left:0;right:0;top:176px;text-align:center;font:400 300px/.88 Anton;letter-spacing:.005em}
+.p5 svg.arrow{left:0;top:120px;width:1080px;height:420px}
+.p5 .pw{inset:0;-webkit-mask-image:linear-gradient(to right,transparent 30px,#000 200px,#000 calc(100% - 200px),transparent calc(100% - 30px));mask-image:linear-gradient(to right,transparent 30px,#000 200px,#000 calc(100% - 200px),transparent calc(100% - 30px))}
+.p5 .pw img{position:absolute;width:980px;left:90px;top:400px;-webkit-mask-image:linear-gradient(to bottom,#000 58%,transparent 80%);mask-image:linear-gradient(to bottom,#000 58%,transparent 80%)}
+.p5 .n{font:600 36px/1.1 var(--hand);font-size:42px;text-align:center;color:var(--green)}
+.p5 .bottom{left:0;right:0;bottom:150px;text-align:center;color:var(--white)}
+.p5 .bottom .c{display:inline-block;font:700 26px/1 Inter;letter-spacing:.08em;background:var(--lime);color:var(--green);padding:12px 18px;margin-bottom:18px}
+.p5 .bottom b{display:block;font:600 84px/1 var(--display);letter-spacing:-.035em}
+.p5 .logo{left:0;right:0;margin:auto;bottom:60px;height:42px}
+</style></head>
+<body>
+
+<!-- P1 NAME COVER -->
+<section class="slide p1 grain" data-name="p1-name-cover">
+  <canvas class="px" id="px1" data-text="Rishabh" data-color="#EAE26A"></canvas>
+  <img class="ph photo-fade" src="assets/rishabh-cutout-hd.png" alt="">
+  <div class="sig">Happy birthday</div>
+  <div class="note" style="left:52px;top:500px;width:330px;transform:rotate(-4deg)">16 years in<br>banking &amp; investment</div>
+  <div class="note" style="left:40px;top:650px;width:340px;transform:rotate(3deg)">fun fact: “Rishabh”<br>means bull ↗</div>
+  <div class="note" style="right:46px;top:486px;width:330px;transform:rotate(4deg)">founder of<b>1FC GROUP &amp; 1FCODE</b></div>
+  <div class="note" style="right:36px;top:640px;width:330px;transform:rotate(-3deg)">currently: helping<br>families plan<br>their legacy ✨</div>
+  <div class="tagline">founder / fintech builder / born bullish</div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<!-- P2 CLEAN WHITE -->
+<section class="slide p2" data-name="p2-signature">
+  <img class="logo" src="assets/logo-on-light.svg" alt="1FCode">
+  <img class="ph" src="assets/rishabh-cutout-hd.png" alt="">
+  <svg class="bk" viewBox="0 0 1080 1350" id="bk2" aria-hidden="true"></svg>
+  <div class="happy">HAPPY</div>
+  <div class="bday">Birthday</div>
+  <div class="name">Rishabh<span>M Shah</span></div>
+  <div class="role">Founder &amp; CEO,<br>1FC Group of Companies</div>
+  <div class="quote">You saw families lost in scattered finances, and gave them one clear framework.</div>
+  <div class="ft"><span>1fcode.com</span><span>#1FCode</span></div>
+</section>
+
+<!-- P3 DARK GLOW -->
+<section class="slide p3" data-name="p3-glow-select">
+  <div class="tex"></div>
+  <div class="glow"></div>
+  <div class="happy">Happy</div>
+  <div class="bd">BIRTHDAY</div>
+  <img class="ph photo-fade" src="assets/rishabh-cutout-hd.png" alt="">
+  <div class="chip">TO OUR FOUNDER,</div>
+  <div class="sel">Rishabh M Shah!<i style="left:-9px;top:-9px"></i><i style="right:-9px;top:-9px"></i><i style="left:-9px;bottom:-9px"></i><i style="right:-9px;bottom:-9px"></i><i style="left:calc(50% - 8px);top:-9px"></i><i style="left:calc(50% - 8px);bottom:-9px"></i></div>
+  <div class="tr">Your vision is the foundation of everything we build at <b>1FC</b>. Here’s to a year of clarity, growth and countless milestones.</div>
+  <svg class="cur" width="190" height="74" viewBox="0 0 190 74" aria-hidden="true"><path d="M154 4 L154 44 L164 34 L172 52 L180 48 L172 31 L186 31 Z" fill="#EAE26A" stroke="#043335" stroke-width="3" stroke-linejoin="round"/><rect x="4" y="38" width="140" height="34" rx="8" fill="#EAE26A"/><text x="74" y="61" text-anchor="middle" font-family="Inter" font-weight="700" font-size="18" fill="#043335">Team 1FC</text></svg>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<!-- P4 LIME TONAL -->
+<section class="slide p4" data-name="p4-happy-founder">
+  <div class="l1">HAPPY</div>
+  <div class="l2">FOUNDER</div>
+  <div class="sig">Birthday</div>
+  <img class="ph photo-fade" src="assets/rishabh-cutout-hd.png" alt="">
+  <div class="n" style="left:70px;top:446px"><b>Rishabh M Shah</b></div>
+  <div class="n" style="left:70px;top:532px">16 years in<br>banking &amp;<br>investment</div>
+  <div class="n r" style="right:70px;top:446px"><b>Founder &amp; CEO</b><br>1FC Group</div>
+  <div class="n r" style="right:70px;top:548px">Born bullish:<br>“Rishabh” means<br>bull in Sanskrit</div>
+  <div class="line">Here’s to another bullish year.</div>
+  <div class="ft"><img src="assets/logo-on-light.svg" alt="1FCode"><span>With love, Team 1FC</span></div>
+</section>
+
+<!-- P5 BORN BULLISH -->
+<section class="slide p5" data-name="p5-born-bullish">
+  <svg class="arrow" viewBox="0 0 1080 420" aria-hidden="true"><path d="M 40 380 L 230 300 L 330 330 L 520 200 L 640 230 L 860 90 L 1000 40" fill="none" stroke="#EAE26A" stroke-width="16" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/><path d="M 952 30 L 1010 36 L 990 92" fill="none" stroke="#EAE26A" stroke-width="16" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/></svg>
+  <div class="bull">BULLISH</div>
+  <div class="born">born</div>
+  <div class="pw"><img src="assets/rishabh-cutout-hd.png" alt=""></div>
+  <div class="n" style="left:50px;top:540px;width:300px;transform:rotate(-4deg)">“Rishabh” is<br>Sanskrit for <u>bull</u></div>
+  <div class="n" style="right:50px;top:540px;width:300px;transform:rotate(4deg)">16 years in<br>banking &amp; investment</div>
+  <div class="bottom"><span class="c">HAPPY BIRTHDAY TO OUR FOUNDER</span><b>Rishabh M Shah</b></div>
+  <img class="logo" src="assets/logo-on-dark.svg" alt="1FCode">
+</section>
+
+<script>
+/* pixel-serif name: draw small, binarise, scale up with hard pixels */
+function pixelWord(cv) {
+  const text = cv.dataset.text, color = cv.dataset.color, fs = 46, scale = 6.2;
+  const s = document.createElement('canvas'), c = s.getContext('2d');
+  c.font = `${fs}px "Instrument Serif"`;
+  const w = Math.ceil(c.measureText(text).width) + 6, h = Math.ceil(fs * 1.25);
+  s.width = w; s.height = h;
+  c.font = `${fs}px "Instrument Serif"`; c.fillStyle = color; c.textBaseline = 'alphabetic';
+  c.fillText(text, 3, Math.round(fs * 0.95));
+  const id = c.getImageData(0, 0, w, h), d = id.data;
+  for (let i = 3; i < d.length; i += 4) d[i] = d[i] > 110 ? 255 : 0;
+  c.putImageData(id, 0, 0);
+  cv.width = w * scale; cv.height = h * scale;
+  const t = cv.getContext('2d'); t.imageSmoothingEnabled = false; t.drawImage(s, 0, 0, w * scale, h * scale);
+}
+document.fonts.load('46px "Instrument Serif"').then(() => document.querySelectorAll('canvas.px').forEach(pixelWord));
+
+/* P2: lime bokeh and sparkles */
+(() => {
+  const svg = document.getElementById('bk2'), NS = 'http://www.w3.org/2000/svg';
+  const star = (x, y, r, blur, op) => { const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', `M ${x} ${y-r} C ${x+r*.16} ${y-r*.16} ${x+r*.16} ${y-r*.16} ${x+r} ${y} C ${x+r*.16} ${y+r*.16} ${x+r*.16} ${y+r*.16} ${x} ${y+r} C ${x-r*.16} ${y+r*.16} ${x-r*.16} ${y+r*.16} ${x-r} ${y} C ${x-r*.16} ${y-r*.16} ${x-r*.16} ${y-r*.16} ${x} ${y-r} Z`);
+    p.setAttribute('fill', '#EAE26A'); p.setAttribute('opacity', op); if (blur) p.style.filter = `blur(${blur}px)`; svg.appendChild(p); };
+  const dot = (x, y, r, blur, op) => { const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', r); c.setAttribute('fill', '#EAE26A'); c.setAttribute('opacity', op); c.style.filter = `blur(${blur}px)`; svg.appendChild(c); };
+  star(1010, 70, 120, 14, .9); star(40, 1170, 130, 16, .85); star(1000, 1240, 110, 12, .8);
+  dot(960, 600, 40, 10, .55); dot(700, 1080, 30, 8, .6); dot(150, 340, 26, 8, .5); dot(880, 1000, 18, 5, .7);
+  star(640, 820, 22, 0, 1); star(940, 760, 16, 0, 1); star(560, 460, 14, 0, .9); star(1000, 420, 18, 0, 1);
+})();
+</script>
+</body></html>
