@@ -120,4 +120,103 @@ page("x-paper-tape", "Missive Letterhead X", GRID.format(p="x") + """
     <div class="tape" style="top:15mm;height:9mm;font-size:6.8pt"><b>missivedigital.com</b></div>
     {legal_grid()}"""),
 ])
-print("built v–x")
+
+def mark_white(cls="mark"):
+    return (f'<svg class="{cls}" viewBox="0 -4 131 122"><path fill="#fff" fill-opacity=".55" d="{MARK_LIGHT}"/>'
+            f'<path fill="#fff" fill-rule="evenodd" d="{MARK_DARK}"/></svg>')
+
+# ───────────────────────── Y · Word grid (services interleaved with gradient tiles)
+tile = '<i class="tl"></i>'
+tile_mark = f'<i class="tl">{mark_white("tm")}</i>'
+page("y-word-grid", "Missive Letterhead Y", GRID.format(p="y") + """
+  .y .logo{position:absolute;top:16mm;left:18mm;height:9mm}
+  .y .head{position:absolute;top:15.4mm;right:18mm;display:grid;grid-template-columns:auto auto;gap:9mm}
+  .y .words{position:absolute;top:33mm;left:18mm;right:18mm;display:flex;justify-content:space-between;align-items:center;
+            font-size:15pt;font-weight:700;letter-spacing:-.045em;text-transform:uppercase;line-height:1;border-top:.2mm solid var(--ink);border-bottom:.2mm solid var(--ink);padding:3mm 0}
+  .y .tl{display:inline-grid;place-items:center;width:13mm;height:8.5mm;border-radius:.8mm;background:linear-gradient(140deg,var(--deep),var(--teal))}
+  .y .tm{width:5.4mm}
+  .y .letter{top:56mm;left:18mm;right:18mm}
+  .y .mark{position:absolute;top:17mm;left:18mm;height:7mm}
+""", [
+ ("first", f"""    {logo_svg()}
+    <div class="head"><div><span class="lbl">Write</span><div class="val">hello@missivedigital.com</div></div><div><span class="lbl">Visit</span><div class="val">missivedigital.com</div></div></div>
+    <div class="words"><span>Content</span>{tile}<span>SEO</span>{tile_mark}<span>Social</span>{tile}<span>Email</span></div>
+    {LETTER}
+    {legal_grid()}"""),
+ ("continuation", f"""    {mark_svg()}
+    <div class="words" style="top:28mm;font-size:9pt;padding:2mm 0"><span>Content</span><span>SEO</span><span>Social</span><span>Email</span></div>
+    {legal_grid()}"""),
+])
+
+# ───────────────────────── Z · Nodes (the logo wired to its contact tiles)
+page("z-nodes", "Missive Letterhead Z", GRID.format(p="z") + """
+  .z .logo{position:absolute;top:21mm;left:18mm;height:9.5mm}
+  .z .wires{position:absolute;inset:0;width:210mm;height:297mm}
+  .z .wires path{fill:none;stroke:var(--ink);stroke-width:.25}
+  .z .node{position:absolute;left:112mm;height:7.4mm;display:flex;align-items:center;gap:2.6mm;padding:0 3.4mm;border-radius:1.6mm;
+           background:var(--mist);border:.3mm solid rgba(11,19,20,.14);font-size:7.2pt;white-space:nowrap}
+  .z .node .lbl{margin:0}
+  .z .node.main{background:var(--teal);font-weight:700}
+  .z .letter{top:52mm;left:18mm;right:18mm}
+  .z .mark{position:absolute;top:17mm;left:18mm;height:7mm}
+""", [
+ ("first", f"""    {logo_svg()}
+    <svg class="wires" viewBox="0 0 210 297">
+      <path d="M66.4 27.9 H90 M90 18.8 V37 M90 18.8 H112 M90 27.9 H112 M90 37 H112"/>
+      <circle cx="90" cy="27.9" r=".7" fill="#0B1314"/>
+    </svg>
+    <div class="node" style="top:15.1mm"><span class="lbl">Write</span>hello@missivedigital.com</div>
+    <div class="node main" style="top:24.2mm"><span class="lbl" style="color:var(--ink)">Visit</span>missivedigital.com</div>
+    <div class="node" style="top:33.3mm"><span class="lbl">Studio</span>Ahmedabad, India</div>
+    {LETTER}
+    {legal_grid()}"""),
+ ("continuation", f"""    {mark_svg()}
+    <svg class="wires" viewBox="0 0 210 297"><path d="M28 20.5 H112"/><circle cx="28" cy="20.5" r=".9" fill="#19929E"/></svg>
+    <div class="node main" style="top:16.8mm">missivedigital.com</div>
+    {legal_grid()}"""),
+])
+
+# ───────────────────────── AA · Window (a rounded deep-teal window reveals the mark)
+page("aa-window", "Missive Letterhead AA", GRID.format(p="a") + """
+  .a .logo{position:absolute;top:16mm;left:18mm;height:9.5mm}
+  .a .info{position:absolute;top:32mm;left:18mm;display:grid;grid-template-columns:auto auto;gap:9mm}
+  .a .win{position:absolute;top:14mm;right:18mm;width:64mm;height:32mm;border-radius:4mm;overflow:hidden;background:linear-gradient(140deg,var(--deep),var(--teal))}
+  .a .win .big{position:absolute;right:6mm;bottom:5mm;width:24mm}
+  .a .win .cap{position:absolute;left:5mm;top:4.6mm;color:#fff;font-size:5.6pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.7}
+  .a .letter{top:56mm;left:18mm;right:18mm}
+  .a .mark{position:absolute;top:17mm;left:18mm;height:7mm}
+""", [
+ ("first", f"""    {logo_svg()}
+    <div class="info"><div><span class="lbl">Write</span><div class="val">hello@missivedigital.com</div></div><div><span class="lbl">Visit</span><div class="val">missivedigital.com</div></div></div>
+    <div class="win"><div class="cap">Content<br>SEO<br>Social</div>{mark_white("big")}</div>
+    {LETTER}
+    {legal_grid()}"""),
+ ("continuation", f"""    {mark_svg()}
+    <div class="win" style="height:14mm;width:30mm">{mark_white("big").replace('class="big"', 'class="big" style="width:11mm;right:3mm;bottom:2.6mm"')}</div>
+    {legal_grid()}"""),
+])
+
+# ───────────────────────── AB · Frame (the letter sits as a white sheet framed on paper)
+page("ab-frame", "Missive Letterhead AB", """
+  .a{background:var(--paper)}
+  .a .sheet{position:absolute;top:11mm;left:8mm;right:8mm;bottom:11mm;background:#fff;border-radius:3mm;box-shadow:0 .6mm 2.4mm rgba(11,19,20,.06)}
+  .a .rim{position:absolute;left:11mm;right:11mm;display:flex;justify-content:space-between;font-size:5.4pt;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);line-height:1}
+  .a .rim.t{top:4.6mm} .a .rim.b{bottom:4.6mm}
+  .a .rim b{color:var(--deep);font-weight:700}
+  .a .logo{position:absolute;top:22mm;left:20mm;height:9.5mm}
+  .a .head{position:absolute;top:21.6mm;right:20mm;display:grid;grid-template-columns:auto auto;gap:9mm}
+  .a .letter{top:48mm;left:20mm;right:20mm}
+  .a .mark{position:absolute;top:20mm;left:20mm;height:7mm}
+""", [
+ ("first", f"""    <div class="sheet"></div>
+    <div class="rim t"><span>Missive Digital Marketing LLP</span><b>missivedigital.com</b></div>
+    {logo_svg()}
+    <div class="head"><div><span class="lbl">Write</span><div class="val">hello@missivedigital.com</div></div><div><span class="lbl">Studio</span><div class="val">Ahmedabad, India</div></div></div>
+    {LETTER}
+    <div class="rim b"><span>825, Iconic Shyamal, Shyamal Cross Road, 132 Feet Ring Road, Ahmedabad, Gujarat 380015</span><span>LLPIN {LLPIN} · LLP Act, 2008</span></div>"""),
+ ("continuation", f"""    <div class="sheet"></div>
+    <div class="rim t"><span>Missive Digital Marketing LLP</span><b>missivedigital.com</b></div>
+    {mark_svg()}
+    <div class="rim b"><span>Ahmedabad, India</span><span>LLPIN {LLPIN}</span></div>"""),
+])
+print("built v–ab")

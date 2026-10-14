@@ -3,7 +3,7 @@
 const fs = require("fs"), path = require("path");
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || "playwright");
 const dir = __dirname, out = path.join(dir, "output");
-const all = fs.readdirSync(dir).filter(f => /^[a-z]-.*\.html$/.test(f)).map(f => f.slice(0, -5));
+const all = fs.readdirSync(dir).filter(f => /^[a-z]{1,2}-.*\.html$/.test(f)).map(f => f.slice(0, -5));
 const designs = process.argv.length > 2 ? process.argv.slice(2) : all;
 (async () => {
   const browser = await chromium.launch();
