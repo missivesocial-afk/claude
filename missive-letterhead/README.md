@@ -28,6 +28,10 @@ light teal #5DC5C1, deep teal #19929E, mist #CDEDEB, one deep-teal emphasis per 
 | Z | `z-nodes.html` | Node diagram: the logo's full stop wired to Write / Visit / Studio tiles |
 | AA | `aa-window.html` | Rounded deep-teal window revealing the mark and services |
 | AB | `ab-frame.html` | Letter as a white sheet framed on paper; legal details around the rim |
+| AC | `ac-blocks.html` | Block build: services as stacked isometric blocks, SEO on top in deep teal |
+| AD | `ad-screen.html` | Screen fly-in: a 3D-tilted browser card with a display line, one chip and service tags |
+| AE | `ae-captions.html` | Floating caption "Hello from Missive" with Missive in the deep-teal chip |
+| AF | `af-neon.html` | Neon logo: glowing light-teal wordmark on an ink header with a teal edge |
 
 If Helvetica Neue is installed, the HTML uses it; the PDFs here embed TeX Gyre Heros (GUST Font License).
 
@@ -68,7 +72,7 @@ Every design has a **first page** and a **continuation sheet** (page 2+). Design
 - `output/*-letterhead.pdf` — blank print masters (page 1 + continuation), A4, no margins
 - `output/*-sample-letter.pdf` — the same page with a sample letter, for review
 - `output/*-preview.png`, `*-blank.png`, `*-continuation.png` — previews
-- `output/all-three-designs.png`, `output/creative-designs.png`, `output/bold-designs.png`, `output/round4-designs.png`, `output/minimal-creative-designs.png`, `output/playful-designs.png`, `output/on-brand-designs.png`, `output/on-brand-designs-2.png` — side-by-side comparisons
+- `output/all-three-designs.png`, `output/creative-designs.png`, `output/bold-designs.png`, `output/round4-designs.png`, `output/minimal-creative-designs.png`, `output/playful-designs.png`, `output/on-brand-designs.png`, `output/on-brand-designs-2.png`, `output/on-brand-designs-3.png` — side-by-side comparisons
 - `assets/missive-logo.svg` — colour logo, redrawn as vectors (wordmark outlined)
 - `assets/missive-mark.svg` — colour mark only
 - `assets/missive-logo-white.svg` — for dark backgrounds
