@@ -15,6 +15,18 @@ Three letterhead directions for **Missive Digital Marketing LLP**, built from th
 | E | `e-fold-reveal.html` | Printed both sides with DL fold ticks; folded, the back reads "You've got a missive." with a return address |
 | F | `f-flight-path.html` | The mark flies as a paper plane along a dashed path and lands as the full stop of "Messages that land." |
 
+### On-brand directions (Missive brand system) — current round
+Built on the Missive motion style tokens: Helvetica Neue (TeX Gyre Heros stand-in), paper #F1F4F3, ink #0B1314,
+light teal #5DC5C1, deep teal #19929E, mist #CDEDEB, one deep-teal emphasis per page. Source: `build_brand.py` + `missive-brand.css`.
+
+| | Design | Idea |
+|---|---|---|
+| V | `v-chip.html` | Swiss grid header; display line "Content that gets you FOUND" with one deep-teal chip |
+| W | `w-band.html` | Ink band with tracked caps over a light-teal strip; big mist "MISSIVE" behind the foot; deep-teal pill |
+| X | `x-paper-tape.html` | Dot-grain paper; contact on a mist tape strip; light-teal stripes accent |
+
+If Helvetica Neue is installed, the HTML uses it; the PDFs here embed TeX Gyre Heros (GUST Font License).
+
 ### Bold directions (2026 trends)
 | | Design | Trend |
 |---|---|---|
@@ -52,7 +64,7 @@ Every design has a **first page** and a **continuation sheet** (page 2+). Design
 - `output/*-letterhead.pdf` — blank print masters (page 1 + continuation), A4, no margins
 - `output/*-sample-letter.pdf` — the same page with a sample letter, for review
 - `output/*-preview.png`, `*-blank.png`, `*-continuation.png` — previews
-- `output/all-three-designs.png`, `output/creative-designs.png`, `output/bold-designs.png`, `output/round4-designs.png`, `output/minimal-creative-designs.png`, `output/playful-designs.png` — side-by-side comparisons
+- `output/all-three-designs.png`, `output/creative-designs.png`, `output/bold-designs.png`, `output/round4-designs.png`, `output/minimal-creative-designs.png`, `output/playful-designs.png`, `output/on-brand-designs.png` — side-by-side comparisons
 - `assets/missive-logo.svg` — colour logo, redrawn as vectors (wordmark outlined)
 - `assets/missive-mark.svg` — colour mark only
 - `assets/missive-logo-white.svg` — for dark backgrounds

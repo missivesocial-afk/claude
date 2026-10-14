@@ -1,0 +1,2 @@
+TeX Gyre Heros (a Helvetica-metric clone) by GUST e-foundry, distributed under the GUST Font License.
+Used only when Helvetica Neue files are not present in assets/fonts/user/.

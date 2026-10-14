@@ -1,0 +1,26 @@
+/* Missive brand system (from the Missive motion style): paper and ink do the work,
+   light teal for surfaces, one deep-teal emphasis per page, Helvetica Neue only. */
+@font-face{font-family:"Missive Sans";font-weight:400;src:local("Helvetica Neue"),url(fonts/texgyreheros-regular.otf) format("opentype")}
+@font-face{font-family:"Missive Sans";font-weight:700;src:local("Helvetica Neue Bold"),local("HelveticaNeue-Bold"),url(fonts/texgyreheros-bold.otf) format("opentype")}
+:root{
+  --paper:#F1F4F3; --paper-2:#E4EBEA; --ink:#0B1314; --ink-2:#4A5A5B;
+  --teal:#5DC5C1; --deep:#19929E; --mist:#CDEDEB; --white:#FFFFFF;
+  --f:"Helvetica Neue","Missive Sans",Helvetica,Arial,sans-serif;
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:var(--f);color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact;-webkit-font-smoothing:antialiased}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;background:#fff;break-after:page}
+.page:last-child{break-after:auto}
+.lbl{display:block;font-size:5.4pt;font-weight:400;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);margin-bottom:1.3mm}
+.val{font-size:7.2pt;line-height:1.5;color:var(--ink)}
+.chip{background:var(--deep);color:#fff;font-weight:700;padding:.04em .3em .1em;border-radius:.16em}
+.pill{background:var(--deep);color:#fff;font-weight:400;padding:.34em .85em .38em;border-radius:.5em;white-space:nowrap}
+.letter{position:absolute;font-size:9.6pt;line-height:1.58;color:var(--ink);display:none}
+body.sample .letter{display:block}
+.letter p{margin:0 0 3.3mm}
+.letter .meta{color:var(--ink-2);margin-bottom:7mm}
+.letter .subject{font-weight:700;margin:6mm 0 5mm}
+.letter .sign{margin-top:9mm}
+.letter .sign b{display:block;font-weight:700}
