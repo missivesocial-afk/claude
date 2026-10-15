@@ -32,6 +32,10 @@ light teal #5DC5C1, deep teal #19929E, mist #CDEDEB, one deep-teal emphasis per 
 | AD | `ad-screen.html` | Screen fly-in: a 3D-tilted browser card with a display line, one chip and service tags |
 | AE | `ae-captions.html` | Floating caption "Hello from Missive" with Missive in the deep-teal chip |
 | AF | `af-neon.html` | Neon logo: glowing light-teal wordmark on an ink header with a teal edge |
+| AG | `ag-headline-band.html` | Kinetic headline "CONTENT SEO SOCIAL" (SEO in deep teal) above a full-width ink band |
+| AH | `ah-spine.html` | Giant mist MISSIVE running vertically down the right edge |
+| AI | `ai-card-stack.html` | Fanned stack of brand cards held by a mist tape strip, contact on the front card |
+| AJ | `aj-numbered.html` | Contact details as 01 / 02 / 03 numbered pills, Visit in deep teal |
 
 If Helvetica Neue is installed, the HTML uses it; the PDFs here embed TeX Gyre Heros (GUST Font License).
 
@@ -72,7 +76,7 @@ Every design has a **first page** and a **continuation sheet** (page 2+). Design
 - `output/*-letterhead.pdf` — blank print masters (page 1 + continuation), A4, no margins
 - `output/*-sample-letter.pdf` — the same page with a sample letter, for review
 - `output/*-preview.png`, `*-blank.png`, `*-continuation.png` — previews
-- `output/all-three-designs.png`, `output/creative-designs.png`, `output/bold-designs.png`, `output/round4-designs.png`, `output/minimal-creative-designs.png`, `output/playful-designs.png`, `output/on-brand-designs.png`, `output/on-brand-designs-2.png`, `output/on-brand-designs-3.png` — side-by-side comparisons
+- `output/all-three-designs.png`, `output/creative-designs.png`, `output/bold-designs.png`, `output/round4-designs.png`, `output/minimal-creative-designs.png`, `output/playful-designs.png`, `output/on-brand-designs.png`, `output/on-brand-designs-2.png`, `output/on-brand-designs-3.png`, `output/on-brand-designs-4.png` — side-by-side comparisons
 - `assets/missive-logo.svg` — colour logo, redrawn as vectors (wordmark outlined)
 - `assets/missive-mark.svg` — colour mark only
 - `assets/missive-logo-white.svg` — for dark backgrounds

@@ -327,4 +327,110 @@ page("af-neon", "Missive Letterhead AF", GRID.format(p="a") + """
     {NEON.replace('class="neon"', 'class="neon" style="top:5mm;left:29mm;width:40mm"')}
     {legal_grid()}"""),
 ])
-print("built v–af")
+
+HEAD_INFO = ('<div class="info"><div><span class="lbl">Write</span><div class="val">hello@missivedigital.com</div></div>'
+             '<div><span class="lbl">Visit</span><div class="val">missivedigital.com</div></div></div>')
+
+# ───────────────────────── AG · Headline & band (kinetic display line above an ink band)
+page("ag-headline-band", "Missive Letterhead AG", """
+  .a .logo{position:absolute;top:16mm;left:18mm;height:9.5mm}
+  .a .info{position:absolute;top:16mm;right:18mm;display:grid;grid-template-columns:auto auto;gap:9mm}
+  .a .rule{position:absolute;top:32mm;left:18mm;right:18mm;height:.2mm;background:var(--ink)}
+  .a .letter{top:44mm;left:18mm;right:18mm}
+  .a .kl{position:absolute;left:17mm;bottom:48mm;font-size:38pt;font-weight:700;letter-spacing:-.045em;line-height:.86;text-transform:uppercase;white-space:nowrap}
+  .a .kl em{font-style:normal;color:var(--deep)}
+  .a .band{position:absolute;left:0;right:0;bottom:33mm;height:10mm;background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 18mm;
+           color:#fff;font-size:6pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .a .band span+span{color:var(--mist)}
+  .a .legal{position:absolute;left:18mm;right:18mm;bottom:11mm;display:grid;grid-template-columns:1.15fr 1.15fr 1fr;gap:6mm}
+  .a .legal .val{font-size:6.6pt}
+  .a .mark{position:absolute;top:17mm;left:18mm;height:7mm}
+""", [
+ ("first", f"""    {logo_svg()}
+    {HEAD_INFO}
+    <div class="rule"></div>
+    {LETTER}
+    <div class="kl">Content <em>SEO</em> Social</div>
+    <div class="band"><span>Missive Digital Marketing LLP</span><span>Ahmedabad · India</span></div>
+    {legal_grid()}"""),
+ ("continuation", f"""    {mark_svg()}
+    <div class="rule" style="top:28mm"></div>
+    <div class="band" style="bottom:33mm"><span>Missive Digital Marketing LLP</span><span>missivedigital.com</span></div>
+    {legal_grid()}"""),
+])
+
+# ───────────────────────── AH · Spine (a giant vertical MISSIVE down the right edge)
+page("ah-spine", "Missive Letterhead AH", GRID.format(p="a") + """
+  .a .spine{position:absolute;top:8mm;right:-11mm;writing-mode:vertical-rl;font-size:122pt;font-weight:700;letter-spacing:-.045em;line-height:.86;
+            text-transform:uppercase;color:var(--mist);white-space:nowrap}
+  .a .logo{position:absolute;top:16mm;left:18mm;height:9.5mm}
+  .a .info{position:absolute;top:31mm;left:18mm;display:grid;grid-template-columns:auto auto auto;gap:9mm}
+  .a .tag{position:absolute;top:16.6mm;left:118mm;font-size:6.4pt}
+  .a .letter{top:52mm;left:18mm;right:50mm}
+  .a .legal{right:50mm;grid-template-columns:1fr 1fr}
+  .a .legal > div:last-child{display:none}
+  .a .mark{position:absolute;top:17mm;left:18mm;height:7mm}
+""", [
+ ("first", f"""    <div class="spine">Missive</div>
+    {logo_svg()}
+    <div class="info"><div><span class="lbl">Write</span><div class="val">hello@missivedigital.com</div></div><div><span class="lbl">Visit</span><div class="val">missivedigital.com</div></div><div><span class="lbl">Studio</span><div class="val">Ahmedabad, India</div></div></div>
+    {LETTER}
+    {legal_grid()}"""),
+ ("continuation", f"""    <div class="spine">Missive</div>
+    {mark_svg()}
+    {legal_grid()}"""),
+])
+
+# ───────────────────────── AI · Card stack (fanned brand cards held by a tape strip)
+page("ai-card-stack", "Missive Letterhead AI", GRID.format(p="a") + """
+  .a .logo{position:absolute;top:18mm;left:18mm;height:10mm}
+  .a .sub{position:absolute;top:32mm;left:18mm}
+  .a .c{position:absolute;width:58mm;height:33mm;border-radius:1.6mm;box-shadow:0 1.2mm 4mm rgba(11,19,20,.12)}
+  .a .c1{top:10mm;right:11mm;background:var(--mist);transform:rotate(9deg)}
+  .a .c2{top:12.5mm;right:17mm;background:linear-gradient(140deg,var(--deep),var(--teal));transform:rotate(-5deg);overflow:hidden}
+  .a .c2 .mk{position:absolute;right:3.4mm;bottom:3.4mm;width:10.5mm}
+  .a .c3{top:17mm;right:36mm;background:#fff;border:.25mm solid rgba(11,19,20,.1);transform:rotate(2deg);padding:5mm 5mm;display:flex;flex-direction:column;justify-content:space-between}
+  .a .c3 .val{font-size:6.6pt}
+  .a .tape{position:absolute;top:14.6mm;right:57mm;width:22mm;height:6.4mm;background:var(--mist);opacity:.92;transform:rotate(-7deg);box-shadow:0 .4mm 1.6mm rgba(11,19,20,.08)}
+  .a .letter{top:58mm;left:18mm;right:18mm}
+  .a .mark{position:absolute;top:17mm;left:18mm;height:7mm}
+""", [
+ ("first", f"""    {logo_svg()}
+    <div class="sub val" style="color:var(--ink-2)">Content · SEO · Social · Email</div>
+    <div class="c c1"></div>
+    <div class="c c2">{mark_white("mk")}</div>
+    <div class="c c3"><div><span class="lbl">Write</span><div class="val">hello@missivedigital.com</div></div><div><span class="lbl">Visit</span><div class="val">missivedigital.com</div></div></div>
+    <div class="tape"></div>
+    {LETTER}
+    {legal_grid()}"""),
+ ("continuation", f"""    {mark_svg()}
+    <div class="c c1" style="width:28mm;height:16mm;top:12mm;right:20mm"></div>
+    <div class="c c2" style="width:28mm;height:16mm;top:13mm;right:24mm">{mark_white("mk").replace('class="mk"', 'class="mk" style="width:7mm;right:2.4mm;bottom:2mm"')}</div>
+    {legal_grid()}"""),
+])
+
+# ───────────────────────── AJ · Numbered pills (contact details as numbered tip pills)
+def npill(n, label, value, main=False):
+    cls = "np main" if main else "np"
+    return f'<div class="{cls}"><b>{n}</b><span class="lbl">{label}</span>{value}</div>'
+page("aj-numbered", "Missive Letterhead AJ", GRID.format(p="a") + """
+  .a .logo{position:absolute;top:19mm;left:18mm;height:10.5mm}
+  .a .pills{position:absolute;top:13mm;right:18mm;display:grid;gap:2mm;justify-items:end}
+  .a .np{display:flex;align-items:center;gap:2.6mm;background:var(--paper);border-radius:4mm;padding:1.2mm 4.4mm 1.2mm 1.2mm;font-size:7.2pt;white-space:nowrap}
+  .a .np b{width:6mm;height:6mm;border-radius:50%;background:var(--teal);display:grid;place-items:center;font-size:6pt;font-weight:700}
+  .a .np .lbl{margin:0}
+  .a .np.main{background:var(--deep);color:#fff}
+  .a .np.main b{background:#fff;color:var(--deep)}
+  .a .np.main .lbl{color:var(--mist)}
+  .a .letter{top:52mm;left:18mm;right:18mm}
+  .a .mark{position:absolute;top:17mm;left:18mm;height:7mm}
+""", [
+ ("first", f"""    {logo_svg()}
+    <div class="pills">{npill("01", "Write", "hello@missivedigital.com")}{npill("02", "Visit", "missivedigital.com", True)}{npill("03", "Studio", "Ahmedabad, India")}</div>
+    {LETTER}
+    {legal_grid()}"""),
+ ("continuation", f"""    {mark_svg()}
+    <div class="pills" style="top:16mm">{npill("02", "Visit", "missivedigital.com", True)}</div>
+    {legal_grid()}"""),
+])
+print("built v–aj")
