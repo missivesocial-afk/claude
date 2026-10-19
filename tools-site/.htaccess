@@ -1,0 +1,11 @@
+# Single-page app routing for Hostinger (Apache).
+# Sends every address that isn't a real file or folder to index.html,
+# so refreshing a tool page (e.g. /yes-or-no) no longer shows a 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
